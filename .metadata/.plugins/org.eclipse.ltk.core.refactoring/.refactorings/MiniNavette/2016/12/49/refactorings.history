@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename package &apos;fr.utbm.lo43.Entities&apos; to &apos;fr.utbm.lo43.entities&apos;&#x0D;&#x0A;- Original project: &apos;MiniNavette&apos;&#x0D;&#x0A;- Original element: &apos;MiniNavette/src/fr.utbm.lo43.Entities&apos;&#x0D;&#x0A;- Renamed element: &apos;MiniNavette/src/fr.utbm.lo43.entities&apos;&#x0D;&#x0A;- Update references to refactored element&#x0D;&#x0A;- Update textual occurrences in comments and strings" description="Rename package &apos;fr.utbm.lo43.Entities&apos;" flags="589830" hierarchical="false" id="org.eclipse.jdt.ui.rename.package" input="/src&lt;fr.utbm.lo43.Entities" name="fr.utbm.lo43.entities" qualified="false" references="true" stamp="1480946021629" textual="false" version="1.0"/>
+</session>
