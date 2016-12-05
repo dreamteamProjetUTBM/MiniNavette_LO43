@@ -1,0 +1,7 @@
+package fr.utbm.lo43.gamestates;
+
+import org.newdawn.slick.state.BasicGameState;
+
+public class MainGameState extends BasicGameState{
+
+}
