@@ -1,0 +1,11 @@
+package fr.utbm.lo43;
+
+import org.newdawn.slick.AppGameContainer;
+
+public class Main 
+{
+	public static void main(String[] args) 
+	{
+		AppGameContainer container = new AppGameContainer(new GameWindow("Mini Navette (UTBM)"));
+	}
+}

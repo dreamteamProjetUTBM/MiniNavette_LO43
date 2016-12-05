@@ -1,6 +1,5 @@
 package fr.utbm.lo43;
 
-import org.lwjgl.opengl.Display;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.SlickException;
 
