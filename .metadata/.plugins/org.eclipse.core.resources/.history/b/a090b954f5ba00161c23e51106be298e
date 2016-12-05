@@ -4,11 +4,11 @@ import fr.utbm.lo43.entities.Entity;
 
 public abstract class Component 
 {
-	private Entity parent;
+	private Entity entity;
 
-	public Component(Entity p)
+	public Component()
 	{
-		parent = p;
+		
 	}
 	
 	public abstract void init();

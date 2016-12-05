@@ -8,7 +8,7 @@ public abstract class Component
 
 	public Component(Entity p)
 	{
-		parent = p;
+		
 	}
 	
 	public abstract void init();

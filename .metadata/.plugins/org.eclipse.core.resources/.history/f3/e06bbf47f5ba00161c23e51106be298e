@@ -1,14 +1,11 @@
 package fr.utbm.lo43.components;
 
-import fr.utbm.lo43.entities.Entity;
-
 public abstract class Component 
 {
-	private Entity parent;
 
-	public Component(Entity p)
+	public Component()
 	{
-		parent = p;
+		
 	}
 	
 	public abstract void init();
