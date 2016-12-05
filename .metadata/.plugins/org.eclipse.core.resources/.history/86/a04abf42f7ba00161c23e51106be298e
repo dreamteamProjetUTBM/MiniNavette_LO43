@@ -21,18 +21,12 @@ public class Entity
 	
 	public void update()
 	{
-		for(Component c : components)
-		{
-			c.update();
-		}
+		
 	}
 	
 	public void render()
 	{
-		for(Component c : components)
-		{
-			c.render();
-		}
+		
 	}
 	
 	public void cleanUp()

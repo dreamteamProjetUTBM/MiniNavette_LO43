@@ -29,10 +29,7 @@ public class Entity
 	
 	public void render()
 	{
-		for(Component c : components)
-		{
-			c.render();
-		}
+		
 	}
 	
 	public void cleanUp()
