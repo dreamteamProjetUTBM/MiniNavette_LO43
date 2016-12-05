@@ -1,11 +1,11 @@
 package fr.utbm.lo43.components;
 
 import fr.utbm.lo43.entities.Entity;
-import fr.utbm.lo43.misc.Clickable;
 
-public class ClickableComponent extends Component
+public class AIComponent extends Component
 {
-	public ClickableComponent(Entity p, Clickable c) 
+
+	public AIComponent(Entity p) 
 	{
 		super(p);
 	}
@@ -29,4 +29,5 @@ public class ClickableComponent extends Component
 	public void cleanUp() 
 	{
 	}
+
 }

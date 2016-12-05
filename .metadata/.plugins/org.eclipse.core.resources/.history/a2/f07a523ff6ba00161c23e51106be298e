@@ -1,11 +1,10 @@
 package fr.utbm.lo43.components;
 
 import fr.utbm.lo43.entities.Entity;
-import fr.utbm.lo43.misc.Clickable;
 
 public class ClickableComponent extends Component
 {
-	public ClickableComponent(Entity p, Clickable c) 
+	public ClickableComponent(Entity p) 
 	{
 		super(p);
 	}
