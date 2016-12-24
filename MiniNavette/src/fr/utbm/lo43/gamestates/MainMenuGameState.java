@@ -1,7 +1,5 @@
 package fr.utbm.lo43.gamestates;
 
-import java.io.Console;
-
 import org.lwjgl.input.Mouse;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -13,7 +11,7 @@ import org.newdawn.slick.state.StateBasedGame;
 public class MainMenuGameState extends BasicGameState
 {
 
-	private Image header;
+	private Image header;	
 	
 	private Image startGame;
 	private Image startGame_normal;
