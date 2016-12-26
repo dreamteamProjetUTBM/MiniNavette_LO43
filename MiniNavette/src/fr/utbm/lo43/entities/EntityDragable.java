@@ -3,9 +3,9 @@ package fr.utbm.lo43.entities;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.state.StateBasedGame;
 
-public class EntityClickable extends Entity implements EntityUpdateable 
+public class EntityDragable extends Entity implements EntityUpdateable
 {
-	public EntityClickable()
+	public EntityDragable()
 	{
 		super();
 	}
