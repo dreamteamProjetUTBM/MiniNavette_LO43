@@ -21,8 +21,7 @@ public class EntityClickable extends Entity implements EntityUpdateable
 	{
 		Input input = gc.getInput();
 		
-		if(getRect().contains(input.getMouseX(), input.getMouseY()) 
-				&& input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON))
+		if(getRect().contains(input.getMouseX(), input.getMouseY()) && input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON))
 		{
 			clickedEvent.mouseClicked();
 		}
