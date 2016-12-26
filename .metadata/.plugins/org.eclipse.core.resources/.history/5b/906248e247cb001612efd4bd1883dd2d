@@ -1,0 +1,44 @@
+package fr.utbm.lo43.entities;
+
+import org.lwjgl.util.vector.Vector2f;
+
+public class Entity 
+{
+	protected Vector2f position;
+	
+	public Entity()
+	{
+		
+	}
+	
+	/**
+	 * Récupérer la position actuelle de l'entité
+	 * @return la position
+	 */
+	public Vector2f getPosition()
+	{
+		return position;
+	}
+	
+	/**
+	 * Donner une position qui sera la nouvelle position de
+	 * l'entité
+	 * @param _position la nouvelle position
+	 */
+	public void setPosition(Vector2f _position)
+	{
+		position.x = _position.x;
+		position.y = _position.y;
+	}
+	
+	/**
+	 * Permet de déplacer l'entité par la valeur de l'offset
+	 * donné sur les axes x et y
+	 * @param _offset
+	 */
+	public void move(Vector2f _offset)
+	{
+		position.x += _offset.x;
+		position.y += _offset.y;
+	}
+}
