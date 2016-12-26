@@ -36,9 +36,5 @@ public class EntityDragable extends Entity implements EntityUpdateable
 				isGrabed = true;
 			}
 		}
-		else
-		{
-			isGrabed = false;
-		}
 	}
 }

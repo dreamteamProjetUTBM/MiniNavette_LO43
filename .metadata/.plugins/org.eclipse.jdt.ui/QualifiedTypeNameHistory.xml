@@ -1,2 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<qualifiedTypeNameHistroy/>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="org.newdawn.slick.GameContainer"/>
+<fullyQualifiedTypeName name="org.newdawn.slick.state.StateBasedGame"/>
+<fullyQualifiedTypeName name="fr.utbm.lo43.entities.EventEntityMouseDraged"/>
+<fullyQualifiedTypeName name="fr.utbm.lo43.entities.EventEntityMouseClicked"/>
+<fullyQualifiedTypeName name="org.lwjgl.util.Rectangle"/>
+<fullyQualifiedTypeName name="org.lwjgl.util.vector.Vector2f"/>
+<fullyQualifiedTypeName name="org.newdawn.slick.Input"/>
+</qualifiedTypeNameHistroy>

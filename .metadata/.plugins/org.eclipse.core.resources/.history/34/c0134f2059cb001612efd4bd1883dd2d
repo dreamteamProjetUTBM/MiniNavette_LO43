@@ -31,14 +31,6 @@ public class EntityDragable extends Entity implements EntityUpdateable
 				position.x = input.getMouseY() - (size.y / 2.0f);
 				dragedEvent.mousePressed();
 			}
-			else
-			{
-				isGrabed = true;
-			}
-		}
-		else
-		{
-			isGrabed = false;
 		}
 	}
 }
