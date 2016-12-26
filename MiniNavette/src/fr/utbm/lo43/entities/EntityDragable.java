@@ -5,9 +5,13 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public class EntityDragable extends Entity implements EntityUpdateable
 {
-	public EntityDragable()
+	private EventEntityMouseDraged dragedEvent;
+	
+	public EntityDragable(EventEntityMouseDraged _dragedEvent)
 	{
 		super();
+		
+		dragedEvent = _dragedEvent;
 	}
 
 	@Override

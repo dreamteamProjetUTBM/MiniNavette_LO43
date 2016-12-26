@@ -5,13 +5,9 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public class EntityClickable extends Entity implements EntityUpdateable 
 {
-	private EventEntityMouseClicked clickedEvent;
-	
-	public EntityClickable(EventEntityMouseClicked _clickedEvent)
+	public EntityClickable()
 	{
 		super();
-		
-		clickedEvent = _clickedEvent;
 	}
 
 	@Override

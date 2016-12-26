@@ -3,15 +3,13 @@ package fr.utbm.lo43.entities;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.state.StateBasedGame;
 
-public class EntityClickable extends Entity implements EntityUpdateable 
+public class EntityDragable extends Entity implements EntityUpdateable
 {
-	private EventEntityMouseClicked clickedEvent;
+	private EventEntityMouseDraged dragedEvent;
 	
-	public EntityClickable(EventEntityMouseClicked _clickedEvent)
+	public EntityDragable()
 	{
 		super();
-		
-		clickedEvent = _clickedEvent;
 	}
 
 	@Override
