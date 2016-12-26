@@ -11,10 +11,10 @@ public class Entity
 	protected Vector2f position;
 	protected Vector2f size;
 	
-	public Entity(Vector2f _position, Vector2f _size)
+	public Entity()
 	{
-		position = new Vector2f(_position.x, _position.y);
-		size = new Vector2f(_size.x, _size.y);
+		position = new Vector2f();
+		size = new Vector2f();
 	}
 	
 	/**

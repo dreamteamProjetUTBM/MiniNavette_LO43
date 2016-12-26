@@ -13,8 +13,8 @@ public class Entity
 	
 	public Entity(Vector2f _position, Vector2f _size)
 	{
-		position = new Vector2f(_position.x, _position.y);
-		size = new Vector2f(_size.x, _size.y);
+		position = new Vector2f();
+		size = new Vector2f();
 	}
 	
 	/**

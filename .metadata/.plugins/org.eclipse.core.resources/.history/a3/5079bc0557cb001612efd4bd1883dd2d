@@ -1,6 +1,5 @@
 package fr.utbm.lo43.entities;
 
-import org.lwjgl.util.vector.Vector2f;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -8,9 +7,9 @@ public class EntityDragable extends Entity implements EntityUpdateable
 {
 	private EventEntityMouseDraged dragedEvent;
 	
-	public EntityDragable(EventEntityMouseDraged _dragedEvent, Vector2f _position, Vector2f _size)
+	public EntityDragable(EventEntityMouseDraged _dragedEvent)
 	{
-		super(_position, _size);
+		super();
 		
 		dragedEvent = _dragedEvent;
 	}

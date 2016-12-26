@@ -9,9 +9,9 @@ public class EntityClickable extends Entity implements EntityUpdateable
 {
 	private EventEntityMouseClicked clickedEvent;
 	
-	public EntityClickable(EventEntityMouseClicked _clickedEvent, Vector2f _position, Vector2f _size)
+	public EntityClickable(EventEntityMouseClicked _clickedEvent, Vector2f _position, Vector2f size)
 	{
-		super(_position, _size);
+		super();
 		
 		clickedEvent = _clickedEvent;
 	}
