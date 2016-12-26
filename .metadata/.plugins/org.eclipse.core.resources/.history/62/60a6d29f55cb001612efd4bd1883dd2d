@@ -48,46 +48,19 @@ public class Entity
 		position.y += _offset.y;
 	}
 	
-	/**
-	 * Permet de récupérer un vecteur qui donne la taille de l'entité
-	 * (sa largeur dans x et sa hauteur dans y)
-	 * @return le vecteur contenant la taille
-	 */
 	public Vector2f getSize()
 	{
 		return size;
 	}
 	
-	/**
-	 * Permet de définir la taille de l'entité
-	 * @param _size la composante x représente la largeur et la composante
-	 * 				y représente la hauteur de l'entité
-	 */
 	public void setSize(Vector2f _size)
 	{
 		size.x = _size.x;
 		size.y = _size.y;
 	}
 	
-	/**
-	 * Permet de récupérer un rectangle dont les composantes représentent
-	 * la position ainsi que la taille de l'entité :
-	 * 		- x : position en x
-	 * 		- y : position en y
-	 * 		- width : largeur de l'entité
-	 * 		- height : hauteur de l'entité
-	 * Ce rectangle peut servir dans le cadre de la détection d'un clique souris
-	 * par exemple
-	 * @return
-	 */
 	public Rectangle getRect()
 	{
-		Rectangle rect = new Rectangle();
-		rect.setX((int) position.x);
-		rect.setY((int) position.y);
-		rect.setWidth((int) size.x);
-		rect.setHeight((int) size.y);
-		
-		return rect;
+		return new Rectangle(position.x, position.y, size.x, size.y);
 	}
 }

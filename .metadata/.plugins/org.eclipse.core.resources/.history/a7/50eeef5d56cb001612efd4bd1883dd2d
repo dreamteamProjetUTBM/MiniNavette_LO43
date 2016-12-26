@@ -76,8 +76,6 @@ public class Entity
 	 * 		- y : position en y
 	 * 		- width : largeur de l'entité
 	 * 		- height : hauteur de l'entité
-	 * Ce rectangle peut servir dans le cadre de la détection d'un clique souris
-	 * par exemple
 	 * @return
 	 */
 	public Rectangle getRect()
