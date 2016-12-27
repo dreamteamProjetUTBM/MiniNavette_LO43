@@ -15,7 +15,7 @@ public class Button extends EntityClickable implements EntityDrawable
 	
 	public Button(Vector2f _position, Vector2f _size) 
 	{
-		super(_position, _size);
+		super(_position, _size);	
 	}
 
 	@Override

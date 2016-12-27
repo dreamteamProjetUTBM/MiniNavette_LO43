@@ -47,9 +47,6 @@ public class EntityClickable extends Entity implements EntityUpdateable
 	public EntityClickable(Vector2f _position)
 	{
 		super(_position);
-		
-		isMouseHover = false;
-		isMouseHoverAndPressed = false;
 	}
 
 	@Override

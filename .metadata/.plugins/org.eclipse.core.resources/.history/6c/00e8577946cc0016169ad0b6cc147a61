@@ -87,7 +87,7 @@ public class Entity
 	
 	/**
 	 * Permet de récupérer un rectangle dont les composantes représentent
-	 * la position ainsi que la taille de l'entité :<br>
+	 * la position ainsi que la taille de l'entité : <br>
 	 * 		- x : position en x<br>
 	 * 		- y : position en y<br>
 	 * 		- width : largeur de l'entité<br>

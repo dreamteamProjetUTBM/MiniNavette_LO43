@@ -13,14 +13,16 @@ public class Button extends EntityClickable implements EntityDrawable
 	private Image img_hover;
 	private Image img_pressed;
 	
-	public Button(Vector2f _position, Vector2f _size) 
-	{
+	public Button(Vector2f _position, Vector2f _size) {
 		super(_position, _size);
+		
+		
 	}
 
 	@Override
-	public void render() 
-	{
+	public void render() {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	@Override

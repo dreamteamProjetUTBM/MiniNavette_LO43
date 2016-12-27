@@ -87,11 +87,11 @@ public class Entity
 	
 	/**
 	 * Permet de récupérer un rectangle dont les composantes représentent
-	 * la position ainsi que la taille de l'entité :<br>
-	 * 		- x : position en x<br>
-	 * 		- y : position en y<br>
-	 * 		- width : largeur de l'entité<br>
-	 * 		- height : hauteur de l'entité<br>
+	 * la position ainsi que la taille de l'entité :
+	 * 		- x : position en x
+	 * 		- y : position en y
+	 * 		- width : largeur de l'entité
+	 * 		- height : hauteur de l'entité
 	 * Ce rectangle peut servir dans le cadre de la détection d'un clique souris
 	 * par exemple
 	 * @return

@@ -38,19 +38,6 @@ public class EntityClickable extends Entity implements EntityUpdateable
 		isMouseHover = false;
 		isMouseHoverAndPressed = false;
 	}
-	
-	/**
-	 * Avec ce constructeur vous devez tout initialiser dans la classe qui hérite sauf la position
-	 * donnée en paramètre
-	 * @param _position La position de l'entité
-	 */
-	public EntityClickable(Vector2f _position)
-	{
-		super(_position);
-		
-		isMouseHover = false;
-		isMouseHoverAndPressed = false;
-	}
 
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg) 

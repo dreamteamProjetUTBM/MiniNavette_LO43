@@ -35,18 +35,6 @@ public class EntityDragable extends Entity implements EntityUpdateable
 		
 		isGrabed = false;
 	}
-	
-	/**
-	 * Avec ce constructeur vous devez tout initialiser dans la classe qui hérite sauf la position
-	 * donnée en paramètre
-	 * @param _position La position de l'entité
-	 */
-	public EntityDragable(Vector2f _position)
-	{
-		super(_position);
-		
-		isGrabed = false;
-	}
 
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg) 
