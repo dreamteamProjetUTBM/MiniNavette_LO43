@@ -8,13 +8,7 @@ import org.newdawn.slick.state.StateBasedGame;
 public class EntityClickable extends Entity implements EntityUpdateable 
 {
 	private EventEntityMouseClicked clickedEvent;
-
-	/**
-	 * Avec ce constructeur on donne directement le EventEntityMouseClicked
-	 * @param _clickedEvent	Le EventEntityMouseClicked qui contient directement les actions
-	 * @param _position		La position de l'entité
-	 * @param _size			La taille de l'entité
-	 */
+	
 	public EntityClickable(EventEntityMouseClicked _clickedEvent, Vector2f _position, Vector2f _size)
 	{
 		super(_position, _size);
@@ -22,11 +16,6 @@ public class EntityClickable extends Entity implements EntityUpdateable
 		clickedEvent = _clickedEvent;
 	}
 	
-	/**
-	 * Avec ce constructeur on est obligé de définir le EventEntityMouseClicked dans la classe qui hérite
-	 * @param _position La position de l'entité
-	 * @param _size		La taille de l'entité
-	 */
 	public EntityClickable(Vector2f _position, Vector2f _size)
 	{
 		super(_position, _size);

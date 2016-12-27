@@ -25,7 +25,7 @@ public class EntityDragable extends Entity implements EntityUpdateable
 	}
 	
 	/**
-	 * Avec ce constructeur on est obligé de définir le EventEntityMouseDraged dans la classe qui hérite
+	 * Avec ce constructeur on est obligé de définir le EventEntityMouseDraged
 	 * @param _position	La position de l'entité
 	 * @param _size		La taille de l'entité
 	 */

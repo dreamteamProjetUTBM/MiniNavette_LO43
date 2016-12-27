@@ -22,11 +22,6 @@ public class EntityClickable extends Entity implements EntityUpdateable
 		clickedEvent = _clickedEvent;
 	}
 	
-	/**
-	 * Avec ce constructeur on est obligé de définir le EventEntityMouseClicked dans la classe qui hérite
-	 * @param _position La position de l'entité
-	 * @param _size		La taille de l'entité
-	 */
 	public EntityClickable(Vector2f _position, Vector2f _size)
 	{
 		super(_position, _size);
