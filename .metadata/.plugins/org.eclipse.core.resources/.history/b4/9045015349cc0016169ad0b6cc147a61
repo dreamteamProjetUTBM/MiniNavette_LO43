@@ -30,8 +30,6 @@ public class Button extends EntityClickable implements EntityDrawable
 		}
 		
 		img_actual = img_idle;
-		size.x = img_actual.getWidth();
-		size.y = img_actual.getHeight();
 	}
 
 	@Override
@@ -50,7 +48,6 @@ public class Button extends EntityClickable implements EntityDrawable
 		 */
 		if(isMouseHover)
 		{
-			
 			if(isMouseHoverAndPressed)
 			{
 				img_actual = img_pressed;

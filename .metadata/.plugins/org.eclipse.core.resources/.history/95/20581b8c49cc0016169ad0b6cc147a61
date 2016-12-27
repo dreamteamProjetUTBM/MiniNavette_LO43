@@ -71,8 +71,7 @@ public class EntityDragable extends Entity implements EntityUpdateable
 		{
 			if(isGrabed != false)
 			{
-				if(dragedEvent != null)
-					dragedEvent.mouseReleased();
+				dragedEvent.mouseReleased();
 				isGrabed = false;
 			}
 		}

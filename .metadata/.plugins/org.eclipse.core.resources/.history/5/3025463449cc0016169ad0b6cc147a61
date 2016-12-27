@@ -56,26 +56,26 @@ public class EntityClickable extends Entity implements EntityUpdateable
 	public void update(GameContainer gc, StateBasedGame sbg) 
 	{
 		Input input = gc.getInput();
+		System.out.println("X : " + input.getMouseX() + " Y : " + input.getMouseY());
 		
 		if(getRect().contains(input.getMouseX(), input.getMouseY())) 
 		{
 			isMouseHover = true;
+			System.out.println("Hover");
 			
 			if(input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON))
 			{
+				System.out.println("clicked");
 				isMouseHoverAndPressed = true;
-				if(clickedEvent != null)
-					clickedEvent.mouseClicked();
+				clickedEvent.mouseClicked();
 			}
 			else
 			{
 				isMouseHoverAndPressed = false;
 			}
 		}
-		else
-		{
-			isMouseHover = false;
-			isMouseHoverAndPressed = false;
-		}
+		
+		isMouseHover = false;
+		isMouseHoverAndPressed = false;
 	}
 }

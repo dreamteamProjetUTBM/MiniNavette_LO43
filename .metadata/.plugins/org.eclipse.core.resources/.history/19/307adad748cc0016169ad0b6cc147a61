@@ -104,6 +104,10 @@ public class Entity
 				(int) size.x,
 				(int) size.y
 		);
+		rect.setX();
+		rect.setY();
+		rect.setWidth();
+		rect.setHeight();
 		
 		return rect;
 	}

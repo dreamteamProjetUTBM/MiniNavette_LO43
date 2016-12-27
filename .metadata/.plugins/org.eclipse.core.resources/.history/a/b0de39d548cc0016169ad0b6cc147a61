@@ -98,12 +98,11 @@ public class Entity
 	 */
 	public Rectangle getRect()
 	{
-		Rectangle rect = new Rectangle(
-				(int) position.x,
-				(int) position.y,
-				(int) size.x,
-				(int) size.y
-		);
+		Rectangle rect = new Rectangle();
+		rect.setX((int) position.x);
+		rect.setY((int) position.y);
+		rect.setWidth((int) size.x);
+		rect.setHeight((int) size.y);
 		
 		return rect;
 	}
