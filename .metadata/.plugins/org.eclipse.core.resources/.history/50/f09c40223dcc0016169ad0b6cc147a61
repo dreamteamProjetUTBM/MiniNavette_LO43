@@ -10,29 +10,11 @@ public class EntityDragable extends Entity implements EntityUpdateable
 	private EventEntityMouseDraged dragedEvent;
 	private boolean isGrabed;
 	
-	/**
-	 * Avec ce constructeur on donne directement le EventEntityMouseDraged
-	 * @param _dragedEvent	Le EventEntityMouseDraged qui contient directement les actions
-	 * @param _position		La position de l'entité
-	 * @param _size			La taille de l'entité
-	 */
 	public EntityDragable(EventEntityMouseDraged _dragedEvent, Vector2f _position, Vector2f _size)
 	{
 		super(_position, _size);
 		
 		dragedEvent = _dragedEvent;
-		isGrabed = false;
-	}
-	
-	/**
-	 * Avec ce constructeur on est obligé de définir le EventEntityMouseDraged
-	 * @param _position	La position de l'entité
-	 * @param _size		La taille de l'entité
-	 */
-	public EntityDragable(Vector2f _position, Vector2f _size)
-	{
-		super(_position, _size);
-		
 		isGrabed = false;
 	}
 
@@ -56,11 +38,7 @@ public class EntityDragable extends Entity implements EntityUpdateable
 		}
 		else
 		{
-			if(isGrabed != false)
-			{
-				dragedEvent.mouseReleased();
-				isGrabed = false;
-			}
+			isGrabed = false;
 		}
 	}
 }

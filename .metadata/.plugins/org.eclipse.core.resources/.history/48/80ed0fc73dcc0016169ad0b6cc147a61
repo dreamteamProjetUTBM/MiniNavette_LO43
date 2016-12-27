@@ -58,6 +58,10 @@ public class EntityDragable extends Entity implements EntityUpdateable
 		{
 			if(isGrabed != false)
 			{
+				/**
+				 * Dans la cas ou la souris est relaché on passe dans cette condition 
+				 * (Normalement à tester...)
+				 */
 				dragedEvent.mouseReleased();
 				isGrabed = false;
 			}
