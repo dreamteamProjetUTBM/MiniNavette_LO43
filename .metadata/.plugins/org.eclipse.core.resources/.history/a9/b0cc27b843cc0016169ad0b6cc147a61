@@ -46,20 +46,12 @@ public class EntityClickable extends Entity implements EntityUpdateable
 		
 		if(getRect().contains(input.getMouseX(), input.getMouseY())) 
 		{
-			isMouseHover = true;
-			
 			if(input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON))
 			{
-				isMouseHoverAndPressed = true;
 				clickedEvent.mouseClicked();
-			}
-			else
-			{
-				isMouseHoverAndPressed = false;
 			}
 		}
 		
-		isMouseHover = false;
-		isMouseHoverAndPressed = false;
+		
 	}
 }

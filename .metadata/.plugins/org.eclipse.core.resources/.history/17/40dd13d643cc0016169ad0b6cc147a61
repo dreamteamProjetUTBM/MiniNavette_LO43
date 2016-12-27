@@ -53,13 +53,8 @@ public class EntityClickable extends Entity implements EntityUpdateable
 				isMouseHoverAndPressed = true;
 				clickedEvent.mouseClicked();
 			}
-			else
-			{
-				isMouseHoverAndPressed = false;
-			}
 		}
 		
 		isMouseHover = false;
-		isMouseHoverAndPressed = false;
 	}
 }

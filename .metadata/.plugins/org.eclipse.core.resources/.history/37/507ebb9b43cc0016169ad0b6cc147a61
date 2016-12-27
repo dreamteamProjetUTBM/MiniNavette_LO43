@@ -8,8 +8,7 @@ import org.newdawn.slick.state.StateBasedGame;
 public class EntityClickable extends Entity implements EntityUpdateable 
 {
 	protected EventEntityMouseClicked clickedEvent;
-	protected boolean isMouseHover;
-	protected boolean isMouseHoverAndPressed;
+	
 
 	/**
 	 * Avec ce constructeur on donne directement le EventEntityMouseClicked
@@ -22,8 +21,6 @@ public class EntityClickable extends Entity implements EntityUpdateable
 		super(_position, _size);
 		
 		clickedEvent = _clickedEvent;
-		isMouseHover = false;
-		isMouseHoverAndPressed = false;
 	}
 	
 	/**
@@ -34,9 +31,6 @@ public class EntityClickable extends Entity implements EntityUpdateable
 	public EntityClickable(Vector2f _position, Vector2f _size)
 	{
 		super(_position, _size);
-		
-		isMouseHover = false;
-		isMouseHoverAndPressed = false;
 	}
 
 	@Override
@@ -46,20 +40,12 @@ public class EntityClickable extends Entity implements EntityUpdateable
 		
 		if(getRect().contains(input.getMouseX(), input.getMouseY())) 
 		{
-			isMouseHover = true;
-			
 			if(input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON))
 			{
-				isMouseHoverAndPressed = true;
 				clickedEvent.mouseClicked();
-			}
-			else
-			{
-				isMouseHoverAndPressed = false;
 			}
 		}
 		
-		isMouseHover = false;
-		isMouseHoverAndPressed = false;
+		
 	}
 }
