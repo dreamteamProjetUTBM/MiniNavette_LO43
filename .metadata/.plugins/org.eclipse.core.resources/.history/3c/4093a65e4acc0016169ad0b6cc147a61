@@ -73,6 +73,6 @@ public class Button extends EntityClickable implements EntityDrawable
 	 */
 	public void setEventCallback(EventEntityMouseClicked _mouseClicked)
 	{
-		clickedEvent = _mouseClicked;
+		
 	}
 }

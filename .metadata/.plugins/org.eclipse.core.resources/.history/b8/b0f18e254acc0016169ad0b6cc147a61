@@ -65,14 +65,4 @@ public class Button extends EntityClickable implements EntityDrawable
 			img_actual = img_idle;
 		}
 	}
-	
-	/**
-	 * Permet de mettre en place l'action qui sera mené quand le bouton de la souris sera
-	 * cliqué
-	 * @param _mouseClicked L'interface surchargée
-	 */
-	public void setEventCallback(EventEntityMouseClicked _mouseClicked)
-	{
-		clickedEvent = _mouseClicked;
-	}
 }
