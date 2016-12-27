@@ -8,7 +8,6 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 import fr.utbm.lo43.entities.Button;
-import fr.utbm.lo43.entities.EventEntityMouseClicked;
 
 public class MainMenuGameState extends BasicGameState
 {
@@ -29,16 +28,7 @@ public class MainMenuGameState extends BasicGameState
 		button = new Button(new Vector2f(100, 100), 
 				"asset/start_button.png", 
 				"asset/start_button_hover.png", 
-				"asset/start_button_clicked.png");
-		
-		button.setEventCallback(new EventEntityMouseClicked() 
-		{
-			@Override
-			public void mouseClicked() 
-			{
-				System.out.println("Bouton cliqué !");
-			}
-		});
+				"asset/start_button_clicked.png");	
 	}
 
 	@Override

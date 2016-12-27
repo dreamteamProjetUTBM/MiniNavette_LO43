@@ -36,7 +36,7 @@ public class MainMenuGameState extends BasicGameState
 			@Override
 			public void mouseClicked() 
 			{
-				System.out.println("Bouton cliqué !");
+				
 			}
 		});
 	}
