@@ -48,18 +48,7 @@ public class Button extends EntityClickable implements EntityDrawable
 		 */
 		if(isMouseHover)
 		{
-			if(isMouseHoverAndPressed)
-			{
-				img_actual = img_pressed;
-			}
-			else
-			{
-				img_actual = img_hover;
-			}
-		}
-		else
-		{
-			img_actual = img_idle;
+			
 		}
 	}
 }

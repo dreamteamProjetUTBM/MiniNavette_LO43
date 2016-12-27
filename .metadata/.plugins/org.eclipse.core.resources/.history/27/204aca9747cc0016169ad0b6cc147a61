@@ -21,21 +21,16 @@ public class Button extends EntityClickable implements EntityDrawable
 		try 
 		{
 			img_idle = new Image(_img_idle);
-			img_hover = new Image(_img_hover);
-			img_pressed = new Image(_img_pressed);
 		} 
 		catch (SlickException e) 
 		{
 			e.printStackTrace();
 		}
-		
-		img_actual = img_idle;
 	}
 
 	@Override
 	public void render() 
 	{
-		img_actual.draw(position.x, position.y);
 	}
 	
 	@Override
@@ -48,18 +43,7 @@ public class Button extends EntityClickable implements EntityDrawable
 		 */
 		if(isMouseHover)
 		{
-			if(isMouseHoverAndPressed)
-			{
-				img_actual = img_pressed;
-			}
-			else
-			{
-				img_actual = img_hover;
-			}
-		}
-		else
-		{
-			img_actual = img_idle;
+			
 		}
 	}
 }
