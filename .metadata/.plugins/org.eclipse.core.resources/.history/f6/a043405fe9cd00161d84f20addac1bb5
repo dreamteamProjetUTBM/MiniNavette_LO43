@@ -12,19 +12,4 @@ public class Passenger extends Entity
 	{
 		super(_position);
 	}
-	
-	private void takeTheBus(Bus bus)
-	{
-		
-	}
-	
-	public void busArrived(Bus bus)
-	{
-		
-	}
-	
-	public void leaveBus(Station station)
-	{
-		
-	}
 }
