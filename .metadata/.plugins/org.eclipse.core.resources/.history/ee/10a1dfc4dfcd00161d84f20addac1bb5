@@ -17,7 +17,8 @@ public class MainMenuGameState extends BasicGameState
 	
 	@Override
 	public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException 
-	{	
+	{
+	
 		button = new Button(new Vector2f(100, 100), 
 				"asset/start_button.png", 
 				"asset/start_button_hover.png", 

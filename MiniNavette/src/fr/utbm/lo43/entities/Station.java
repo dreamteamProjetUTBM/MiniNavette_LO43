@@ -1,5 +1,11 @@
 package fr.utbm.lo43.entities;
 
-public class Station {
+import org.lwjgl.util.vector.Vector2f;
 
+public class Station extends Entity
+{
+	public Station(Vector2f _position) 
+	{
+		super(_position);
+	}	
 }

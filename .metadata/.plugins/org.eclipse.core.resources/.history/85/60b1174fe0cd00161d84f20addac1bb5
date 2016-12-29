@@ -1,0 +1,16 @@
+package fr.utbm.lo43.logic;
+
+public class Inventary {
+	/** Constructeur privé */
+	private Inventary()
+	{}
+ 
+	/** Instance unique pré-initialisée */
+	private static Inventory INSTANCE = new Inventory();
+ 
+	/** Point d'accès pour l'instance unique du singleton */
+	public static Inventory getInstance()
+	{	return INSTANCE;
+	}
+
+}
