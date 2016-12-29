@@ -32,19 +32,4 @@ public class Station extends Entity
 	{
 		
 	}
-	
-	public void enterStation(Passenger passenger)
-	{
-		
-	}
-	
-	public Station getNextStation(Passenger passenger)
-	{
-		return null;
-	}
-	
-	public void keepPassenger(Passenger passenger)
-	{
-		
-	}
 }

@@ -43,8 +43,4 @@ public class Station extends Entity
 		return null;
 	}
 	
-	public void keepPassenger(Passenger passenger)
-	{
-		
-	}
 }
