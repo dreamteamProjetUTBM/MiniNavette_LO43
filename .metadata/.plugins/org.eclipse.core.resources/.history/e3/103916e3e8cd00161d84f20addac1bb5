@@ -31,17 +31,7 @@ public abstract class Bus extends Entity
 		
 	}
 	
-	private void updateNextStation()
-	{
-		
-	}
-	
-	private void removePassenger(Passenger passenger)
-	{
-		
-	}
-	
-	private void changeDirection()
+	public void updateNextStation()
 	{
 		
 	}

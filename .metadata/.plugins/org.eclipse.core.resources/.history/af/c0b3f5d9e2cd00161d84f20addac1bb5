@@ -7,5 +7,5 @@ public class Station extends Entity
 	public Station(Vector2f _position) 
 	{
 		super(_position);
-	}
+	}	
 }
