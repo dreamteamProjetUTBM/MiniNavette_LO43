@@ -12,9 +12,7 @@ import fr.utbm.lo43.entities.Button;
 public class MainMenuGameState extends BasicGameState
 {
 
-	private Button play_button;
-	private Button option_button;
-	private Button quit_button;
+	private Button button;
 	
 	@Override
 	public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException 
