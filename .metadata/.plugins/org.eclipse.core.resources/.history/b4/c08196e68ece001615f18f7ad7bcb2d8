@@ -26,45 +26,23 @@ public class MainMenuGameState extends BasicGameState
 		arg0.getGraphics().setBackground(Color.white);
 		
 		play_button = new Button(
-				new Vector2f(75, 275), 
+				new Vector2f(75, 150), 
 				"asset/b_play_idle.png", 
 				"asset/b_play_hover.png", 
 				"asset/b_play_pressed.png"
 		);
-		
-		option_button = new Button(
-				new Vector2f(75, 330), 
-				"asset/b_play_idle.png", 
-				"asset/b_play_hover.png", 
-				"asset/b_play_pressed.png"
-		);
-		
-		quit_button = new Button(
-				new Vector2f(75, 385), 
-				"asset/b_play_idle.png", 
-				"asset/b_play_hover.png", 
-				"asset/b_play_pressed.png"
-		);
-		
-		logo = new Image("asset/logo.png");
 	}
 
 	@Override
 	public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2) throws SlickException 
 	{
 		play_button.render();
-		option_button.render();
-		quit_button.render();
-		
-		logo.draw((854 / 2) - (logo.getWidth() / 2), 0);
 	}
 
 	@Override
 	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException 
 	{
 		play_button.update(arg0, arg1);
-		option_button.update(arg0, arg1);
-		quit_button.update(arg0, arg1);
 	}
 
 	@Override
