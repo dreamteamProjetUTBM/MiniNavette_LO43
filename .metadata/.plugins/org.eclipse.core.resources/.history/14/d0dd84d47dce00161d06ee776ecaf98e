@@ -19,7 +19,7 @@ public class MainMenuGameState extends BasicGameState
 	@Override
 	public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException 
 	{
-		arg0.getGraphics().setBackground(Color.white);
+		arg0.getGraphics().setColor(Color.white);
 		
 		button = new Button(new Vector2f(100, 100), 
 				"asset/start_button.png", 

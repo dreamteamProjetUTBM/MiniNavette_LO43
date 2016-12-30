@@ -9,4 +9,8 @@
 <fullyQualifiedTypeName name="fr.utbm.lo43.entities.Button"/>
 <fullyQualifiedTypeName name="org.lwjgl.util.vector.Vector2f"/>
 <fullyQualifiedTypeName name="fr.utbm.lo43.entities.EventEntityMouseClicked"/>
+<fullyQualifiedTypeName name="fr.utbm.lo43.entities.Passenger"/>
+<fullyQualifiedTypeName name="java.util.Date"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="fr.utbm.lo43.entities.Station"/>
 </qualifiedTypeNameHistroy>
