@@ -1,0 +1,23 @@
+package fr.utbm.lo43.entities;
+
+import java.util.ArrayList;
+
+public class EntityCollection 
+{
+	ArrayList<Entity> entities;
+	
+	public EntityCollection()
+	{
+		entities = new ArrayList<Entity>();
+	}
+	
+	public void add(Entity _entity)
+	{
+		
+	}
+	
+	public void delete(Entity _entity)
+	{
+		
+	}
+}
