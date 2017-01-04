@@ -114,4 +114,25 @@ public class Segment extends EntityDragable implements EntityDrawable
 		}
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		// TODO Auto-generated method stub		
+		if(obj.getClass() != getClass())
+			return false;
+		
+		Segment _obj = (Segment) obj;
+		
+		if(obj == this)
+			return true;
+		
+		else if((_obj.getPositions().get(0).distance(getPositions().get(0)) == 0 &&
+				_obj.getPositions().get(1).distance(getPositions().get(1)) == 0) ||
+				(_obj.getPositions().get(0).distance(getPositions().get(1)) == 0 &&
+				_obj.getPositions().get(1).distance(getPositions().get(0)) == 0)
+				){
+			return true;
+		}
+
+		return false;
+	}
 }

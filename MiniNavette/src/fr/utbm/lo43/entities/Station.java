@@ -9,6 +9,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -23,9 +24,7 @@ public class Station extends EntityClickable implements EntityDrawable
 	//En FR en plus
 	private Filiere filiere;
 	private Image preview;
-	
-	Segment seg;
-	
+		
 	private boolean alcoolized;
 	private int maxWaitingTime;
 	private int extraTime;
@@ -48,9 +47,8 @@ public class Station extends EntityClickable implements EntityDrawable
 			e.printStackTrace();
 		}
 		
-		size.x = 24;
-		size.y = 24;
-		seg = new Segment(new Vector2f(), new Vector2f(),0);
+		size.x = 48;
+		size.y = 48;
 		
 		drawable = true;
 	}
@@ -124,13 +122,15 @@ public class Station extends EntityClickable implements EntityDrawable
 	@Override
 	public void render(Graphics arg2) {
 		// TODO Auto-generated method stub
-		preview.draw(getPosition().x,getPosition().y,24,24);
+		preview.draw(getPosition().x+12,getPosition().y+12,24,24);
+		arg2.setColor(Color.blue);
+
+		Rectangle rec = new Rectangle(getRect().getX(), getRect().getY(), getRect().getWidth(), getRect().getHeight());
 		
+		arg2.draw(rec);
 		for (Passenger passenger : waitingPassenger) {
 			passenger.render(arg2);
 		}
-		arg2.setColor(Color.blue);
-		seg.render(arg2);
 	}
 	
 	@Override

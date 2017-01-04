@@ -1,7 +1,10 @@
 package fr.utbm.lo43.gamestates;
 
+import java.nio.charset.MalformedInputException;
 import java.util.ArrayList;
 import java.util.Random;
+
+import javax.swing.undo.CannotRedoException;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -86,17 +89,24 @@ public class MainGameState extends BasicGameState
 
 		}
 	
-		Station station1 = new Station(new Vector2f(33*24,12*24),Filiere.GI);
-		Station station2 = new Station(new Vector2f(20*24,20*24),Filiere.EDIM);
-		Station station3 = new Station(new Vector2f(37*24,26*24),Filiere.IMSI);
+		Station station1 = new Station(new Vector2f(5*48,3*48),Filiere.GI);
+		Station station2 = new Station(new Vector2f(5*48,5*48),Filiere.EDIM);
+		Station station3 = new Station(new Vector2f(7*48,7*48),Filiere.IMSI);
+		Station station4 = new Station(new Vector2f(3*48,8*48),Filiere.GI);
+		Station station5 = new Station(new Vector2f(8*48,10*48),Filiere.ENERGIE);
+
 		
 		Map.getInstance().addStation(station1);
 		Map.getInstance().addStation(station2);
 		Map.getInstance().addStation(station3);
+		Map.getInstance().addStation(station4);
+		Map.getInstance().addStation(station5);
 
 		entities.add(station1);
 		entities.add(station2);
 		entities.add(station3);
+		entities.add(station4);
+		entities.add(station5);
 
 		
 		current_line = 0;
@@ -132,10 +142,10 @@ public class MainGameState extends BasicGameState
 		entities.update(arg0, arg1);
 		Random rand = new Random();
 		counter += arg2;
-				
+		fr.utbm.lo43.logic.Line _line = Map.getInstance().getLine(current_line);
 		
 		if(counter >5000){
-			entities.add(game.map.getStations().get(rand.nextInt(game.map.getStationsLenght())).newPassenger());
+			//entities.add(game.map.getStations().get(rand.nextInt(game.map.getStationsLenght())).newPassenger());
 			counter = 0;
 		}
 		
@@ -147,9 +157,9 @@ public class MainGameState extends BasicGameState
 				Vector2f _position = new Vector2f(input.getMouseX(),input.getMouseY());
 				for (Station station : Map.getInstance().getStations()) {
 					if(station.isOnStation(_position)){
-						
 						editLine = true;
-						drag_station_position = station.getPosition();
+						//On resize sur le centre de la case
+						drag_station_position = new Vector2f(station.getPosition().x+24, station.getPosition().y+24);
 					}
 				}
 			}
@@ -159,18 +169,28 @@ public class MainGameState extends BasicGameState
 				Vector2f _final = new Vector2f(input.getMouseX(),input.getMouseY());
 				for (Station station : Map.getInstance().getStations()) {
 					if(station.isOnStation(_final) && !station.isOnStation(drag_station_position)){
-						Segment _segment = new Segment(drag_station_position, station.getPosition(),current_line);
-						if(!Map.getInstance().getLine(current_line).existingSemgent(_segment)){
-							
-							System.out.println("N'existe pas");
-							Map.getInstance().getLine(current_line).addSegment(_segment);
-							entities.add(_segment);
+						//On resize sur le centre de la case
+						Vector2f _end = new Vector2f(station.getPosition().x+24,station.getPosition().y+24);
+						Segment _segment = new Segment(drag_station_position, _end,current_line);
+						int index = _line.canAddSegment(_segment);	
+
+						if(_line.canRemove(_segment)){
+							_line.removeSegment(_segment);
+							entities.delete(_segment);					
+						}
+						
+						if(_line.canCreateSegment(_end) && _line.canCreateSegment(drag_station_position)){
+							if(index == 0 || index == _line.getSegments().size()){
+								if(index == 0)
+									_segment = new Segment(_end, drag_station_position, current_line);
+								_line.addSegment(_segment,index);
+								entities.add(_segment);
+							}
 						}
 						
 					}
 				}
 				editLine = false;
-
 			}
 		}
 		
