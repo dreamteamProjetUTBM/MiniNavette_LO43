@@ -157,7 +157,8 @@ public class MainGameState extends BasicGameState
 			if(editLine){
 				Vector2f _final = new Vector2f(input.getMouseX(),input.getMouseY());
 				for (Station station : Map.getInstance().getStations()) {
-					if(station.isOnStation(_final)){
+					if(station.isOnStation(_final) && !
+							station.isOnStation(drag_station_position)){
 						Segment _segment = new Segment(drag_station_position, _final,current_line);
 						Map.getInstance().getLine(current_line).addSegment(_segment);
 						entities.add(_segment);

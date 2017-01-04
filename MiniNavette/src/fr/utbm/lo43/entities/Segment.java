@@ -66,6 +66,7 @@ public class Segment extends EntityDragable implements EntityDrawable
 	@Override
 	public void render(Graphics arg2) {
 		arg2.setLineWidth(3);
+		arg2.setColor(Map.getInstance().getLine(lineIndex).getColor());
 		arg2.draw(line);
 	}
 	

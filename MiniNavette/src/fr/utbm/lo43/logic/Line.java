@@ -26,6 +26,10 @@ public abstract class Line extends Entity implements EntityUpdateable, EntityDra
 		updatable = false;
 	}
 	
+	public Color getColor(){
+		return color;
+	}
+	
 	public ArrayList<Segment> getSegments(){
 		return segments;
 	}
