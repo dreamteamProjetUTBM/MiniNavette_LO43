@@ -61,9 +61,7 @@ public class MainGameState extends BasicGameState
 	}
 
 	@Override
-	public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2) throws SlickException 
-	{
-		entities.render(arg2);
+	public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2) throws SlickException {
 		
 		arg2.setColor(new Color(238,238,238));
 		for (Line grid_line : game.map.grid) {

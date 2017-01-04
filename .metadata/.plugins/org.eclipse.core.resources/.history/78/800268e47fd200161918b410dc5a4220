@@ -60,7 +60,7 @@ public class Button extends EntityClickable implements EntityDrawable
 	@Override
 	public void render(Graphics arg2) 
 	{
-		img_actual.draw(position.x, position.y, size.x, size.y);
+		img_actual.draw(position.x, position.y,size.x,size.y);
 	}
 	
 	@Override

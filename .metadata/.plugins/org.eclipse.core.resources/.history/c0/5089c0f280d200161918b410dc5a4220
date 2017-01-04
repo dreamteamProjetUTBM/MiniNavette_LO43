@@ -26,7 +26,7 @@ public class MainGameState extends BasicGameState
 
 	Game game;
 	int counter = 0;
-	EntityCollection entities;
+	EntityCollection entityCollection;
 	
 	Rectangle menu_inventary;
 	ArrayList<Button> lines_button;
@@ -35,10 +35,8 @@ public class MainGameState extends BasicGameState
 	ClassicBus bus_test;
 	
 	@Override
-	public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException 
-	{
+	public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException {
 		game = new Game();
-		entities = new EntityCollection();
 		
 		menu_inventary= new Rectangle(0, 720-24*2, 1080, 24*2);
 		lines_button = new ArrayList<>();
@@ -61,9 +59,7 @@ public class MainGameState extends BasicGameState
 	}
 
 	@Override
-	public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2) throws SlickException 
-	{
-		entities.render(arg2);
+	public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2) throws SlickException {
 		
 		arg2.setColor(new Color(238,238,238));
 		for (Line grid_line : game.map.grid) {
@@ -94,9 +90,8 @@ public class MainGameState extends BasicGameState
 	}
 
 	@Override
-	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException 
-	{
-		entities.update(gc, sbg);
+	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException {
+		// TODO Auto-generated method stub
 		Random rand = new Random();
 		
 		counter += arg2;
