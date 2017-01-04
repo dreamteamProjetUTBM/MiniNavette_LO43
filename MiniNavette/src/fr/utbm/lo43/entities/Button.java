@@ -1,9 +1,10 @@
 package fr.utbm.lo43.entities;
 
-import org.lwjgl.util.vector.Vector2f;
 import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
 
 public class Button extends EntityClickable implements EntityDrawable 
@@ -35,7 +36,7 @@ public class Button extends EntityClickable implements EntityDrawable
 	}
 
 	@Override
-	public void render() 
+	public void render(Graphics arg2) 
 	{
 		img_actual.draw(position.x, position.y);
 	}
@@ -67,9 +68,9 @@ public class Button extends EntityClickable implements EntityDrawable
 	}
 	
 	/**
-	 * Permet de mettre en place l'action qui sera mené quand le bouton de la souris sera
-	 * cliqué
-	 * @param _mouseClicked L'interface surchargée
+	 * Permet de mettre en place l'action qui sera menï¿½ quand le bouton de la souris sera
+	 * cliquï¿½
+	 * @param _mouseClicked L'interface surchargï¿½e
 	 */
 	public void setEventCallback(EventEntityMouseClicked _mouseClicked)
 	{

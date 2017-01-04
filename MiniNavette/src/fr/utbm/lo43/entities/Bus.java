@@ -1,13 +1,13 @@
 package fr.utbm.lo43.entities;
 
-import org.lwjgl.util.vector.Vector2f;
+import org.newdawn.slick.geom.Vector2f;
 
-public abstract class Bus extends Entity
+public abstract class Bus extends EntityDragable implements EntityDrawable
 {
-	private int capacity;
-	private int direction;
-	private Station[] listStation;
-	private float segmentProgress;
+	protected int capacity;
+	protected int direction;
+	protected Station[] listStation;
+	protected float segmentProgress;
 	
 	public Bus(Vector2f _position) 
 	{

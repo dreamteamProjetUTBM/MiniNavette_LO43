@@ -1,15 +1,16 @@
 package fr.utbm.lo43.gamestates;
 
-import org.lwjgl.util.vector.Vector2f;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 import fr.utbm.lo43.entities.Button;
+import fr.utbm.lo43.entities.EventEntityMouseClicked;
 
 public class MainMenuGameState extends BasicGameState
 {
@@ -52,9 +53,9 @@ public class MainMenuGameState extends BasicGameState
 	@Override
 	public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2) throws SlickException 
 	{
-		play_button.render();
-		option_button.render();
-		quit_button.render();
+		play_button.render(arg2);
+		option_button.render(arg2);
+		quit_button.render(arg2);
 		
 		logo.draw((854 / 2) - (logo.getWidth() / 2), 0);
 	}
@@ -65,6 +66,17 @@ public class MainMenuGameState extends BasicGameState
 		play_button.update(arg0, arg1);
 		option_button.update(arg0, arg1);
 		quit_button.update(arg0, arg1);
+		
+		//Change de State
+		play_button.setEventCallback(
+				new EventEntityMouseClicked() {
+					
+					@Override
+					public void mouseClicked() {
+						arg1.enterState(1);
+					}
+				}
+		);
 	}
 
 	@Override

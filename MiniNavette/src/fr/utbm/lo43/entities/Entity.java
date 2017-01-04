@@ -1,20 +1,20 @@
 package fr.utbm.lo43.entities;
 
 import org.lwjgl.util.Rectangle;
-import org.lwjgl.util.vector.Vector2f;
+import org.newdawn.slick.geom.Vector2f;
 
 public class Entity 
 {
 	/**
-	 * La position de l'entité
+	 * La position de l'entitï¿½
 	 */
 	protected Vector2f position;
 	protected Vector2f size;
 	
 	/**
-	 * Construit une entité qui possède la position et la taille donnée
-	 * @param _position La position de l'entité
-	 * @param _size		La taille de l'entité
+	 * Construit une entitï¿½ qui possï¿½de la position et la taille donnï¿½e
+	 * @param _position La position de l'entitï¿½
+	 * @param _size		La taille de l'entitï¿½
 	 */
 	public Entity(Vector2f _position, Vector2f _size)
 	{
@@ -23,9 +23,9 @@ public class Entity
 	}
 	
 	/**
-	 * Construit une entité avec la position donnée mais une taille qui est de 0 pour la
-	 * largeur ainsi que la hauteur de l'entité
-	 * @param _position La position de l'entité
+	 * Construit une entitï¿½ avec la position donnï¿½e mais une taille qui est de 0 pour la
+	 * largeur ainsi que la hauteur de l'entitï¿½
+	 * @param _position La position de l'entitï¿½
 	 */
 	public Entity(Vector2f _position)
 	{
@@ -34,7 +34,7 @@ public class Entity
 	}
 	
 	/**
-	 * Récupérer la position actuelle de l'entité
+	 * Rï¿½cupï¿½rer la position actuelle de l'entitï¿½
 	 * @return la position
 	 */
 	public Vector2f getPosition()
@@ -44,7 +44,7 @@ public class Entity
 	
 	/**
 	 * Donner une position qui sera la nouvelle position de
-	 * l'entité
+	 * l'entitï¿½
 	 * @param _position la nouvelle position
 	 */
 	public void setPosition(Vector2f _position)
@@ -54,9 +54,9 @@ public class Entity
 	}
 	
 	/**
-	 * Permet de déplacer l'entité par la valeur de l'offset
-	 * donné sur les axes x et y
-	 * @param _offset les offset de déplacement sur x et y
+	 * Permet de dï¿½placer l'entitï¿½ par la valeur de l'offset
+	 * donnï¿½ sur les axes x et y
+	 * @param _offset les offset de dï¿½placement sur x et y
 	 */
 	public void move(Vector2f _offset)
 	{
@@ -65,7 +65,7 @@ public class Entity
 	}
 	
 	/**
-	 * Permet de récupérer un vecteur qui donne la taille de l'entité
+	 * Permet de rï¿½cupï¿½rer un vecteur qui donne la taille de l'entitï¿½
 	 * (sa largeur dans x et sa hauteur dans y)
 	 * @return le vecteur contenant la taille
 	 */
@@ -75,9 +75,9 @@ public class Entity
 	}
 	
 	/**
-	 * Permet de définir la taille de l'entité
-	 * @param _size la composante x représente la largeur et la composante
-	 * 				y représente la hauteur de l'entité
+	 * Permet de dï¿½finir la taille de l'entitï¿½
+	 * @param _size la composante x reprï¿½sente la largeur et la composante
+	 * 				y reprï¿½sente la hauteur de l'entitï¿½
 	 */
 	public void setSize(Vector2f _size)
 	{
@@ -86,13 +86,13 @@ public class Entity
 	}
 	
 	/**
-	 * Permet de récupérer un rectangle dont les composantes représentent
-	 * la position ainsi que la taille de l'entité :<br>
+	 * Permet de rï¿½cupï¿½rer un rectangle dont les composantes reprï¿½sentent
+	 * la position ainsi que la taille de l'entitï¿½ :<br>
 	 * 		- x : position en x<br>
 	 * 		- y : position en y<br>
-	 * 		- width : largeur de l'entité<br>
-	 * 		- height : hauteur de l'entité<br>
-	 * Ce rectangle peut servir dans le cadre de la détection d'un clique souris
+	 * 		- width : largeur de l'entitï¿½<br>
+	 * 		- height : hauteur de l'entitï¿½<br>
+	 * Ce rectangle peut servir dans le cadre de la dï¿½tection d'un clique souris
 	 * par exemple
 	 * @return
 	 */

@@ -4,6 +4,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
+import fr.utbm.lo43.gamestates.MainGameState;
 import fr.utbm.lo43.gamestates.MainMenuGameState;
 
 public class GameWindow extends StateBasedGame{
@@ -17,6 +18,7 @@ public class GameWindow extends StateBasedGame{
 	public void initStatesList(GameContainer arg0) throws SlickException 
 	{
 		addState(new MainMenuGameState());
+		addState(new MainGameState());
 	}
 
 }

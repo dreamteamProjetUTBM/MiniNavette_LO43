@@ -4,6 +4,6 @@ public enum Filiere {
 	GI, 
 	IMSI,
 	GMC,
-	EDIM
-	
+	EDIM,
+	ENERGIE
 }

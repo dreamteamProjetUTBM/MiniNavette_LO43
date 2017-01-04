@@ -1,8 +1,8 @@
 package fr.utbm.lo43.entities;
 
-import org.lwjgl.util.vector.Vector2f;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Input;
+import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
 
 public class EntityClickable extends Entity implements EntityUpdateable 
@@ -10,12 +10,13 @@ public class EntityClickable extends Entity implements EntityUpdateable
 	protected EventEntityMouseClicked clickedEvent;
 	protected boolean isMouseHover;
 	protected boolean isMouseHoverAndPressed;
+	protected boolean isMousePressed;
 
 	/**
 	 * Avec ce constructeur on donne directement le EventEntityMouseClicked
 	 * @param _clickedEvent	Le EventEntityMouseClicked qui contient directement les actions
-	 * @param _position		La position de l'entité
-	 * @param _size			La taille de l'entité
+	 * @param _position		La position de l'entitï¿½
+	 * @param _size			La taille de l'entitï¿½
 	 */
 	public EntityClickable(EventEntityMouseClicked _clickedEvent, Vector2f _position, Vector2f _size)
 	{
@@ -24,12 +25,13 @@ public class EntityClickable extends Entity implements EntityUpdateable
 		clickedEvent = _clickedEvent;
 		isMouseHover = false;
 		isMouseHoverAndPressed = false;
+		isMousePressed = false;
 	}
 	
 	/**
-	 * Avec ce constructeur on est obligé de définir le EventEntityMouseClicked dans la classe qui hérite
-	 * @param _position La position de l'entité
-	 * @param _size		La taille de l'entité
+	 * Avec ce constructeur on est obligï¿½ de dï¿½finir le EventEntityMouseClicked dans la classe qui hï¿½rite
+	 * @param _position La position de l'entitï¿½
+	 * @param _size		La taille de l'entitï¿½
 	 */
 	public EntityClickable(Vector2f _position, Vector2f _size)
 	{
@@ -40,9 +42,9 @@ public class EntityClickable extends Entity implements EntityUpdateable
 	}
 	
 	/**
-	 * Avec ce constructeur vous devez tout initialiser dans la classe qui hérite sauf la position
-	 * donnée en paramètre
-	 * @param _position La position de l'entité
+	 * Avec ce constructeur vous devez tout initialiser dans la classe qui hï¿½rite sauf la position
+	 * donnï¿½e en paramï¿½tre
+	 * @param _position La position de l'entitï¿½
 	 */
 	public EntityClickable(Vector2f _position)
 	{

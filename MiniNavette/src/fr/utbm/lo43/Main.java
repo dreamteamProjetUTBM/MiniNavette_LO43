@@ -9,7 +9,7 @@ public class Main
 	{
 		try 
 		{
-			AppGameContainer container = new AppGameContainer(new GameWindow("Mini Navette (UTBM)"), 854, 480, false);
+			AppGameContainer container = new AppGameContainer(new GameWindow("Mini Navette (UTBM)"), 1080, 720, false);
 			container.setTargetFrameRate(60);
 			container.start();
 		} 

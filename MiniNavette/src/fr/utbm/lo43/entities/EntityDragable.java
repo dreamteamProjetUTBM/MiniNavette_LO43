@@ -1,20 +1,20 @@
 package fr.utbm.lo43.entities;
 
-import org.lwjgl.util.vector.Vector2f;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Input;
+import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
 
 public class EntityDragable extends Entity implements EntityUpdateable
 {
-	private EventEntityMouseDraged dragedEvent;
-	private boolean isGrabed;
+	protected EventEntityMouseDraged dragedEvent;
+	protected boolean isGrabed;
 	
 	/**
 	 * Avec ce constructeur on donne directement le EventEntityMouseDraged
 	 * @param _dragedEvent	Le EventEntityMouseDraged qui contient directement les actions
-	 * @param _position		La position de l'entité
-	 * @param _size			La taille de l'entité
+	 * @param _position		La position de l'entitï¿½
+	 * @param _size			La taille de l'entitï¿½
 	 */
 	public EntityDragable(EventEntityMouseDraged _dragedEvent, Vector2f _position, Vector2f _size)
 	{
@@ -25,9 +25,9 @@ public class EntityDragable extends Entity implements EntityUpdateable
 	}
 	
 	/**
-	 * Avec ce constructeur on est obligé de définir le EventEntityMouseDraged dans la classe qui hérite
-	 * @param _position	La position de l'entité
-	 * @param _size		La taille de l'entité
+	 * Avec ce constructeur on est obligï¿½ de dï¿½finir le EventEntityMouseDraged dans la classe qui hï¿½rite
+	 * @param _position	La position de l'entitï¿½
+	 * @param _size		La taille de l'entitï¿½
 	 */
 	public EntityDragable(Vector2f _position, Vector2f _size)
 	{
@@ -37,9 +37,9 @@ public class EntityDragable extends Entity implements EntityUpdateable
 	}
 	
 	/**
-	 * Avec ce constructeur vous devez tout initialiser dans la classe qui hérite sauf la position
-	 * donnée en paramètre
-	 * @param _position La position de l'entité
+	 * Avec ce constructeur vous devez tout initialiser dans la classe qui hï¿½rite sauf la position
+	 * donnï¿½e en paramï¿½tre
+	 * @param _position La position de l'entitï¿½
 	 */
 	public EntityDragable(Vector2f _position)
 	{
