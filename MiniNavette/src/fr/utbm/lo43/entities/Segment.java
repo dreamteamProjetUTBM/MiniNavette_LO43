@@ -74,7 +74,8 @@ public class Segment extends EntityDragable implements EntityDrawable
 		super.update(gc, sbg);
 		Input input = gc.getInput();
 
-
+System.out.println("Segment.update()");
+		
 		if(getRect().contains(input.getMouseX(), input.getMouseY()) && input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON))
 		{
 

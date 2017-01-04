@@ -37,10 +37,30 @@ public class Button extends EntityClickable implements EntityDrawable
 		drawable = true;
 	}
 
+	public Button(Vector2f _position, float height, float width,String _img_idle, String _img_hover, String _img_pressed) 
+	{
+		super(_position);
+		
+		try 
+		{
+			img_idle = new Image(_img_idle);
+			img_hover = new Image(_img_hover);
+			img_pressed = new Image(_img_pressed);
+		} 
+		catch (SlickException e) 
+		{
+			e.printStackTrace();
+		}
+		
+		img_actual = img_idle;
+		size.x = width;
+		size.y = height;
+	}
+	
 	@Override
 	public void render(Graphics arg2) 
 	{
-		img_actual.draw(position.x, position.y);
+		img_actual.draw(position.x, position.y,size.x,size.y);
 	}
 	
 	@Override

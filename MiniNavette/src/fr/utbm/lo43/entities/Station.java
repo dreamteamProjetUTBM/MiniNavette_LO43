@@ -131,15 +131,17 @@ public class Station extends EntityClickable implements EntityDrawable
 		// TODO Auto-generated method stub
 		super.update(gc, sbg);
 
-		Input input = gc.getInput();
+		
+		
+		//Input input = gc.getInput();
 
-		if(isMouseHoverAndPressed){
+		//if(isMouseHoverAndPressed){
 			
 			//Check si y'a des lignes dans inventaire
-			if(!Map.getInstance().getLine(0).getSegments().contains(seg))
-				Map.getInstance().getLine(0).addSegment(new Segment(getPosition(), new Vector2f(input.getMouseX(), input.getMouseY()),0));
+			//if(!Map.getInstance().getLine(0).getSegments().contains(seg))
+				//Map.getInstance().getLine(0).addSegment(new Segment(getPosition(), new Vector2f(input.getMouseX(), input.getMouseY()),0));
 			
 			//Map.getInstance().AddLine(new ClassicLine(Color.blue));
-		}
+		//}
 	}
 }
