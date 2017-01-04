@@ -23,6 +23,7 @@ public abstract class Line extends Entity implements EntityUpdateable, EntityDra
 		super(new Vector2f());
 		color = _color;
 		segments = new ArrayList<>();
+		updatable = false;
 	}
 	
 	public ArrayList<Segment> getSegments(){

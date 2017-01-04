@@ -6,6 +6,7 @@ import java.util.Random;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Line;
 import org.newdawn.slick.geom.Rectangle;
@@ -18,6 +19,7 @@ import fr.utbm.lo43.entities.ClassicBus;
 import fr.utbm.lo43.entities.EntityCollection;
 import fr.utbm.lo43.entities.EventEntityMouseClicked;
 import fr.utbm.lo43.entities.Passenger;
+import fr.utbm.lo43.entities.Segment;
 import fr.utbm.lo43.entities.Station;
 import fr.utbm.lo43.entities.ToggledButton;
 import fr.utbm.lo43.logic.ClassicLine;
@@ -38,11 +40,16 @@ public class MainGameState extends BasicGameState
 	
 	ClassicBus bus_test;
 	
+	private boolean editLine;
+	private Vector2f drag_station_position;
+	
 	@Override
 	public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException 
 	{
 		game = new Game();
 		entities = new EntityCollection();
+		
+		editLine = false;
 		
 		menu_inventary= new Rectangle(0, 720-24*2, 1080, 24*2);
 		lines_button = new ArrayList<>();
@@ -114,22 +121,7 @@ public class MainGameState extends BasicGameState
 		
 		entities.render(arg2);
 
-		/*
-		for (Button button : lines_button) {
-			button.render(arg2);
-		}
-		
-		for (Station stat : game.map.stations) {
-			stat.render(arg2);
-		}
-		
-		for (fr.utbm.lo43.logic.Line line : Map.getInstance().getLines()) {
-			line.render(arg2);
-		}
-		
-		
-		
-		bus_test.render(arg2);*/
+		/*bus_test.render(arg2);*/
 		
 
 	}
@@ -145,6 +137,35 @@ public class MainGameState extends BasicGameState
 		if(counter >5000){
 			entities.add(game.map.getStations().get(rand.nextInt(game.map.getStationsLenght())).newPassenger());
 			counter = 0;
+		}
+		
+		Input input = arg0.getInput();
+
+		if(input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON)){
+			
+			if(!editLine){
+				Vector2f _position = new Vector2f(input.getMouseX(),input.getMouseY());
+				for (Station station : Map.getInstance().getStations()) {
+					if(station.isOnStation(_position)){
+						editLine = true;
+						drag_station_position = _position;
+					}
+				}
+			}
+		}
+		else {
+			if(editLine){
+				Vector2f _final = new Vector2f(input.getMouseX(),input.getMouseY());
+				for (Station station : Map.getInstance().getStations()) {
+					if(station.isOnStation(_final)){
+						Segment _segment = new Segment(drag_station_position, _final,current_line);
+						Map.getInstance().getLine(current_line).addSegment(_segment);
+						entities.add(_segment);
+					}
+				}
+				editLine = false;
+
+			}
 		}
 		
 		

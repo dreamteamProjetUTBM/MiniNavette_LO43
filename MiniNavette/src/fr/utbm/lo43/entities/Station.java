@@ -116,6 +116,10 @@ public class Station extends EntityClickable implements EntityDrawable
 		return filiere;
 	}
 	
+	public boolean isOnStation(Vector2f _position){
+		return getRect().contains((int)_position.x, (int)_position.y);
+	}
+	
 	@Override
 	public void render(Graphics arg2) {
 		// TODO Auto-generated method stub
