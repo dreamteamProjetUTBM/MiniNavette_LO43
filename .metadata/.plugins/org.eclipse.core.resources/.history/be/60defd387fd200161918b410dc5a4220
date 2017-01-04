@@ -1,0 +1,32 @@
+package fr.utbm.lo43.entities;
+
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.geom.Vector2f;
+
+public class ToggledButton extends EntityClickable implements EntityDrawable 
+{
+
+	public ToggledButton(EventEntityMouseClicked _clickedEvent, Vector2f _position, Vector2f _size) 
+	{
+		super(_clickedEvent, _position, _size);
+		
+		drawable = true;
+	}
+	
+	public ToggledButton(Vector2f _position, Vector2f _size) 
+	{
+		super(_position, _size);
+	}
+	
+	public ToggledButton(Vector2f _position) 
+	{
+		super(_position);
+	}
+
+	@Override
+	public void render(Graphics arg2) {
+		// TODO Auto-generated method stub
+		
+	}
+
+}
