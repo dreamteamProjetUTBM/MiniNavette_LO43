@@ -28,10 +28,7 @@ public class EntityCollection implements EntityUpdateable, EntityDrawable
 	@Override
 	public void render(Graphics arg2) 
 	{
-		for(Entity entitie : entities)
-		{
-			
-		}
+		
 	}
 
 	@Override

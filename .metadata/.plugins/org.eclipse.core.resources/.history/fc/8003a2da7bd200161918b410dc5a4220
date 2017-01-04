@@ -14,11 +14,11 @@ public class Entity
 	/**
 	 * Permet de savoir si l'entité est updatable 
 	 */
-	protected boolean updatable;
+	protected boolean is_updatble;
 	/**
 	 * Permet de savoir si l'entité est dessinable
 	 */
-	protected boolean drawable;
+	protected boolean is_drawable;
 	
 	/**
 	 * Construit une entitï¿½ qui possï¿½de la position et la taille donnï¿½e
@@ -29,9 +29,6 @@ public class Entity
 	{
 		position = new Vector2f(_position.x, _position.y);
 		size = new Vector2f(_size.x, _size.y);
-		
-		updatable = false;
-		drawable = false;
 	}
 	
 	/**
@@ -118,23 +115,5 @@ public class Entity
 		);
 		
 		return rect;
-	}
-	
-	/**
-	 * Permet de savoir si l'entité peut être updaté
-	 * @return updatable
-	 */
-	public boolean isUpdateble()
-	{
-		return updatable;
-	}
-	
-	/**
-	 * Permet de savoir si l'entité peut être dessiné
-	 * @return drawable
-	 */
-	public boolean isDrawable()
-	{
-		return drawable;
 	}
 }

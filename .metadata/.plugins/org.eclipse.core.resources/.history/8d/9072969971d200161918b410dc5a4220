@@ -30,7 +30,7 @@ public class EntityCollection implements EntityUpdateable, EntityDrawable
 	{
 		for(Entity entitie : entities)
 		{
-			
+			entitie.render(arg2);
 		}
 	}
 
