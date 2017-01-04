@@ -22,8 +22,6 @@ public class EntityDragable extends Entity implements EntityUpdateable
 		
 		dragedEvent = _dragedEvent;
 		isGrabed = false;
-		
-		updatable = true;
 	}
 	
 	/**
@@ -36,8 +34,6 @@ public class EntityDragable extends Entity implements EntityUpdateable
 		super(_position, _size);
 		
 		isGrabed = false;
-		
-		updatable = true;
 	}
 	
 	/**
@@ -50,8 +46,6 @@ public class EntityDragable extends Entity implements EntityUpdateable
 		super(_position);
 		
 		isGrabed = false;
-		
-		updatable = true;
 	}
 
 	@Override

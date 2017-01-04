@@ -56,8 +56,6 @@ public class EntityClickable extends Entity implements EntityUpdateable
 		
 		isMouseHover = false;
 		isMouseHoverAndPressed = false;
-		
-		updatable = true;
 	}
 
 	@Override

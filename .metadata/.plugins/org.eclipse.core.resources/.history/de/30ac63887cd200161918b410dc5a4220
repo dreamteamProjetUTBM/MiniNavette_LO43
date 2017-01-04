@@ -17,12 +17,12 @@ public class EntityCollection implements EntityUpdateable, EntityDrawable
 	
 	public void add(Entity _entity)
 	{
-		entities.add(_entity);
+		
 	}
 	
-	public boolean delete(Entity _entity)
+	public void delete(Entity _entity)
 	{
-		return entities.remove(_entity);
+		
 	}
 
 	@Override

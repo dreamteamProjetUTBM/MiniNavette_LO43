@@ -27,9 +27,6 @@ public class Passenger extends Entity implements EntityDrawable
 		{
 			e.printStackTrace();
 		}
-		
-		updatable = true;
-		drawable = true;
 	}
 	
 	private void takeTheBus(Bus bus)

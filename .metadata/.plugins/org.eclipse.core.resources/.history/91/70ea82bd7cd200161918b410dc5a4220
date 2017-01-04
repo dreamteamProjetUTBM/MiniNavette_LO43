@@ -12,9 +12,6 @@ public abstract class Bus extends EntityDragable implements EntityDrawable
 	public Bus(Vector2f _position) 
 	{
 		super(_position);
-		
-		updatable = true;
-		drawable = true;
 	}
 	
 	public abstract void move();

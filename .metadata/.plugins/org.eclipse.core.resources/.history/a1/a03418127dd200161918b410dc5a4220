@@ -53,8 +53,6 @@ public class Segment extends EntityDragable implements EntityDrawable
 				System.out.println("Segment.MousePresssed()");
 			}
 		};
-		
-		drawable = true;
 	}
 	
 	public ArrayList<Station> getStations()

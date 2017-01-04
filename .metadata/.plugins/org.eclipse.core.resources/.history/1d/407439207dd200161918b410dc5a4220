@@ -51,8 +51,6 @@ public class Station extends EntityClickable implements EntityDrawable
 		size.x = 24;
 		size.y = 24;
 		seg = new Segment(new Vector2f(), new Vector2f(),0);
-		
-		drawable = true;
 	}
 	
 	public void newPassenger()
