@@ -34,6 +34,7 @@ public class Button extends EntityClickable implements EntityDrawable
 		size.x = img_actual.getWidth();
 		size.y = img_actual.getHeight();
 		
+		updatable = true;
 		drawable = true;
 	}
 

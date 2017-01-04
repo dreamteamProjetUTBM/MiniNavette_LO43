@@ -13,6 +13,7 @@ public abstract class Bus extends EntityDragable implements EntityDrawable
 	{
 		super(_position);
 		
+		updatable = true;
 		drawable = true;
 	}
 	
