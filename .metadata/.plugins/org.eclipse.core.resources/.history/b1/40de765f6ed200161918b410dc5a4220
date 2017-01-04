@@ -33,17 +33,6 @@ public class MainMenuGameState extends BasicGameState
 				"asset/b_play_pressed.png"
 		);
 		
-		//Change de State
-		play_button.setEventCallback(
-				new EventEntityMouseClicked() {
-					
-					@Override
-					public void mouseClicked() {
-						arg1.enterState(1);
-					}
-				}
-		);
-		
 		option_button = new Button(
 				new Vector2f(75, 330), 
 				"asset/b_play_idle.png", 
@@ -77,6 +66,17 @@ public class MainMenuGameState extends BasicGameState
 		play_button.update(arg0, arg1);
 		option_button.update(arg0, arg1);
 		quit_button.update(arg0, arg1);
+		
+		//Change de State
+		play_button.setEventCallback(
+				new EventEntityMouseClicked() {
+					
+					@Override
+					public void mouseClicked() {
+						arg1.enterState(1);
+					}
+				}
+		);
 	}
 
 	@Override

@@ -1,5 +1,8 @@
 package fr.utbm.lo43.logic;
 
+import org.newdawn.slick.Color;
+import fr.utbm.lo43.logic.Line;
+
 public class Game {
 
 	public Map map;
@@ -12,6 +15,8 @@ public class Game {
 	public Game(){
 		map = Map.getInstance();
 		inventory = Inventory.getInstance();
+		
+		map.AddLine(new ClassicLine(Color.green));
 	}
 	
 }

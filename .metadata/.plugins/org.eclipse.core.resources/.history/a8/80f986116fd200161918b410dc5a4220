@@ -12,9 +12,7 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import fr.utbm.lo43.entities.ClassicBus;
 import fr.utbm.lo43.entities.Station;
-import fr.utbm.lo43.logic.ClassicLine;
 import fr.utbm.lo43.logic.Game;
-import fr.utbm.lo43.logic.Map;
 
 public class MainGameState extends BasicGameState
 {
@@ -28,8 +26,6 @@ public class MainGameState extends BasicGameState
 	public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException {
 		game = new Game();
 		tes = new ClassicBus(new org.newdawn.slick.geom.Vector2f(50,50));
-		
-		Map.getInstance().AddLine(new ClassicLine(Color.green));
 	}
 
 	@Override
