@@ -62,6 +62,16 @@ public class Segment extends EntityDragable implements EntityDrawable
 	{
 		return stations;
 	}
+	
+	public ArrayList<Vector2f> getPositions(){
+		ArrayList<Vector2f> _positions = new ArrayList<>();
+		Vector2f _start = new Vector2f(line.getX1(),line.getY1());
+		Vector2f _end = new Vector2f(line.getX2(),line.getY2());
+
+		_positions.add(_start);
+		_positions.add(_end);
+		return _positions;
+	}
 
 	@Override
 	public void render(Graphics arg2) {
@@ -76,7 +86,6 @@ public class Segment extends EntityDragable implements EntityDrawable
 		super.update(gc, sbg);
 		Input input = gc.getInput();
 
-		System.out.println("Segment.update()");
 		
 		if(getRect().contains(input.getMouseX(), input.getMouseY()) && input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON))
 		{

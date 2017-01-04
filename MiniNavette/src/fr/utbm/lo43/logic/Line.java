@@ -38,6 +38,15 @@ public abstract class Line extends Entity implements EntityUpdateable, EntityDra
 		segments.add(_seg);
 	}
 	
+	public boolean existingSemgent(Segment _seg){
+		for (Segment segment : segments) {
+			if(_seg.getPositions().get(0).distance(segment.getPositions().get(0)) ==0 && _seg.getPositions().get(1).distance(segment.getPositions().get(1)) ==0){
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	public void removeSegment(Segment _seg){
 		segments.remove(_seg);
 	}

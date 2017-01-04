@@ -120,6 +120,7 @@ public class Station extends EntityClickable implements EntityDrawable
 		return getRect().contains((int)_position.x, (int)_position.y);
 	}
 	
+	
 	@Override
 	public void render(Graphics arg2) {
 		// TODO Auto-generated method stub
