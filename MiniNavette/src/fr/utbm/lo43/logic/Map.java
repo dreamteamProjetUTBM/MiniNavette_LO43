@@ -15,8 +15,6 @@ public class Map {
 	public ArrayList<Station> stations;
 	private ArrayList<fr.utbm.lo43.logic.Line> lines;
 	public ArrayList<Line> grid;
-
-	private int stationsLenght;
 	
 	/** Constructeur privé */
 	private Map()
@@ -32,14 +30,7 @@ public class Map {
 		for(int i = 0;i < 720 ; i+=24){
 			grid.add(new Line(0,i,1080,i));
 		}
-		
-		//Initialisation des trois premières stations
-		stations.add(new Station(new Vector2f(33*24,12*24),Filiere.GI));
-		stations.add(new Station(new Vector2f(20*24,20*24),Filiere.EDIM));
-		stations.add(new Station(new Vector2f(37*24,26*24),Filiere.IMSI));
-
-		stationsLenght = stations.size();
-		
+				
 	}
  
 	/** Instance unique pré-initialisée */
@@ -51,7 +42,7 @@ public class Map {
 	}
 	
 	public int getStationsLenght(){
-		return stationsLenght;
+		return stations.size();
 	}
 	
 	public ArrayList<Station> getStations(){
@@ -68,6 +59,10 @@ public class Map {
 	
 	public void AddLine(fr.utbm.lo43.logic.Line _line){
 		lines.add(_line);
+	}
+	
+	public void addStation(Station _station){
+		stations.add(_station);
 	}
 
 }

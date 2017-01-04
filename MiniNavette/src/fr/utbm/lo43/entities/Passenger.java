@@ -2,15 +2,17 @@ package fr.utbm.lo43.entities;
 
 import java.util.Date;
 
+import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
+import org.newdawn.slick.state.StateBasedGame;
 
 import fr.utbm.lo43.logic.Filiere;
 
 
-public class Passenger extends Entity implements EntityDrawable
+public class Passenger extends Entity implements EntityDrawable, EntityUpdateable
 {
 	private Date arrivalTime;
 	private Filiere filiere;
@@ -50,5 +52,11 @@ public class Passenger extends Entity implements EntityDrawable
 	@Override
 	public void render(Graphics arg2) {
 		preview.draw(getPosition().x,getPosition().y,12,12);
+	}
+	
+	@Override
+	public void update(GameContainer gc, StateBasedGame sbg) {
+		// TODO Auto-generated method stub
+		
 	}
 }

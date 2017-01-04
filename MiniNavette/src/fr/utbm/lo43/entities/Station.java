@@ -55,7 +55,7 @@ public class Station extends EntityClickable implements EntityDrawable
 		drawable = true;
 	}
 	
-	public void newPassenger()
+	public Passenger newPassenger()
 	{
 		Filiere passenger_type = filiere;
 		
@@ -78,6 +78,8 @@ public class Station extends EntityClickable implements EntityDrawable
 		
 		Passenger p = new Passenger(new Vector2f(offsetX,offsetY), passenger_type);
 		waitingPassenger.add(p);
+		
+		return p;
 	}
 	
 	public void checkWaitingTime()
