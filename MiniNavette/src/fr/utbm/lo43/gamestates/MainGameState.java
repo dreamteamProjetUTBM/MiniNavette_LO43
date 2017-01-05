@@ -1,10 +1,7 @@
 package fr.utbm.lo43.gamestates;
 
-import java.nio.charset.MalformedInputException;
 import java.util.ArrayList;
 import java.util.Random;
-
-import javax.swing.undo.CannotRedoException;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -17,11 +14,9 @@ import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-import fr.utbm.lo43.entities.Button;
 import fr.utbm.lo43.entities.ClassicBus;
 import fr.utbm.lo43.entities.EntityCollection;
 import fr.utbm.lo43.entities.EventEntityMouseClicked;
-import fr.utbm.lo43.entities.Passenger;
 import fr.utbm.lo43.entities.Segment;
 import fr.utbm.lo43.entities.Station;
 import fr.utbm.lo43.entities.ToggledButton;
@@ -198,8 +193,8 @@ public class MainGameState extends BasicGameState
 	}
 
 	@Override
-	public int getID() {
-		// TODO Auto-generated method stub
+	public int getID() 
+	{
 		return 1;
 	}
 
