@@ -39,7 +39,7 @@ public abstract class Line extends Entity implements EntityUpdateable, EntityDra
 	}
 	
 	//only top and queue
-	public boolean existingSemgent(Segment _seg){
+	public boolean existingSegment(Segment _seg){
 		for (Segment segment : segments) {
 			if(segment.equals(_seg))
 				return true;
@@ -51,7 +51,7 @@ public abstract class Line extends Entity implements EntityUpdateable, EntityDra
 	public int canAddSegment(Segment _segment){
 		
 		
-		if(existingSemgent(_segment)){
+		if(existingSegment(_segment)){
 			return -2;
 		}
 

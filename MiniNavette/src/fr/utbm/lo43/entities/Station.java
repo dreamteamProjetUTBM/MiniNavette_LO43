@@ -12,10 +12,13 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
+
+import fr.utbm.lo43.dijkstra.Dijkstrable;
 import fr.utbm.lo43.logic.Filiere;
+import fr.utbm.lo43.logic.Line;
 import fr.utbm.lo43.logic.Map;
 
-public class Station extends EntityClickable implements EntityDrawable
+public class Station extends EntityClickable implements EntityDrawable, Dijkstrable
 {
 	//24 taille case
 	//Quadrillage
@@ -200,5 +203,30 @@ public class Station extends EntityClickable implements EntityDrawable
 			
 			//Map.getInstance().AddLine(new ClassicLine(Color.blue));
 		//}
+	}
+	
+	private int calculateDistance(Station d){
+		int weight = 0;
+		int weightTemp = 0;
+
+		for(Line l : Map.getInstance().getLines()){
+			
+			for(Segment s : l.getSegments()){
+				if(d.isOnStation(s.getStartSegment())){
+					while(true){ //boucle a definir
+					
+					}
+				}else if(isOnStation(s.getEndSegment())){
+					
+				}
+			}
+		}
+		return weight;
+	}
+	
+	@Override
+	public int calculateWeight(Dijkstrable d){
+
+		return this.calculateDistance((Station) d);
 	}
 }

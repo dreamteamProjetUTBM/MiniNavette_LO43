@@ -13,7 +13,7 @@ import fr.utbm.lo43.logic.Map;
 
 public class Segment extends EntityDragable implements EntityDrawable
 {
-	private float lenght;
+	
 	
 	private ArrayList<Station> stations;
 	
@@ -199,5 +199,14 @@ public class Segment extends EntityDragable implements EntityDrawable
 	public Segment getPreviousSegment()
 	{
 		return (line_bus.getSegments().indexOf(this)-1) > 0 ? line_bus.getSegments().get(line_bus.getSegments().indexOf(this)+1) : null ;
+	}
+	
+	/**
+	 * Retourne la longueur d'un segment
+	 * @return
+	 */
+	public float getLenght(){
+		return line.length();
+	
 	}
 }
