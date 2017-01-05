@@ -219,6 +219,7 @@ public class MainGameState extends BasicGameState
 							if(index == 0 || index == _line.getSegments().size()){
 								if(index == 0)
 									_segment = new Segment(_end, drag_station_position, current_line);
+								System.out.println(current_line);
 								_line.addSegment(_segment,index);
 								entities.add(_segment);
 							}

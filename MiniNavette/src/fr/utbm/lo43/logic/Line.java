@@ -93,10 +93,13 @@ public abstract class Line extends Entity implements EntityUpdateable, EntityDra
 		if(segments.size() == 0)
 			return false;
 		
-		if(segments.get(segments.size()-1).equals(_seg))
-			return true;
-		else if(segments.get(0).equals(_seg))
-			return true;
+		if(segments.get(segments.size()-1).getLineIndex() == _seg.getLineIndex()){
+			//if(segments.get(segments.size()-1).equals(_seg))
+			if(segments.get(segments.size()-1).hasSameVectors(_seg))
+				return true;
+			else if(segments.get(0).equals(_seg))
+				return true;
+		}
 		return false;
 	}
 	
