@@ -27,6 +27,7 @@ public class Label extends Entity implements EntityDrawable
 		super(_position);
 		
 		text = _text;
+		drawable = true;
 	}
 
 	@Override
