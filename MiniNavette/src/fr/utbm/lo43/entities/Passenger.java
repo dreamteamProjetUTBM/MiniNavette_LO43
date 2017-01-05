@@ -67,7 +67,7 @@ public class Passenger extends Entity implements EntityDrawable, EntityUpdateabl
 
 	@Override
 	public void render(Graphics arg2) {
-		preview.draw(getPosition().x,getPosition().y,12,12);
+		preview.draw(getPosition().x,getPosition().y,Map.GRID_SIZE/2,Map.GRID_SIZE/2);
 	}
 	
 	@Override

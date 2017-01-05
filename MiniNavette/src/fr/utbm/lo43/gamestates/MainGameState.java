@@ -14,9 +14,11 @@ import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+import fr.utbm.lo43.GameWindow;
 import fr.utbm.lo43.entities.ClassicBus;
 import fr.utbm.lo43.entities.EntityCollection;
 import fr.utbm.lo43.entities.EventEntityMouseClicked;
+import fr.utbm.lo43.entities.Label;
 import fr.utbm.lo43.entities.Segment;
 import fr.utbm.lo43.entities.Station;
 import fr.utbm.lo43.entities.ToggledButton;
@@ -65,7 +67,7 @@ public class MainGameState extends BasicGameState
 
 		
 		for(int i = 0 ; i < 6 ; i++){
-			ToggledButton line_b = new ToggledButton(new Vector2f(500+Map.GRID_SIZE*i,Map.HEIGHT-Map.GRID_SIZE*1.5f),new Vector2f(Map.GRID_SIZE,Map.GRID_SIZE
+			ToggledButton line_b = new ToggledButton(new Vector2f(Map.WIDTH/2-3*Map.GRID_SIZE+Map.GRID_SIZE*i,Map.HEIGHT-Map.GRID_SIZE-Map.GRID_SIZE/4),new Vector2f(Map.GRID_SIZE,Map.GRID_SIZE
 					),"asset/lines1_idle.png","asset/lines1_hover.png","asset/lines1_pressed.png");
 			lines_button.add(line_b);
 			if(i == 0){
@@ -84,7 +86,26 @@ public class MainGameState extends BasicGameState
 			entities.add(line_b);
 
 		}
-	
+		
+		ToggledButton bus_b = new ToggledButton(new Vector2f(Map.WIDTH/3,Map.HEIGHT-Map.GRID_SIZE-Map.GRID_SIZE/4),new Vector2f(Map.GRID_SIZE,Map.GRID_SIZE
+				),"asset/bus_b_idle.png","asset/bus_b_hover.png","asset/bus_b_idle.png");
+
+		Label bus_label = new Label(Integer.toString(game.getInventory().getRemainingBus()), new Vector2f(Map.WIDTH/3-Map.GRID_SIZE,Map.HEIGHT-Map.GRID_SIZE));
+		
+		
+		
+		bus_b.setEventCallback(new EventEntityMouseClicked() {
+			
+			@Override
+			public void mouseClicked() {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		entities.add(bus_b);
+		entities.add(bus_label);
+
+		
 		Station station1 = new Station(new Vector2f(10*Map.GRID_SIZE*2,3*Map.GRID_SIZE*2),Filiere.GI);
 		Station station2 = new Station(new Vector2f(5*Map.GRID_SIZE*2,5*Map.GRID_SIZE*2),Filiere.EDIM);
 		Station station3 = new Station(new Vector2f(7*Map.GRID_SIZE*2,7*Map.GRID_SIZE*2),Filiere.IMSI);
@@ -127,7 +148,7 @@ public class MainGameState extends BasicGameState
 		
 		entities.render(arg2);
 
-		/*bus_test.render(arg2);*/
+		bus_test.render(arg2);
 		
 
 	}
@@ -141,11 +162,20 @@ public class MainGameState extends BasicGameState
 		fr.utbm.lo43.logic.Line _line = Map.getInstance().getLine(current_line);
 		
 		if(counter >5000){
-			//entities.add(game.map.getStations().get(rand.nextInt(game.map.getStationsLenght())).newPassenger());
+			int index_station = rand.nextInt(game.map.getStationsLenght());
+			while(!game.map.getStations().get(index_station).canAddPassenger())
+				index_station = rand.nextInt(game.map.getStationsLenght());
+			entities.add(game.map.getStations().get(index_station).newPassenger());
 			counter = 0;
 		}
 		
 		Input input = arg0.getInput();
+		
+		if(input.isKeyDown(Input.KEY_ESCAPE))
+		{
+			System.out.println("Pause");
+			arg1.enterState(GameWindow.GS_PAUSE_MENU);
+		}
 
 		if(input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON)){
 			
@@ -206,7 +236,7 @@ public class MainGameState extends BasicGameState
 	@Override
 	public int getID() 
 	{
-		return 1;
+		return GameWindow.GS_GAME;
 	}
 
 }

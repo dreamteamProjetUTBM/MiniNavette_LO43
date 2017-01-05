@@ -9,6 +9,7 @@ import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+import fr.utbm.lo43.GameWindow;
 import fr.utbm.lo43.entities.Button;
 import fr.utbm.lo43.entities.EventEntityMouseClicked;
 
@@ -27,19 +28,19 @@ public class MainMenuGameState extends BasicGameState
 		arg0.getGraphics().setBackground(Color.white);
 		
 		play_button = new Button(
-				new Vector2f(75, 275), 
-				"asset/b_play_idle.png", 
-				"asset/b_play_hover.png", 
+				new Vector2f(75, 275),
+				"asset/b_play_idle.png",
+				"asset/b_play_hover.png",
 				"asset/b_play_pressed.png"
 		);
-		
+	
 		//Change de State
 		play_button.setEventCallback(
 				new EventEntityMouseClicked() {
 					
 					@Override
 					public void mouseClicked() {
-						arg1.enterState(1);
+						arg1.enterState(GameWindow.GS_GAME);
 					}
 				}
 		);
@@ -57,6 +58,14 @@ public class MainMenuGameState extends BasicGameState
 				"asset/b_play_hover.png", 
 				"asset/b_play_pressed.png"
 		);
+		quit_button.setEventCallback(new EventEntityMouseClicked() 
+		{	
+			@Override
+			public void mouseClicked() 
+			{
+				arg0.exit();
+			}
+		});
 		
 		logo = new Image("asset/logo.png");
 	}
@@ -82,7 +91,7 @@ public class MainMenuGameState extends BasicGameState
 	@Override
 	public int getID() 
 	{
-		return 0;
+		return GameWindow.GS_MAIN_MENU;
 	}
 
 }

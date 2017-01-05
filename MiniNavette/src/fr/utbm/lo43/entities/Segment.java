@@ -83,9 +83,27 @@ public class Segment extends EntityDragable implements EntityDrawable
 
 	@Override
 	public void render(Graphics arg2) {
+		
+		int offset = 0;
+		for (int i = lineIndex ; i < Map.getInstance().getLines().size(); i++) {
+			fr.utbm.lo43.logic.Line _line = Map.getInstance().getLine(i);
+			for (Segment segment : _line.getSegments()) {
+				Vector2f _intersect = segment.line.intersect(line);
+				if(_intersect == null && segment.equals(this)){ // donc parallèle
+					offset++;
+				}
+			}
+		}
+		
 		arg2.setLineWidth(3);
 		arg2.setColor(Map.getInstance().getLine(lineIndex).getColor());
-		arg2.draw(line);
+		System.out.println(offset);
+		Line _linerender;
+		if(line.getX1() == line.getX2())
+			_linerender = new Line(new Vector2f(line.getX1()+3*offset, line.getY1()), new Vector2f(line.getX2()+3*offset, line.getY2()));
+		else
+			_linerender = new Line(new Vector2f(line.getX1(), line.getY1()+3*offset), new Vector2f(line.getX2(), line.getY2()+3*offset));
+		arg2.draw(_linerender);
 	}
 	
 	@Override
@@ -123,13 +141,7 @@ public class Segment extends EntityDragable implements EntityDrawable
 	}
 
 	public boolean isCrossing(Segment _segment){
-		System.out.println(_segment.line.intersects(line));
 		Vector2f _intersect = line.intersect(_segment.line,true);
-		
-		System.out.println("Deb : "+line.getX1() + line.getY1());
-		System.out.println("Fin : "+line.getX2() + line.getY2());
-
-		System.out.println("Inter : "+_intersect);
 		
 		if(_intersect == null)
 			return false;

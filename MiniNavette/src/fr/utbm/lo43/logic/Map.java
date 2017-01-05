@@ -41,11 +41,14 @@ public class Map {
 	}
  
 	/** Instance unique pré-initialisée */
-	private static Map INSTANCE = new Map();
+	private static Map INSTANCE;
  
 	/** Point d'accès pour l'instance unique du singleton */
 	public static Map getInstance()
-	{	return INSTANCE;
+	{	
+		if(INSTANCE == null)
+			INSTANCE = new Map();
+		return INSTANCE;
 	}
 	
 	public int getStationsLenght(){
