@@ -1,6 +1,0 @@
-package fr.utbm.lo43.entities;
-
-public interface EventEntityMouseClicked 
-{
-	void mouseClicked();
-}

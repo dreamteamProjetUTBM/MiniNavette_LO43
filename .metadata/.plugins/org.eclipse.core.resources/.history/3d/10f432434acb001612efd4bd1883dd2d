@@ -1,7 +1,0 @@
-package fr.utbm.lo43.entities;
-
-public interface EventEntityMouseDraged 
-{
-	void mousePressed();
-	void mouseReleased();
-}

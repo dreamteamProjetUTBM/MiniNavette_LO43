@@ -11,7 +11,14 @@
 <fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="fr.utbm.lo43.entities.Station"/>
 <fullyQualifiedTypeName name="fr.utbm.lo43.entities.Button"/>
-<fullyQualifiedTypeName name="org.newdawn.slick.geom.Vector2f"/>
 <fullyQualifiedTypeName name="org.lwjgl.util.vector.Vector2f"/>
 <fullyQualifiedTypeName name="org.newdawn.slick.Image"/>
+<fullyQualifiedTypeName name="fr.utbm.lo43.entities.EntityDrawable"/>
+<fullyQualifiedTypeName name="org.newdawn.slick.geom.Vector2f"/>
+<fullyQualifiedTypeName name="org.newdawn.slick.TrueTypeFont"/>
+<fullyQualifiedTypeName name="org.newdawn.slick.Font"/>
+<fullyQualifiedTypeName name="java.awt.Font"/>
+<fullyQualifiedTypeName name="java.io.InputStream"/>
+<fullyQualifiedTypeName name="java.io.FileInputStream"/>
+<fullyQualifiedTypeName name="org.newdawn.slick.Color"/>
 </qualifiedTypeNameHistroy>
