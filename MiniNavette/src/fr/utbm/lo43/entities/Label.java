@@ -10,7 +10,7 @@ import org.newdawn.slick.geom.Vector2f;
  *
  */
 public class Label extends Entity implements EntityDrawable
-{
+{	
 	/**
 	 * Le text affiché lors du rendu du Label
 	 */
