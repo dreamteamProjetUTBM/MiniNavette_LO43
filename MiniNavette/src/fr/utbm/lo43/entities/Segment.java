@@ -19,6 +19,7 @@ public class Segment extends EntityDragable implements EntityDrawable
 	
 	//Line de Slick2D
 	Line line;
+	fr.utbm.lo43.logic.Line line_bus;
 	int lineIndex;
 	
 	public Segment(Vector2f _start, Vector2f _end,int index) 
@@ -187,5 +188,16 @@ public class Segment extends EntityDragable implements EntityDrawable
 				}
 
 		return false;
+	}
+	
+	//moi j'aime bien faire des methodes comme ça aussi
+	public Segment getNextSegment()
+	{
+		return (line_bus.getSegments().indexOf(this)+1) <= ( line_bus.getSegments().size() ) ? line_bus.getSegments().get(line_bus.getSegments().indexOf(this)+1) : null ;
+	}
+	
+	public Segment getPreviousSegment()
+	{
+		return (line_bus.getSegments().indexOf(this)-1) > 0 ? line_bus.getSegments().get(line_bus.getSegments().indexOf(this)+1) : null ;
 	}
 }
