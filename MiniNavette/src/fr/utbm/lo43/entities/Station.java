@@ -1,6 +1,7 @@
 package fr.utbm.lo43.entities;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 
 import org.newdawn.slick.Color;
@@ -36,12 +37,15 @@ public class Station extends EntityClickable implements EntityDrawable
 	
 	protected ArrayList<Passenger> waitingPassenger;
 	
+	//HashMap qui donne la prochaine station a atteindre pour chaque atteindre une filiere a partir de cette station 
+	private HashMap<Filiere, Station> nextStop;
+	
 	public Station(Vector2f _position, Filiere type) 
 	{
 		super(_position);
 		filiere = type;
 		waitingPassenger = new ArrayList<>();
-		
+		nextStop = new HashMap<>();
 		try 
 		{
 			preview = new Image("asset/"+filiere.toString().toLowerCase()+".png");
