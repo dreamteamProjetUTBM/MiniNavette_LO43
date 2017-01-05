@@ -17,6 +17,7 @@ import org.newdawn.slick.state.StateBasedGame;
 import fr.utbm.lo43.entities.ClassicBus;
 import fr.utbm.lo43.entities.EntityCollection;
 import fr.utbm.lo43.entities.EventEntityMouseClicked;
+import fr.utbm.lo43.entities.Label;
 import fr.utbm.lo43.entities.Segment;
 import fr.utbm.lo43.entities.Station;
 import fr.utbm.lo43.entities.ToggledButton;
@@ -88,6 +89,10 @@ public class MainGameState extends BasicGameState
 		ToggledButton bus_b = new ToggledButton(new Vector2f(Map.WIDTH/3,Map.HEIGHT-Map.GRID_SIZE-Map.GRID_SIZE/4),new Vector2f(Map.GRID_SIZE,Map.GRID_SIZE
 				),"asset/bus_b_idle.png","asset/bus_b_hover.png","asset/bus_b_idle.png");
 
+		Label bus_label = new Label(Integer.toString(game.getInventory().getRemainingBus()), new Vector2f(Map.WIDTH/3-Map.GRID_SIZE,Map.HEIGHT-Map.GRID_SIZE));
+		
+		
+		
 		bus_b.setEventCallback(new EventEntityMouseClicked() {
 			
 			@Override
@@ -96,8 +101,8 @@ public class MainGameState extends BasicGameState
 				
 			}
 		});
-		
 		entities.add(bus_b);
+		entities.add(bus_label);
 
 		
 		Station station1 = new Station(new Vector2f(10*Map.GRID_SIZE*2,3*Map.GRID_SIZE*2),Filiere.GI);

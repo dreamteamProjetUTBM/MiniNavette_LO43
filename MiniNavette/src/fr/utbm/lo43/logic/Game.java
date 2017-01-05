@@ -14,4 +14,7 @@ public class Game {
 		inventory = Inventory.getInstance();
 	}
 	
+	public Inventory getInventory(){
+		return inventory;
+	}
 }
