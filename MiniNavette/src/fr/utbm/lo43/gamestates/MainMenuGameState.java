@@ -12,6 +12,7 @@ import org.newdawn.slick.state.StateBasedGame;
 import fr.utbm.lo43.GameWindow;
 import fr.utbm.lo43.entities.Button;
 import fr.utbm.lo43.entities.EventEntityMouseClicked;
+import fr.utbm.lo43.logic.Map;
 
 public class MainMenuGameState extends BasicGameState
 {
@@ -28,7 +29,7 @@ public class MainMenuGameState extends BasicGameState
 		arg0.getGraphics().setBackground(Color.white);
 		
 		play_button = new Button(
-				new Vector2f(75, 275),
+				new Vector2f((Map.WIDTH / 2) - (600 / 2), 375),
 				"asset/b_play_idle.png",
 				"asset/b_play_hover.png",
 				"asset/b_play_pressed.png"
@@ -46,17 +47,17 @@ public class MainMenuGameState extends BasicGameState
 		);
 		
 		option_button = new Button(
-				new Vector2f(75, 340), 
-				"asset/b_play_idle.png", 
-				"asset/b_play_hover.png", 
-				"asset/b_play_pressed.png"
+				new Vector2f((Map.WIDTH / 2) - (600 / 2), 440), 
+				"asset/b_option_idle.png", 
+				"asset/b_option_hover.png", 
+				"asset/b_option_pressed.png"
 		);
 		
 		quit_button = new Button(
-				new Vector2f(75, 405), 
-				"asset/b_play_idle.png", 
-				"asset/b_play_hover.png", 
-				"asset/b_play_pressed.png"
+				new Vector2f((Map.WIDTH / 2) - (600 / 2), 505), 
+				"asset/b_quit_idle.png", 
+				"asset/b_quit_hover.png", 
+				"asset/b_quit_pressed.png"
 		);
 		quit_button.setEventCallback(new EventEntityMouseClicked() 
 		{	
@@ -77,7 +78,7 @@ public class MainMenuGameState extends BasicGameState
 		option_button.render(arg2);
 		quit_button.render(arg2);
 		
-		logo.draw((854 / 2) - (logo.getWidth() / 2), 0);
+		logo.draw((Map.WIDTH / 2) - (logo.getWidth() / 2), 0);
 	}
 
 	@Override
