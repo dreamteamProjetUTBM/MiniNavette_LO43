@@ -17,16 +17,16 @@ import fr.utbm.lo43.logic.Map;
 
 public class Station extends EntityClickable implements EntityDrawable
 {
-	//24 taille case
-	//Quadrillage
-	//Jerem: rajout de ma part, à voir s'il ne faut pas le mettre dans le diagramme
-	//En FR en plus
+	
+	public static final int MAXIMUM_PASSENGER = 8;
+	
 	private Filiere filiere;
 	private Image preview;
 		
 	private boolean alcoolized;
 	private int maxWaitingTime;
 	private int extraTime;
+	
 	
 	private ArrayList<Passenger> waitingPassenger;
 	
@@ -67,16 +67,23 @@ public class Station extends EntityClickable implements EntityDrawable
 		
 		float offsetX,offsetY;
 		
-		offsetX = waitingPassenger.size()%3;
+		offsetX = waitingPassenger.size()%4;
 		offsetY = 0;
 		
-		offsetX = getPosition().x + offsetX * 12;
-		offsetY = getPosition().y + 26 + waitingPassenger.size()/3 * 14 ;
+		offsetX = getPosition().x + offsetX * Map.GRID_SIZE/2;
+		offsetY = getPosition().y + waitingPassenger.size()/4 * Map.GRID_SIZE*1.5f ;
 		
 		Passenger p = new Passenger(new Vector2f(offsetX,offsetY), passenger_type);
 		waitingPassenger.add(p);
 		
 		return p;
+	}
+	
+	public boolean canAddPassenger(){
+		if(waitingPassenger.size() == MAXIMUM_PASSENGER){
+			return false;
+		}
+		return true;
 	}
 	
 	public void checkWaitingTime()
@@ -122,7 +129,7 @@ public class Station extends EntityClickable implements EntityDrawable
 	public void render(Graphics arg2) {
 		// TODO Auto-generated method stub
 		preview.draw(getPosition().x+Map.GRID_SIZE/2,getPosition().y+Map.GRID_SIZE/2,Map.GRID_SIZE,Map.GRID_SIZE);
-		arg2.setColor(Color.blue);
+		arg2.setColor(Color.darkGray);
 
 		Rectangle rec = new Rectangle(getRect().getX(), getRect().getY(), getRect().getWidth(), getRect().getHeight());
 		
