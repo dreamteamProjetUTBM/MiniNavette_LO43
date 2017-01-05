@@ -22,6 +22,11 @@ public class Station extends EntityClickable implements EntityDrawable
 	//En FR en plus
 	protected Filiere filiere;
 	public static final int MAXIMUM_PASSENGER = 8;
+	public static final int CRITICAL_PASSENGER = 6;	
+	private int waitedTime ;
+
+	private static final int MAX_WAITING_TIME = 30;
+	private static final int BONUS_WAITING_TIME = 15;
 	
 	private Image preview;
 		
@@ -79,22 +84,37 @@ public class Station extends EntityClickable implements EntityDrawable
 		
 		return p;
 	}
-	
+
 	public boolean canAddPassenger(){
-		if(waitingPassenger.size() == MAXIMUM_PASSENGER){
+		if(waitingPassenger.size() >= MAXIMUM_PASSENGER){
 			return false;
 		}
 		return true;
 	}
 	
+	public boolean isCriticalPassenger(){
+		return (waitingPassenger.size() >= CRITICAL_PASSENGER) ;
+	}
+	
 	public void checkWaitingTime()
 	{
-		
+		if(this.alcoolized)
+		{
+			if(waitedTime >= MAX_WAITING_TIME + BONUS_WAITING_TIME)
+			{
+				//perdu
+			}
+		}else{
+			if(waitedTime >= MAX_WAITING_TIME)
+			{
+				//perdu
+			}
+		}
 	}
 	
 	public void alcoolise()
 	{
-		
+		alcoolized = true;
 	}
 	
 	public void notifyBus(Bus bus)
@@ -155,7 +175,15 @@ public class Station extends EntityClickable implements EntityDrawable
 	public void update(GameContainer gc, StateBasedGame sbg) {
 		// TODO Auto-generated method stub
 		super.update(gc, sbg);
+		
+		
 
+		if(isCriticalPassenger()){
+			waitedTime ++; //l'incrémenter seconde par secondes c'est faisable ? S'il sait depuis combien de temps il a pas été appelé ça serait cool
+			checkWaitingTime();
+		}else{
+			if(waitedTime >= 0 ) waitedTime --;
+		}
 		
 		
 		//Input input = gc.getInput();
