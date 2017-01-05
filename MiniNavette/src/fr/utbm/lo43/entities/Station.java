@@ -136,12 +136,14 @@ public class Station extends EntityClickable implements EntityDrawable
 	@Override
 	public void render(Graphics arg2) {
 		// TODO Auto-generated method stub
-		preview.draw(getPosition().x+Map.GRID_SIZE/2,getPosition().y+Map.GRID_SIZE/2,Map.GRID_SIZE,Map.GRID_SIZE);
 		arg2.setColor(Color.darkGray);
 		arg2.setLineWidth(1);
 		Rectangle rec = new Rectangle(getRect().getX(), getRect().getY(), getRect().getWidth(), getRect().getHeight());
-		
+		arg2.setColor(new Color(238,238,238));
+		arg2.fill(rec);
 		arg2.draw(rec);
+		preview.draw(getPosition().x+Map.GRID_SIZE/2,getPosition().y+Map.GRID_SIZE/2,Map.GRID_SIZE,Map.GRID_SIZE);
+
 		for (Passenger passenger : waitingPassenger) {
 			passenger.render(arg2);
 		}
