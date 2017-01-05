@@ -47,8 +47,8 @@ public class Station extends EntityClickable implements EntityDrawable
 			e.printStackTrace();
 		}
 		
-		size.x = 48;
-		size.y = 48;
+		size.x = Map.GRID_SIZE*2;
+		size.y = Map.GRID_SIZE*2;
 		
 		drawable = true;
 	}
@@ -122,7 +122,7 @@ public class Station extends EntityClickable implements EntityDrawable
 	@Override
 	public void render(Graphics arg2) {
 		// TODO Auto-generated method stub
-		preview.draw(getPosition().x+12,getPosition().y+12,24,24);
+		preview.draw(getPosition().x+Map.GRID_SIZE/2,getPosition().y+Map.GRID_SIZE/2,Map.GRID_SIZE,Map.GRID_SIZE);
 		arg2.setColor(Color.blue);
 
 		Rectangle rec = new Rectangle(getRect().getX(), getRect().getY(), getRect().getWidth(), getRect().getHeight());

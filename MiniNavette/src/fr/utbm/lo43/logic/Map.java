@@ -12,6 +12,11 @@ import fr.utbm.lo43.entities.Station;
 
 public class Map {
 	
+	public static final int WIDTH = 1280;
+	public static final int HEIGHT = 720;
+	public static final int GRID_SIZE = 32;
+
+	
 	public ArrayList<Station> stations;
 	private ArrayList<fr.utbm.lo43.logic.Line> lines;
 	public ArrayList<Line> grid;
@@ -24,11 +29,11 @@ public class Map {
 		lines = new ArrayList<>();
 		
 		//Création de la grille
-		for(int i = 0;i < 1080 ; i+=24){
-			grid.add(new Line(i,0,i,720));
+		for(int i = 0;i < WIDTH ; i+=GRID_SIZE){
+			grid.add(new Line(i,0,i,HEIGHT));
 		}
-		for(int i = 0;i < 720 ; i+=24){
-			grid.add(new Line(0,i,1080,i));
+		for(int i = 0;i < HEIGHT ; i+=GRID_SIZE){
+			grid.add(new Line(0,i,WIDTH,i));
 		}
 				
 	}

@@ -58,6 +58,14 @@ public class Segment extends EntityDragable implements EntityDrawable
 		
 	}
 	
+	public Vector2f getStartSegment(){
+		return new Vector2f(line.getX1(),line.getY1());
+	}
+	
+	public Vector2f getEndSegment(){
+		return new Vector2f(line.getX2(),line.getY2());
+	}
+	
 	public ArrayList<Station> getStations()
 	{
 		return stations;
@@ -114,6 +122,24 @@ public class Segment extends EntityDragable implements EntityDrawable
 		}
 	}
 
+	public boolean isCrossing(Segment _segment){
+		System.out.println(_segment.line.intersects(line));
+		Vector2f _intersect = line.intersect(_segment.line,true);
+		
+		System.out.println("Deb : "+line.getX1() + line.getY1());
+		System.out.println("Fin : "+line.getX2() + line.getY2());
+
+		System.out.println("Inter : "+_intersect);
+		
+		if(_intersect == null)
+			return false;
+		
+		if(!_intersect.equals(_segment.getStartSegment()) && !_intersect.equals(_segment.getEndSegment()))
+			return true;
+		//System.out.println(_segment.line.getpo);
+		return false;
+	}
+	
 	@Override
 	public boolean equals(Object obj) {
 		// TODO Auto-generated method stub		

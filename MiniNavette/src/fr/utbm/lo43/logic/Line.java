@@ -79,11 +79,7 @@ public abstract class Line extends Entity implements EntityUpdateable, EntityDra
 	public boolean canCreateSegment(Vector2f _vect)
 	{
 		int cpt = 0;
-		System.out.println("Vec : " +_vect);
 		for (Segment segment : segments) {
-			System.out.println("1 : " +segment.getPositions().get(0));
-			System.out.println("2 : " +segment.getPositions().get(1));
-
 			if(segment.getPositions().get(0).distance(_vect) == 0 || segment.getPositions().get(1).distance(_vect) == 0)
 				cpt++;
 		}
@@ -107,5 +103,14 @@ public abstract class Line extends Entity implements EntityUpdateable, EntityDra
 	public boolean removeSegment(Segment _seg){
 		return segments.remove(_seg);
 	}
+	
+	public boolean isSegmentCrossingLine(Segment _segment){
+		for (Segment segment : segments) {
+			if(segment.isCrossing(_segment))
+				return true;
+		}
+		return false;
+	}
+
 	
 }
