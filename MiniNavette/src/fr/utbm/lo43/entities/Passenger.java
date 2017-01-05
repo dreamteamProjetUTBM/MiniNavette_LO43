@@ -1,5 +1,6 @@
 package fr.utbm.lo43.entities;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import org.newdawn.slick.GameContainer;
@@ -10,6 +11,8 @@ import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
 
 import fr.utbm.lo43.logic.Filiere;
+import fr.utbm.lo43.logic.Map;
+import fr.utbm.lo43.logic.Score;
 
 
 public class Passenger extends Entity implements EntityDrawable, EntityUpdateable
@@ -17,6 +20,7 @@ public class Passenger extends Entity implements EntityDrawable, EntityUpdateabl
 	private Date arrivalTime;
 	private Filiere filiere;
 	private Image preview;
+	protected Station nextStop;
 	
 	public Passenger(Vector2f _position, Filiere type) 
 	{
@@ -39,14 +43,26 @@ public class Passenger extends Entity implements EntityDrawable, EntityUpdateabl
 		
 	}
 	
-	public void busArrived(Bus bus)
+	public void busArrived(Bus bus,Station station, ArrayList<Station> nextStops )
 	{
+		Station desiredNextStop = Map.getInstance().getNextStop(this);
+		if(nextStops.contains(desiredNextStop))
+		{
+			nextStop=desiredNextStop; 
+			bus.takeTheBus(this);
+			station.leaveStation(this);
+		}
 		
 	}
 	
 	public void leaveBus(Station station)
 	{
-		
+		if(this.filiere == station.filiere)
+		{
+			Score.getInstance().incrementScore();
+			return;
+		}
+		station.enterStation(this);		
 	}
 
 	@Override

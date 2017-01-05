@@ -9,6 +9,7 @@ import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.particles.ConfigurableEmitter.RandomValue;
 
 import fr.utbm.lo43.entities.Bus;
+import fr.utbm.lo43.entities.Passenger;
 import fr.utbm.lo43.entities.Station;
 
 public class Map {
@@ -75,5 +76,9 @@ public class Map {
 		//renvoyer les stations suivantes du bus de sa ligne
 		return stations;
 	}
-
+	
+	public Station getNextStop(Passenger passenger){
+		//retourner la station dont il a besoin 
+		return stations.get(1);
+	}
 }

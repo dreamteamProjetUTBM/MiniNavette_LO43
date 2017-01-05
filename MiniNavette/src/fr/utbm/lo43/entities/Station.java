@@ -21,14 +21,14 @@ public class Station extends EntityClickable implements EntityDrawable
 	//Quadrillage
 	//Jerem: rajout de ma part, à voir s'il ne faut pas le mettre dans le diagramme
 	//En FR en plus
-	private Filiere filiere;
+	protected Filiere filiere;
 	private Image preview;
 		
 	private boolean alcoolized;
 	private int maxWaitingTime;
 	private int extraTime;
 	
-	private ArrayList<Passenger> waitingPassenger;
+	protected ArrayList<Passenger> waitingPassenger;
 	
 	public Station(Vector2f _position, Filiere type) 
 	{
@@ -96,7 +96,14 @@ public class Station extends EntityClickable implements EntityDrawable
 	
 	public void enterStation(Passenger passenger)
 	{
-		
+		waitingPassenger.add(passenger);
+	}
+	
+	public void leaveStation(Passenger passenger)
+	{
+		if(!waitingPassenger.remove(passenger)){
+			//erreur
+		}
 	}
 	
 	public Station getNextStation(Passenger passenger)
