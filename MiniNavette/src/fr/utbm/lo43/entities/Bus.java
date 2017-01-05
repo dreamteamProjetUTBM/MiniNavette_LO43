@@ -27,6 +27,8 @@ public abstract class Bus extends EntityDragable implements EntityDrawable
 	
 	public abstract void move();
 	
+	
+	
 	public void load(Station station)
 	{
 		ArrayList<Station> nextStops = Map.getInstance().getNextStops(this, station);
@@ -42,17 +44,6 @@ public abstract class Bus extends EntityDragable implements EntityDrawable
 		
 	}
 	
-	
-	public void takeTheBus(Passenger passenger)
-	{
-
-		if(passengers.size() >= capacity)
-		{
-			//exception
-		}
-		passengers.add(passenger);
-	}
-	
 	public void unload(Station station)
 	{
 		for(Passenger passenger : passengers)
@@ -64,6 +55,19 @@ public abstract class Bus extends EntityDragable implements EntityDrawable
 		}
 		
 	}
+	
+	
+	public void takeTheBus(Passenger passenger)
+	{
+
+		if(passengers.size() >= capacity)
+		{
+			//exception
+		}
+		passengers.add(passenger);
+	}
+	
+
 	
 	public void nextSegment()
 	{

@@ -45,10 +45,10 @@ public class Passenger extends Entity implements EntityDrawable, EntityUpdateabl
 	
 	public void busArrived(Bus bus,Station station, ArrayList<Station> nextStops )
 	{
-		Station desiredNextStop = Map.getInstance().getNextStop(this);
-		if(nextStops.contains(desiredNextStop))
+//		Station desiredNextStop = Map.getInstance().getNextStop(this);
+		if(nextStops.contains(nextStop))
 		{
-			nextStop=desiredNextStop; 
+//			nextStop=desiredNextStop; 
 			bus.takeTheBus(this);
 			station.leaveStation(this);
 		}
@@ -62,6 +62,7 @@ public class Passenger extends Entity implements EntityDrawable, EntityUpdateabl
 			Score.getInstance().incrementScore();
 			return;
 		}
+		this.arrivalTime = new Date();
 		station.enterStation(this);		
 	}
 

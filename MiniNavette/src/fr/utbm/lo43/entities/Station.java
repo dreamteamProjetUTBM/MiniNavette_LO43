@@ -99,6 +99,13 @@ public class Station extends EntityClickable implements EntityDrawable
 	
 	public void notifyBus(Bus bus)
 	{
+		//mettre a jour chaque next station de chaque passager avec dijstruc
+		for(Passenger passenger : waitingPassenger)
+		{
+			//passenger.nextStation = la station qu'il lui faut
+		}
+		if(bus.passengers.size() < bus.capacity) bus.unload(this);
+		if(waitingPassenger.size()!=0) bus.load(this);
 		
 	}
 	
@@ -117,11 +124,6 @@ public class Station extends EntityClickable implements EntityDrawable
 	public Station getNextStation(Passenger passenger)
 	{
 		return null;
-	}
-	
-	public void keepPassenger(Passenger passenger)
-	{
-		
 	}
 
 	public Filiere getFiliere(){
