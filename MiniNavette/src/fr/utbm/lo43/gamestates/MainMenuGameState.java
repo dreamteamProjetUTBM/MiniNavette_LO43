@@ -46,14 +46,14 @@ public class MainMenuGameState extends BasicGameState
 		);
 		
 		option_button = new Button(
-				new Vector2f(75, 330), 
+				new Vector2f(75, 340), 
 				"asset/b_play_idle.png", 
 				"asset/b_play_hover.png", 
 				"asset/b_play_pressed.png"
 		);
 		
 		quit_button = new Button(
-				new Vector2f(75, 385), 
+				new Vector2f(75, 405), 
 				"asset/b_play_idle.png", 
 				"asset/b_play_hover.png", 
 				"asset/b_play_pressed.png"
