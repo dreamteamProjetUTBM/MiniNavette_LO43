@@ -58,6 +58,10 @@ public class Segment extends EntityDragable implements EntityDrawable
 		
 	}
 	
+	public int getLineIndex(){
+		return lineIndex;
+	}
+	
 	public Vector2f getStartSegment(){
 		return new Vector2f(line.getX1(),line.getY1());
 	}
@@ -89,20 +93,19 @@ public class Segment extends EntityDragable implements EntityDrawable
 			fr.utbm.lo43.logic.Line _line = Map.getInstance().getLine(i);
 			for (Segment segment : _line.getSegments()) {
 				Vector2f _intersect = segment.line.intersect(line);
-				if(_intersect == null && segment.equals(this)){ // donc parallèle
+				if(_intersect == null && segment.hasSameVectors(this)){ // donc parallèle
 					offset++;
 				}
 			}
 		}
 		
-		arg2.setLineWidth(3);
+		arg2.setLineWidth(5);
 		arg2.setColor(Map.getInstance().getLine(lineIndex).getColor());
-		System.out.println(offset);
 		Line _linerender;
 		if(line.getX1() == line.getX2())
-			_linerender = new Line(new Vector2f(line.getX1()+3*offset, line.getY1()), new Vector2f(line.getX2()+3*offset, line.getY2()));
+			_linerender = new Line(new Vector2f(line.getX1()+5*offset, line.getY1()), new Vector2f(line.getX2()+5*offset, line.getY2()));
 		else
-			_linerender = new Line(new Vector2f(line.getX1(), line.getY1()+3*offset), new Vector2f(line.getX2(), line.getY2()+3*offset));
+			_linerender = new Line(new Vector2f(line.getX1(), line.getY1()+5*offset), new Vector2f(line.getX2(), line.getY2()+5*offset));
 		arg2.draw(_linerender);
 	}
 	
@@ -152,6 +155,16 @@ public class Segment extends EntityDragable implements EntityDrawable
 		return false;
 	}
 	
+	public boolean hasSameVectors(Segment _seg){
+		if((_seg.getPositions().get(0).distance(getPositions().get(0)) == 0 &&
+				_seg.getPositions().get(1).distance(getPositions().get(1)) == 0) ||
+					(_seg.getPositions().get(0).distance(getPositions().get(1)) == 0 &&
+				_seg.getPositions().get(1).distance(getPositions().get(0)) == 0)
+		)
+			return true;
+		return false;
+	}
+	
 	@Override
 	public boolean equals(Object obj) {
 		// TODO Auto-generated method stub		
@@ -163,13 +176,15 @@ public class Segment extends EntityDragable implements EntityDrawable
 		if(obj == this)
 			return true;
 		
-		else if((_obj.getPositions().get(0).distance(getPositions().get(0)) == 0 &&
+		else 
+			if(_obj.getLineIndex() == lineIndex)
+				if((_obj.getPositions().get(0).distance(getPositions().get(0)) == 0 &&
 				_obj.getPositions().get(1).distance(getPositions().get(1)) == 0) ||
 				(_obj.getPositions().get(0).distance(getPositions().get(1)) == 0 &&
 				_obj.getPositions().get(1).distance(getPositions().get(0)) == 0)
 				){
-			return true;
-		}
+					return true;
+				}
 
 		return false;
 	}
