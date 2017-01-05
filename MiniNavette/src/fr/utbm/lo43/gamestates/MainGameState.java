@@ -14,6 +14,7 @@ import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+import fr.utbm.lo43.GameWindow;
 import fr.utbm.lo43.entities.ClassicBus;
 import fr.utbm.lo43.entities.EntityCollection;
 import fr.utbm.lo43.entities.EventEntityMouseClicked;
@@ -169,6 +170,12 @@ public class MainGameState extends BasicGameState
 		}
 		
 		Input input = arg0.getInput();
+		
+		if(input.isKeyDown(Input.KEY_ESCAPE))
+		{
+			System.out.println("Pause");
+			arg1.enterState(GameWindow.GS_PAUSE_MENU);
+		}
 
 		if(input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON)){
 			
@@ -229,7 +236,7 @@ public class MainGameState extends BasicGameState
 	@Override
 	public int getID() 
 	{
-		return 1;
+		return GameWindow.GS_GAME;
 	}
 
 }
