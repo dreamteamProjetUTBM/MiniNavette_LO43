@@ -49,7 +49,7 @@ public class MainGameState extends BasicGameState
 		
 		editLine = false;
 		
-		menu_inventary= new Rectangle(0, 720-24*2, 1080, 24*2);
+		menu_inventary= new Rectangle(0, Map.HEIGHT-Map.GRID_SIZE*1.5f, Map.WIDTH, Map.GRID_SIZE*1.5f);
 		lines_button = new ArrayList<>();
 		
 		Map.getInstance().AddLine(new ClassicLine(Color.red));
@@ -65,7 +65,8 @@ public class MainGameState extends BasicGameState
 
 		
 		for(int i = 0 ; i < 6 ; i++){
-			ToggledButton line_b = new ToggledButton(new Vector2f(400+48*i,720-36),new Vector2f(24,24),"asset/lines1_idle.png","asset/lines1_hover.png","asset/lines1_pressed.png");
+			ToggledButton line_b = new ToggledButton(new Vector2f(500+Map.GRID_SIZE*i,Map.HEIGHT-Map.GRID_SIZE*1.5f),new Vector2f(Map.GRID_SIZE,Map.GRID_SIZE
+					),"asset/lines1_idle.png","asset/lines1_hover.png","asset/lines1_pressed.png");
 			lines_button.add(line_b);
 			if(i == 0){
 				line_b.setToggled(true);
@@ -84,11 +85,11 @@ public class MainGameState extends BasicGameState
 
 		}
 	
-		Station station1 = new Station(new Vector2f(5*48,3*48),Filiere.GI);
-		Station station2 = new Station(new Vector2f(5*48,5*48),Filiere.EDIM);
-		Station station3 = new Station(new Vector2f(7*48,7*48),Filiere.IMSI);
-		Station station4 = new Station(new Vector2f(3*48,8*48),Filiere.GI);
-		Station station5 = new Station(new Vector2f(8*48,10*48),Filiere.ENERGIE);
+		Station station1 = new Station(new Vector2f(10*Map.GRID_SIZE*2,3*Map.GRID_SIZE*2),Filiere.GI);
+		Station station2 = new Station(new Vector2f(5*Map.GRID_SIZE*2,5*Map.GRID_SIZE*2),Filiere.EDIM);
+		Station station3 = new Station(new Vector2f(7*Map.GRID_SIZE*2,7*Map.GRID_SIZE*2),Filiere.IMSI);
+		Station station4 = new Station(new Vector2f(3*Map.GRID_SIZE*2,8*Map.GRID_SIZE*2),Filiere.GI);
+		Station station5 = new Station(new Vector2f(13*Map.GRID_SIZE*2,8*Map.GRID_SIZE*2),Filiere.ENERGIE);
 
 		
 		Map.getInstance().addStation(station1);
@@ -154,7 +155,7 @@ public class MainGameState extends BasicGameState
 					if(station.isOnStation(_position)){
 						editLine = true;
 						//On resize sur le centre de la case
-						drag_station_position = new Vector2f(station.getPosition().x+24, station.getPosition().y+24);
+						drag_station_position = new Vector2f(station.getPosition().x+Map.GRID_SIZE, station.getPosition().y+Map.GRID_SIZE);
 					}
 				}
 			}
@@ -165,7 +166,7 @@ public class MainGameState extends BasicGameState
 				for (Station station : Map.getInstance().getStations()) {
 					if(station.isOnStation(_final) && !station.isOnStation(drag_station_position)){
 						//On resize sur le centre de la case
-						Vector2f _end = new Vector2f(station.getPosition().x+24,station.getPosition().y+24);
+						Vector2f _end = new Vector2f(station.getPosition().x+Map.GRID_SIZE,station.getPosition().y+Map.GRID_SIZE);
 						Segment _segment = new Segment(drag_station_position, _end,current_line);
 						int index = _line.canAddSegment(_segment);	
 
@@ -174,7 +175,17 @@ public class MainGameState extends BasicGameState
 							entities.delete(_segment);					
 						}
 						
-						if(_line.canCreateSegment(_end) && _line.canCreateSegment(drag_station_position)){
+						
+						boolean canContinue = true;
+						
+						for (fr.utbm.lo43.logic.Line line : Map.getInstance().getLines()) {
+							if(line.isSegmentCrossingLine(_segment)){
+								System.out.println("Merde");
+								canContinue = false;
+							}
+						}
+						
+						if(canContinue && _line.canCreateSegment(_end) && _line.canCreateSegment(drag_station_position)){
 							if(index == 0 || index == _line.getSegments().size()){
 								if(index == 0)
 									_segment = new Segment(_end, drag_station_position, current_line);
