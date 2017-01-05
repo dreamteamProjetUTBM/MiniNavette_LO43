@@ -107,7 +107,7 @@ public class MainGameState extends BasicGameState
 		
 		current_line = 0;
 		
-		bus_test = new ClassicBus(new org.newdawn.slick.geom.Vector2f(50,50));
+		bus_test = new ClassicBus(new org.newdawn.slick.geom.Vector2f(50,50), Color.green);
 		
 	}
 

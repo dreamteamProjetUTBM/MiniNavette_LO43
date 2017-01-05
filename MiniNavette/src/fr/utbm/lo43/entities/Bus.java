@@ -1,5 +1,6 @@
 package fr.utbm.lo43.entities;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.geom.Vector2f;
 
 public abstract class Bus extends EntityDragable implements EntityDrawable
@@ -9,11 +10,14 @@ public abstract class Bus extends EntityDragable implements EntityDrawable
 	protected Station[] listStation;
 	protected float segmentProgress;
 	
-	public Bus(Vector2f _position) 
+	protected Color color;
+	
+	public Bus(Vector2f _position, Color _color) 
 	{
 		super(_position);
 		
 		drawable = true;
+		color = _color;
 	}
 	
 	public abstract void move();
