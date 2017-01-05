@@ -20,6 +20,10 @@ public class EntityCollection implements EntityUpdateable, EntityDrawable
 		entities.add(_entity);
 	}
 	
+	public void addAt(Entity _entity, int index){
+		entities.add(index, _entity);
+	}
+	
 	public boolean delete(Entity _entity)
 	{			
 		return entities.remove(_entity);

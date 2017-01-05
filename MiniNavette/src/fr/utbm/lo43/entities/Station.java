@@ -138,7 +138,7 @@ public class Station extends EntityClickable implements EntityDrawable
 		// TODO Auto-generated method stub
 		preview.draw(getPosition().x+Map.GRID_SIZE/2,getPosition().y+Map.GRID_SIZE/2,Map.GRID_SIZE,Map.GRID_SIZE);
 		arg2.setColor(Color.darkGray);
-
+		arg2.setLineWidth(1);
 		Rectangle rec = new Rectangle(getRect().getX(), getRect().getY(), getRect().getWidth(), getRect().getHeight());
 		
 		arg2.draw(rec);

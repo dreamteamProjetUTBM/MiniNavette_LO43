@@ -95,8 +95,6 @@ public class Segment extends EntityDragable implements EntityDrawable
 				Vector2f _intersect = segment.line.intersect(line);
 				if(_intersect == null && segment.hasSameVectors(this)){ // donc parallèle
 					offset++;
-					System.out.println("Bim " + offset);
-
 				}
 			}
 		}
