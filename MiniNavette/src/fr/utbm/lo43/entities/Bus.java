@@ -10,7 +10,7 @@ import fr.utbm.lo43.logic.Map;
 public abstract class Bus extends EntityDragable implements EntityDrawable
 {
 	protected int capacity;
-	protected int direction;
+	protected boolean direction;
 //	protected Station[] listStation;
 	protected float segmentProgress;
 	ArrayList<Passenger> passengers ; 
@@ -51,6 +51,7 @@ public abstract class Bus extends EntityDragable implements EntityDrawable
 			if(passenger.nextStop==station)
 			{
 				passenger.leaveBus(station);;
+				removePassenger(passenger);
 			}
 		}
 		
@@ -71,7 +72,8 @@ public abstract class Bus extends EntityDragable implements EntityDrawable
 	
 	public void nextSegment()
 	{
-		
+		if(endLine())changeDirection();
+		currentSegment = direction ? currentSegment.getNextSegment() : currentSegment.getPreviousSegment();
 	}
 	
 	private void updateNextStation()
@@ -86,6 +88,11 @@ public abstract class Bus extends EntityDragable implements EntityDrawable
 	
 	private void changeDirection()
 	{
-		
+		direction = !direction ;
+	}
+	
+	private boolean endLine()
+	{
+		return currentSegment.getNextSegment()==null;
 	}
 }

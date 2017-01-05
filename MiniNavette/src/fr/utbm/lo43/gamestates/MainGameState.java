@@ -36,6 +36,7 @@ public class MainGameState extends BasicGameState
 	
 	Rectangle menu_inventary;
 	ArrayList<ToggledButton> lines_button;
+	ArrayList<String> lines_button_img;
 	int current_line;
 	
 	ClassicBus bus_test;
@@ -52,7 +53,32 @@ public class MainGameState extends BasicGameState
 		editLine = false;
 		
 		menu_inventary= new Rectangle(0, Map.HEIGHT-Map.GRID_SIZE*1.5f, Map.WIDTH, Map.GRID_SIZE*1.5f);
-		lines_button = new ArrayList<>();
+		lines_button = new ArrayList<ToggledButton>();
+		lines_button_img = new ArrayList<String>();
+		
+		lines_button_img.add("asset/lines_blue_idle.png");
+		lines_button_img.add("asset/lines_blue_hover.png");
+		lines_button_img.add("asset/lines_blue_pressed.png");
+		
+		lines_button_img.add("asset/lines_red_idle.png");
+		lines_button_img.add("asset/lines_red_hover.png");
+		lines_button_img.add("asset/lines_red_pressed.png");
+		
+		lines_button_img.add("asset/lines_yellow_idle.png");
+		lines_button_img.add("asset/lines_yellow_hover.png");
+		lines_button_img.add("asset/lines_yellow_pressed.png");
+		
+		lines_button_img.add("asset/lines_green_idle.png");
+		lines_button_img.add("asset/lines_green_hover.png");
+		lines_button_img.add("asset/lines_green_pressed.png");
+		
+		lines_button_img.add("asset/lines_orange_idle.png");
+		lines_button_img.add("asset/lines_orange_hover.png");
+		lines_button_img.add("asset/lines_orange_pressed.png");
+		
+		lines_button_img.add("asset/lines_purple_idle.png");
+		lines_button_img.add("asset/lines_purple_hover.png");
+		lines_button_img.add("asset/lines_purple_pressed.png");
 		
 		Map.getInstance().AddLine(new ClassicLine(Color.red));
 		Map.getInstance().AddLine(new ClassicLine(Color.green));
@@ -66,9 +92,18 @@ public class MainGameState extends BasicGameState
 		}
 
 		
-		for(int i = 0 ; i < 6 ; i++){
-			ToggledButton line_b = new ToggledButton(new Vector2f(Map.WIDTH/2-3*Map.GRID_SIZE+Map.GRID_SIZE*i,Map.HEIGHT-Map.GRID_SIZE-Map.GRID_SIZE/4),new Vector2f(Map.GRID_SIZE,Map.GRID_SIZE
-					),"asset/lines1_idle.png","asset/lines1_hover.png","asset/lines1_pressed.png");
+		for(int i = 0 ; i < 6 ; i++)
+		{
+			ToggledButton line_b = new ToggledButton(
+					new Vector2f(
+							Map.WIDTH/2-3*Map.GRID_SIZE+Map.GRID_SIZE*i + 5 * i,Map.HEIGHT-Map.GRID_SIZE-Map.GRID_SIZE/4),
+							new Vector2f(Map.GRID_SIZE,Map.GRID_SIZE
+					),
+					lines_button_img.get((i * 3)),
+					lines_button_img.get((i * 3) + 1),
+					lines_button_img.get((i * 3) + 2)
+			);
+			
 			lines_button.add(line_b);
 			if(i == 0){
 				line_b.setToggled(true);
