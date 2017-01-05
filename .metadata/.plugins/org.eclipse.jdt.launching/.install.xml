@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <dirs>
+<entry loc="/usr/lib/jvm/java-8-oracle" stamp="1479905032000"/>
 <entry loc="/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.111-4.b16.fc25.x86_64" stamp="1479925282000"/>
 <entry loc="C:\Program Files\Java\jre1.8.0_111" stamp="1482574586965"/>
 </dirs>

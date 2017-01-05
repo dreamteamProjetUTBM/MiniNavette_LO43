@@ -3,11 +3,13 @@ package fr.utbm.lo43.entities;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.geom.Vector2f;
 
+import fr.utbm.lo43.logic.Map;
+
 public abstract class Bus extends EntityDragable implements EntityDrawable
 {
 	protected int capacity;
 	protected int direction;
-	protected Station[] listStation;
+//	protected Station[] listStation;
 	protected float segmentProgress;
 	
 	protected Color color;
@@ -24,6 +26,7 @@ public abstract class Bus extends EntityDragable implements EntityDrawable
 	
 	public void load(Station station)
 	{
+		Map.getInstance().getNextStops(this, station);
 		
 	}
 	
