@@ -41,6 +41,8 @@ public class MainGameState extends BasicGameState
 	
 	ClassicBus bus_test;
 	
+	private Segment previsualizedSegment;
+	private Segment segmentTemp = null;
 	private boolean editLine;
 	private Vector2f drag_station_position;
 	
@@ -80,12 +82,12 @@ public class MainGameState extends BasicGameState
 		lines_button_img.add("asset/lines_purple_hover.png");
 		lines_button_img.add("asset/lines_purple_pressed.png");
 		
-		Map.getInstance().AddLine(new ClassicLine(Color.red));
-		Map.getInstance().AddLine(new ClassicLine(Color.green));
 		Map.getInstance().AddLine(new ClassicLine(Color.blue));
+		Map.getInstance().AddLine(new ClassicLine(Color.red));
 		Map.getInstance().AddLine(new ClassicLine(Color.yellow));
+		Map.getInstance().AddLine(new ClassicLine(Color.green));
 		Map.getInstance().AddLine(new ClassicLine(Color.orange));
-		Map.getInstance().AddLine(new ClassicLine(Color.pink));
+		Map.getInstance().AddLine(new ClassicLine(Color.magenta));
 
 		for (fr.utbm.lo43.logic.Line line : Map.getInstance().getLines()) {
 			entities.add(line);
@@ -212,6 +214,8 @@ public class MainGameState extends BasicGameState
 			arg1.enterState(GameWindow.GS_PAUSE_MENU);
 		}
 
+
+
 		if(input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON)){
 			
 			if(!editLine){
@@ -223,10 +227,19 @@ public class MainGameState extends BasicGameState
 						drag_station_position = new Vector2f(station.getPosition().x+Map.GRID_SIZE, station.getPosition().y+Map.GRID_SIZE);
 					}
 				}
+			}else{
+				entities.delete(segmentTemp);
+				Segment previsualizedSegment = new Segment(drag_station_position, new Vector2f(input.getMouseX(),input.getMouseY()),current_line);
+				segmentTemp = previsualizedSegment;
+				entities.addAt(previsualizedSegment,0);
+			
 			}
+			
 		}
 		else {
+			
 			if(editLine){
+				entities.delete(segmentTemp);
 				Vector2f _final = new Vector2f(input.getMouseX(),input.getMouseY());
 				for (Station station : Map.getInstance().getStations()) {
 					if(station.isOnStation(_final) && !station.isOnStation(drag_station_position)){
@@ -249,11 +262,12 @@ public class MainGameState extends BasicGameState
 								canContinue = false;
 							}
 						}
-						
+					
 						if(canContinue && _line.canCreateSegment(_end) && _line.canCreateSegment(drag_station_position)){
 							if(index == 0 || index == _line.getSegments().size()){
 								if(index == 0)
 									_segment = new Segment(_end, drag_station_position, current_line);
+				
 								_line.addSegment(_segment,index);
 								entities.addAt(_segment,0);
 							}

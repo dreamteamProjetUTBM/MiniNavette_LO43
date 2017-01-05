@@ -27,6 +27,7 @@ public class EntityCollection implements EntityUpdateable, EntityDrawable
 	public boolean delete(Entity _entity)
 	{			
 		return entities.remove(_entity);
+		
 	}
 
 	@Override

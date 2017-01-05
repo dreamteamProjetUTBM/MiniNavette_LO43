@@ -51,6 +51,7 @@ public class Segment extends EntityDragable implements EntityDrawable
 			@Override
 			public void mousePressed() {
 				// TODO Auto-generated method stub
+				
 				System.out.println("Segment.MousePresssed()");
 			}
 		};
