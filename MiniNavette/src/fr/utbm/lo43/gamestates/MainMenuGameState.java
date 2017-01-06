@@ -84,9 +84,9 @@ public class MainMenuGameState extends BasicGameState
 	@Override
 	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException 
 	{
-		play_button.update(arg0, arg1);
-		option_button.update(arg0, arg1);
-		quit_button.update(arg0, arg1);
+		play_button.update(arg0, arg1,arg2);
+		option_button.update(arg0, arg1,arg2);
+		quit_button.update(arg0, arg1,arg2);
 	}
 
 	@Override

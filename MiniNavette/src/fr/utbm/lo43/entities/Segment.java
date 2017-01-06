@@ -60,6 +60,10 @@ public class Segment extends EntityDragable implements EntityDrawable
 		
 	}
 	
+	/***
+	 * Get line number of the segment
+	 * @return
+	 */
 	public int getLineIndex(){
 		return lineIndex;
 	}
@@ -72,6 +76,10 @@ public class Segment extends EntityDragable implements EntityDrawable
 		return new Vector2f(line.getX2(),line.getY2());
 	}
 	
+	/**
+	 * Get all stations
+	 * @return
+	 */
 	public ArrayList<Station> getStations()
 	{
 		return stations;
@@ -112,9 +120,9 @@ public class Segment extends EntityDragable implements EntityDrawable
 	}
 	
 	@Override
-	public void update(GameContainer gc, StateBasedGame sbg)
+	public void update(GameContainer gc, StateBasedGame sbg,int delta)
 	{
-		super.update(gc, sbg);
+		super.update(gc, sbg,delta);
 		Input input = gc.getInput();
 
 		
@@ -145,6 +153,13 @@ public class Segment extends EntityDragable implements EntityDrawable
 		}
 	}
 
+	
+	/***
+	 * To know if a segment cross another one
+	 * @param _segment Segment to compare
+	 * @return true if the segment cross the line
+	 * false if not
+	 */
 	public boolean isCrossing(Segment _segment){
 		Vector2f _intersect = line.intersect(_segment.line,true);
 		
@@ -166,6 +181,7 @@ public class Segment extends EntityDragable implements EntityDrawable
 			return true;
 		return false;
 	}
+	
 	
 	@Override
 	public boolean equals(Object obj) {

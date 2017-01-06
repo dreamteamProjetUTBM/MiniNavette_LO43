@@ -71,8 +71,8 @@ public class PauseMenuGameState extends BasicGameState
 	@Override
 	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException 
 	{
-		back_button.update(arg0, arg1);
-		quit_button.update(arg0, arg1);
+		back_button.update(arg0, arg1,arg2);
+		quit_button.update(arg0, arg1,arg2);
 	}
 
 	@Override

@@ -64,9 +64,9 @@ public class Button extends EntityClickable implements EntityDrawable
 	}
 	
 	@Override
-	public void update(GameContainer gc, StateBasedGame sbg)
+	public void update(GameContainer gc, StateBasedGame sbg ,int delta)
 	{
-		super.update(gc, sbg);
+		super.update(gc, sbg,delta);
 		
 		/**
 		 * Logique de changement d'image suivant la position de la souris

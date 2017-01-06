@@ -61,7 +61,7 @@ public class EntityClickable extends Entity implements EntityUpdateable
 	}
 
 	@Override
-	public void update(GameContainer gc, StateBasedGame sbg) 
+	public void update(GameContainer gc, StateBasedGame sbg,int delta) 
 	{
 		Input input = gc.getInput();
 		

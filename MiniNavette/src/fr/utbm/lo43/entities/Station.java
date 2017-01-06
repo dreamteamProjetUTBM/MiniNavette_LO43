@@ -179,10 +179,9 @@ public class Station extends EntityClickable implements EntityDrawable, Dijkstra
 	}
 	
 	@Override
-	public void update(GameContainer gc, StateBasedGame sbg) {
+	public void update(GameContainer gc, StateBasedGame sbg,int delta) {
 		// TODO Auto-generated method stub
-		super.update(gc, sbg);
-		
+		super.update(gc, sbg,delta);
 		
 
 		if(isCriticalPassenger()){
@@ -191,18 +190,6 @@ public class Station extends EntityClickable implements EntityDrawable, Dijkstra
 		}else{
 			if(waitedTime >= 0 ) waitedTime --;
 		}
-		
-		
-		//Input input = gc.getInput();
-
-		//if(isMouseHoverAndPressed){
-			
-			//Check si y'a des lignes dans inventaire
-			//if(!Map.getInstance().getLine(0).getSegments().contains(seg))
-				//Map.getInstance().getLine(0).addSegment(new Segment(getPosition(), new Vector2f(input.getMouseX(), input.getMouseY()),0));
-			
-			//Map.getInstance().AddLine(new ClassicLine(Color.blue));
-		//}
 	}
 	
 	private int calculateDistance(Station d){

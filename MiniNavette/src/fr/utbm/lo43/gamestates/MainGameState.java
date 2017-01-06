@@ -193,7 +193,7 @@ public class MainGameState extends BasicGameState
 	@Override
 	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException 
 	{
-		entities.update(arg0, arg1);
+		entities.update(arg0, arg1,arg2);
 		Random rand = new Random();
 		counter += arg2;
 		fr.utbm.lo43.logic.Line _line = Map.getInstance().getLine(current_line);

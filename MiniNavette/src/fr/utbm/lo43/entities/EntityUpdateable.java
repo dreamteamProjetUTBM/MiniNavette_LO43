@@ -6,10 +6,10 @@ import org.newdawn.slick.state.StateBasedGame;
 public interface EntityUpdateable 
 {
 	/**
-	 * Cette méthode est voué à contenir la logique des entités,
-	 * c'est à dire tout ce qui ne relève pas d'un affichage
+	 * Cette mï¿½thode est vouï¿½ ï¿½ contenir la logique des entitï¿½s,
+	 * c'est ï¿½ dire tout ce qui ne relï¿½ve pas d'un affichage
 	 * @param gc  le conteneur de jeu
 	 * @param sbg le game state
 	 */
-	void update(GameContainer gc, StateBasedGame sbg);
+	void update(GameContainer gc, StateBasedGame sbg, int delta);
 }

@@ -7,7 +7,7 @@ import org.newdawn.slick.geom.Vector2f;
 
 import fr.utbm.lo43.logic.Map;
 
-public abstract class Bus extends EntityDragable implements EntityDrawable
+public abstract class Bus extends EntityDragable implements EntityDrawable, EntityUpdateable
 {
 	protected int capacity;
 	protected boolean direction;

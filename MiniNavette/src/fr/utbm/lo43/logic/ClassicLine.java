@@ -18,9 +18,9 @@ public class ClassicLine extends Line{
 	}
 
 	@Override
-	public void update(GameContainer gc, StateBasedGame sbg) {
+	public void update(GameContainer gc, StateBasedGame sbg,int delta) {
 		for (Segment segment : getSegments()) {
-			segment.update(gc, sbg);
+			segment.update(gc, sbg,delta);
 		}
 	}
 

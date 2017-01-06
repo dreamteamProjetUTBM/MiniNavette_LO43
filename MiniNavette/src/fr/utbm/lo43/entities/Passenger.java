@@ -70,7 +70,7 @@ public class Passenger extends Entity implements EntityDrawable, EntityUpdateabl
 	}
 	
 	@Override
-	public void update(GameContainer gc, StateBasedGame sbg) {
+	public void update(GameContainer gc, StateBasedGame sbg,int delta) {
 		// TODO Auto-generated method stub
 		
 	}

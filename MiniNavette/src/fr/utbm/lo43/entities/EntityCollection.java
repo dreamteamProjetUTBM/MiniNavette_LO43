@@ -43,13 +43,13 @@ public class EntityCollection implements EntityUpdateable, EntityDrawable
 	}
 
 	@Override
-	public void update(GameContainer gc, StateBasedGame sbg) 
+	public void update(GameContainer gc, StateBasedGame sbg,int delta) 
 	{
 		for(Entity entitie : entities)
 		{
 			if(entitie.isUpdateble())
 			{
-				((EntityUpdateable)entitie).update(gc, sbg);;
+				((EntityUpdateable)entitie).update(gc, sbg,delta);;
 			}
 		}
 	}
