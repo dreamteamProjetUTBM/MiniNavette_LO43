@@ -114,33 +114,36 @@ public class Segment extends EntityDragable implements EntityDrawable
 		for (int i = lineIndex ; i < Map.getInstance().getLines().size(); i++) {
 			fr.utbm.lo43.logic.Line _line = Map.getInstance().getLine(i);
 			for (Segment segment : _line.getSegments()) {
-				if(segment.polygon.intersects(polygon) == false && segment.hasSameVectors(this)){ // donc parallèle
+				if(!isCrossing(segment) && segment.hasSameVectors(this)){ // donc parallèle
 					offset++;
 				}
 			}
 		}
 		
+		//permet de centrer les segments si il y a des offsets
+		if(offset%2 == 0){
+			offset = -offset;
+		}
+		offset = offset/2;
+		
+		System.out.println(offset);
 		arg2.setLineWidth(5);
 		arg2.setColor(Map.getInstance().getLine(lineIndex).getColor());
 	
 
 		Polygon _polygonrender = new Polygon();
 		_polygonrender.setClosed(false);
-		if(getStartSegment().x == getEndSegment().x){
+
 			
 			
 			for(int i = 0; i<polygon.getPointCount();++i){
-				_polygonrender.addPoint(polygon.getPoint(i)[0]+5*offset, polygon.getPoint(i)[1]);
+				//if(polygon.getPoint(i)[0] == polygon.getPoint(i+1)[0] || polygon.getPoint(i)[1] == polygon.getPoint(i+1)[1]){
+					_polygonrender.addPoint(polygon.getPoint(i)[0]+5*offset, polygon.getPoint(i)[1]);
+				//}
 		
 			}
-		}
-		else
-		{
-			for(int i = 0; i<polygon.getPointCount();++i){
-				_polygonrender.addPoint(polygon.getPoint(i)[0], polygon.getPoint(i)[1]+5*offset);
 		
-			}
-		}
+
 		arg2.draw(_polygonrender);
 	}
 	
