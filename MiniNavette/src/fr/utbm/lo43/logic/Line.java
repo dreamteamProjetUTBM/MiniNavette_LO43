@@ -38,6 +38,15 @@ public abstract class Line extends Entity implements EntityUpdateable, EntityDra
 		segments.add(index, _seg);
 	}
 	
+	/**
+	 * Verfifie si la ligne est une boucle
+	 * @return
+	 */
+	public boolean isLoop(){
+		
+		return segments.get(0).getStartSegment().distance( segments.get(segments.size()-1).getEndSegment()) == 0 ;
+		
+	}
 	//only top and queue
 	public boolean existingSegment(Segment _seg){
 		for (Segment segment : segments) {
@@ -93,6 +102,10 @@ public abstract class Line extends Entity implements EntityUpdateable, EntityDra
 		if(segments.size() == 0)
 			return false;
 		
+		if(isLoop()){
+			return true;
+		}
+		
 		if(segments.get(segments.size()-1).getLineIndex() == _seg.getLineIndex()){
 			//if(segments.get(segments.size()-1).equals(_seg))
 			if(segments.get(segments.size()-1).hasSameVectors(_seg))
@@ -104,6 +117,19 @@ public abstract class Line extends Entity implements EntityUpdateable, EntityDra
 	}
 	
 	public boolean removeSegment(Segment _seg){
+		// en cas de boucle, on decale les segments jusqu'a ce que _seg devienne le premier ou le dernier element
+		if(isLoop()){
+			Segment temp;
+			while(!segments.get(0).equals(_seg)&&!segments.get(segments.size()-1).equals(_seg)){
+				temp = segments.get(segments.size() -1);
+				for(int i = segments.size()-1; i>0; --i){
+				
+					 segments.set(i,segments.get(i-1)); 
+				}
+				segments.set(0,temp);
+			}
+		}
+		
 		return segments.remove(_seg);
 	}
 	
