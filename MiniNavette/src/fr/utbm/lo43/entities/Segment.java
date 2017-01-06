@@ -226,4 +226,8 @@ public class Segment extends EntityDragable implements EntityDrawable
 		return line.length();
 	
 	}
+	
+	public boolean isOnSegment(Vector2f _vector){
+		return line.contains(_vector.x, _vector.y);
+	}
 }

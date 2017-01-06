@@ -38,7 +38,10 @@ public class ClassicBus extends Bus
 		float dir = -1;
 		if(direction)
 			dir = 1;
+		
 		setPosition(new Vector2f(getPosition().x+dir,getPosition().y+dir));
+		shape.setBounds(getPosition().x, getPosition().y, 10, 25);
+
 		//angle++;
 		//shape.transform(Transform.createRotateTransform(angle));
 	}
@@ -49,11 +52,13 @@ public class ClassicBus extends Bus
 		super.update(gc, sbg,delta);
 		
 		cpt += delta;
-		if(delta >100)
+		if(cpt >100)
 		{
 			cpt = 0;
 			move();
+
 		}
+		
 	}
 
 }

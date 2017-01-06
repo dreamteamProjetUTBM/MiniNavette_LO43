@@ -166,7 +166,7 @@ public class MainGameState extends BasicGameState
 		current_line = 0;
 		
 		bus_test = new ClassicBus(new org.newdawn.slick.geom.Vector2f(50,50), Color.green);
-		
+		entities.add(bus_test);
 	}
 
 	@Override
@@ -185,7 +185,7 @@ public class MainGameState extends BasicGameState
 		
 		entities.render(arg2);
 
-		bus_test.render(arg2);
+		//bus_test.render(arg2);
 		
 
 	}
