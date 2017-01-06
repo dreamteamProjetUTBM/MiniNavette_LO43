@@ -63,10 +63,10 @@ public abstract class Line extends Entity implements EntityUpdateable, EntityDra
 		{
 			Segment first = segments.get(0), last = segments.get(segments.size()-1);
 
-			if(first.getPositions().get(0).distance(_segment.getPositions().get(0)) == 0)
+			if(first.getStartSegment().distance(_segment.getStartSegment()) == 0)
 					return 0;
-			else if(last.getPositions().get(1).distance(_segment.getPositions().get(0)) == 0 ||
-					last.getPositions().get(1).distance(_segment.getPositions().get(1)) == 0)
+			else if(last.getEndSegment().distance(_segment.getStartSegment()) == 0 ||
+					last.getEndSegment().distance(_segment.getEndSegment()) == 0)
 				return segments.size();
 			
 		}
@@ -80,7 +80,7 @@ public abstract class Line extends Entity implements EntityUpdateable, EntityDra
 	{
 		int cpt = 0;
 		for (Segment segment : segments) {
-			if(segment.getPositions().get(0).distance(_vect) == 0 || segment.getPositions().get(1).distance(_vect) == 0)
+			if(segment.getStartSegment().distance(_vect) == 0 || segment.getEndSegment().distance(_vect) == 0)
 				cpt++;
 		}
 		
