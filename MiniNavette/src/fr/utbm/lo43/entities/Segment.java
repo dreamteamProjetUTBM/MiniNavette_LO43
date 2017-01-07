@@ -4,7 +4,9 @@ import java.util.ArrayList;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
+import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Line;
 import org.newdawn.slick.geom.Polygon;
 import org.newdawn.slick.geom.Vector2f;
@@ -18,6 +20,7 @@ public class Segment extends EntityDragable implements EntityDrawable
 	private Polygon polygon;
 	private ArrayList<Station> stations;
 	
+	private String iconPath;
 	//Line de Slick2D
 	Line line;
 	fr.utbm.lo43.logic.Line line_bus;
@@ -32,8 +35,7 @@ public class Segment extends EntityDragable implements EntityDrawable
 		Vector2f angle = calculateAnglePosition(_start, _end);
 		polygon.addPoint(angle.x, angle.y);
 		polygon.addPoint(_end.x,_end.y);
-		//line = new Line(_start, _end);
-		//line = new Line(_start.x, _start.y, _end.x, _end.y);
+
 		lineIndex = index;
 		dragedEvent = new EventEntityMouseDraged() {
 			
@@ -67,7 +69,10 @@ public class Segment extends EntityDragable implements EntityDrawable
 		
 	}
 	
-	
+
+	public void setIcon(String imgPath){
+		iconPath = imgPath;
+	}
 	public Vector2f getPointPolygon(int index){
 		return new Vector2f(polygon.getPoint(index)[0], polygon.getPoint(index)[1]);
 	}
@@ -107,6 +112,17 @@ public class Segment extends EntityDragable implements EntityDrawable
 		return _positions;
 	}
 
+	public Vector2f getMid(){
+		Line tempLine = new Line(getStartSegment(), getEndSegment());
+		return new Vector2f(tempLine.getCenterX(), tempLine.getCenterY());
+	}
+	
+	public Vector2f getAngle(){
+		
+		
+		return calculateAnglePosition(getStartSegment(), getEndSegment());
+		
+	}
 	@Override
 	public void render(Graphics arg2) {
 		
@@ -126,7 +142,6 @@ public class Segment extends EntityDragable implements EntityDrawable
 		}
 		offset = offset/2;
 		
-		System.out.println(offset);
 		arg2.setLineWidth(5);
 		arg2.setColor(Map.getInstance().getLine(lineIndex).getColor());
 	
@@ -145,6 +160,20 @@ public class Segment extends EntityDragable implements EntityDrawable
 		
 
 		arg2.draw(_polygonrender);
+		if(iconPath != null){
+			Image icon;
+			try {
+				icon = new Image(iconPath);
+				icon.drawFlash(getMid().x-Map.GRID_SIZE/2,getMid().y-Map.GRID_SIZE/2,Map.GRID_SIZE,Map.GRID_SIZE, Map.getInstance().getLine(lineIndex).getColor());
+	
+			} catch (SlickException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+			
+		
 	}
 	
 	@Override
@@ -189,6 +218,10 @@ public class Segment extends EntityDragable implements EntityDrawable
 	 * false if not
 	 */
 	public boolean isCrossing(Segment _segment){
+		
+		if(this == _segment){
+			return false;
+		}
 		boolean _intersect = polygon.intersects(_segment.polygon);
 		
 		if(_intersect == false){
@@ -264,6 +297,11 @@ public class Segment extends EntityDragable implements EntityDrawable
 		return length;
 	}
 	
+	/**
+	 * Verifie si un point est sur le segment
+	 * @param _vector
+	 * @return
+	 */
 	public boolean isOnSegment(Vector2f _vector){
 		Line _line;
 		for(int i = 0; i<getPositions().size()-1; ++i ){

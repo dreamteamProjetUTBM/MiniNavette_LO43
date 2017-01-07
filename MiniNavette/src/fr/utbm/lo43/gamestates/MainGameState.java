@@ -6,6 +6,7 @@ import java.util.Random;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Line;
@@ -40,7 +41,7 @@ public class MainGameState extends BasicGameState
 	int current_line;
 	
 	ClassicBus bus_test;
-	
+
 	private Segment previsualizedSegment;
 	private Segment segmentTemp = null;
 	private boolean editLine;
@@ -54,9 +55,12 @@ public class MainGameState extends BasicGameState
 		
 		editLine = false;
 		
+		
 		menu_inventary= new Rectangle(0, Map.HEIGHT-Map.GRID_SIZE*1.5f, Map.WIDTH, Map.GRID_SIZE*1.5f);
 		lines_button = new ArrayList<ToggledButton>();
 		lines_button_img = new ArrayList<String>();
+		
+		
 		
 		lines_button_img.add("asset/lines_blue_idle.png");
 		lines_button_img.add("asset/lines_blue_hover.png");
@@ -228,11 +232,15 @@ public class MainGameState extends BasicGameState
 					}
 				}
 			}else{
+				
+				
 				entities.deleteObject(segmentTemp);
+				boolean canAdd = false;
 				Vector2f _positionFin = new Vector2f(input.getMouseX(),input.getMouseY());
 				for (Station station : Map.getInstance().getStations()) {
 					if(station.isOnStation(_position) && !station.isOnStation(drag_station_position)){
 						_positionFin = new Vector2f(station.getPosition().x + Map.GRID_SIZE, station.getPosition().y + Map.GRID_SIZE);
+						canAdd = true;
 						
 					}
 				} 
@@ -241,22 +249,40 @@ public class MainGameState extends BasicGameState
 				int indexLine = _line.canAddSegment(previsualizedSegment);
 				
 				if(_line.canRemove(previsualizedSegment)){
-					System.out.println("SUPPRESSION DE SEGMENT POSSIBLE"); 
-					// a remplacer par une icone de suppression sur le segment ou un truc du genre
+					System.out.println();
+					previsualizedSegment.setIcon("asset/poubelle.png");
+					canAdd = false;
 				}
 				if( _line.canCreateSegment(_positionFin) && _line.canCreateSegment(drag_station_position)){
-					if(indexLine == 0 || indexLine == _line.getSegments().size()){
-						if(indexLine == 0){
-							previsualizedSegment = new Segment(_positionFin, drag_station_position,current_line);
-						}
-						
+					if(indexLine == 0 || indexLine == _line.getSegments().size()){						
+						if(_line.getSegments().size()!=0 &&( indexLine == 0 && _positionFin.distance(_line.getSegments().get(0).getEndSegment()) == 0 || 
+								indexLine ==_line.getSegments().size()  && drag_station_position.distance(_line.getSegments().get(indexLine-1).getEndSegment()) != 0 ))
+							previsualizedSegment = new Segment(_positionFin, drag_station_position, current_line);
+							
+						if(_line.getSegments().size()!=0 && drag_station_position.distance(_line.getSegments().get(0).getStartSegment())==0 &&
+								_positionFin.distance(_line.getSegments().get(_line.getSegments().size()-1).getEndSegment())==0)
+							previsualizedSegment = new Segment(_positionFin, drag_station_position, current_line);
+					
+					}
+					
+				}else{
+					canAdd = false;
+				}
+				
+				if(canAdd){
+					previsualizedSegment.setIcon("asset/add.png");
+				}
+				
+				for (fr.utbm.lo43.logic.Line line : Map.getInstance().getLines()) {
+					if(line.isSegmentCrossingLine(previsualizedSegment)){
+					
+						previsualizedSegment.setIcon("asset/forbidden.png");
+					}
+				}
 
 				segmentTemp = previsualizedSegment;
-				entities.addAt(previsualizedSegment,0);
-			
+				entities.addAt(previsualizedSegment, 0);
 			}
-		}
-		}
 		}
 		else {
 			
@@ -287,10 +313,16 @@ public class MainGameState extends BasicGameState
 					
 						if(canContinue && _line.canCreateSegment(_end) && _line.canCreateSegment(drag_station_position)){
 							if(index == 0 || index == _line.getSegments().size()){
-								if(index == 0)
+								if(_line.getSegments().size()!=0 &&( index == 0 && _end.distance(_line.getSegments().get(0).getEndSegment()) == 0 || 
+										index ==_line.getSegments().size()  && drag_station_position.distance(_line.getSegments().get(index-1).getEndSegment()) != 0 ))
 									_segment = new Segment(_end, drag_station_position, current_line);
-				
+									
+								if(_line.getSegments().size()!=0 && drag_station_position.distance(_line.getSegments().get(0).getStartSegment())==0 &&
+										_end.distance(_line.getSegments().get(_line.getSegments().size()-1).getEndSegment())==0)
+									_segment = new Segment(_end, drag_station_position, current_line);
+							
 								_line.addSegment(_segment,index);
+								
 								entities.addAt(_segment,0);
 							}
 						}
