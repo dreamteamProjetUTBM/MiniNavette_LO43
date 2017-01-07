@@ -243,22 +243,28 @@ public class Segment extends EntityDragable implements EntityDrawable
 		if(this == _segment){
 			return false;
 		}
-		boolean _intersect = polygon.intersects(_segment.polygon);
 		
-		if(_intersect == false){
-		
-			return false;
-		}else
-		{
-			//if (isOnSegment(_segment.getEndSegment()) || isOnSegment(_segment.getStartSegment())){
-			if(getEndSegment().distance(_segment.getStartSegment())==0 || getStartSegment().distance(_segment.getEndSegment())==0){
-				
-				return false;
-					
-			}
-		return true;	
+			Line tempLine1;
+			Line tempLine2;
+			Vector2f intersection;
+			boolean intersect = false;
+			for(int i = 0; i<polygon.getPointCount()-1; ++i){
+				tempLine1 = new Line(new Vector2f(polygon.getPoint(i)[0],polygon.getPoint(i)[1]), new Vector2f(polygon.getPoint(i+1)[0],polygon.getPoint(i+1)[1]));
+				for(int j = 0; j<_segment.polygon.getPointCount()-1; ++j){
+					tempLine2 = new Line(new Vector2f(_segment.polygon.getPoint(j)[0],_segment.polygon.getPoint(j)[1]), new Vector2f(_segment.polygon.getPoint(j+1)[0],_segment.polygon.getPoint(j+1)[1]));
+					intersection = null;
+					intersection = tempLine1.intersect(tempLine2, true);
+					if(intersection != null){
+						if(intersection.distance(_segment.getStartSegment()) == 0 ||intersection.distance(_segment.getEndSegment()) == 0){
+						
+						}else{
+							intersect = true;
+						}
+					}
+				}
+			
 		}
-		
+			return intersect;
 
 		//System.out.println(_segment.line.getpo);
 	}

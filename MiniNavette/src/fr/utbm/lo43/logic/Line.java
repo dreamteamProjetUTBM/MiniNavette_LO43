@@ -143,9 +143,11 @@ public abstract class Line extends Entity implements EntityUpdateable, EntityDra
 	public boolean isSegmentCrossingLine(Segment _segment){
 
 		for (Segment segment : segments) {
+	
 			if(segment.isCrossing(_segment)){
 				return true;
 			}
+
 				
 		}
 		return false;
