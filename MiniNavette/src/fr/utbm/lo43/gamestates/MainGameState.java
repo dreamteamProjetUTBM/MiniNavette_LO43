@@ -39,6 +39,10 @@ public class MainGameState extends BasicGameState
 	Rectangle menu_inventary;
 	ArrayList<ToggledButton> lines_button;
 	ArrayList<String> lines_button_img;
+	//Bus button
+	private ToggledButton bus_button;
+	private Label bus_label;
+	
 	int current_line;
 	
 	ClassicBus bus_test;
@@ -132,22 +136,21 @@ public class MainGameState extends BasicGameState
 			railWay = new RailWay();
 		}
 		
-		ToggledButton bus_b = new ToggledButton(new Vector2f(Map.WIDTH/3,Map.HEIGHT-Map.GRID_SIZE-Map.GRID_SIZE/4),new Vector2f(Map.GRID_SIZE,Map.GRID_SIZE
+		bus_button = new ToggledButton(new Vector2f(Map.WIDTH/3,Map.HEIGHT-Map.GRID_SIZE-Map.GRID_SIZE/4),new Vector2f(Map.GRID_SIZE,Map.GRID_SIZE
 				),"asset/bus_b_idle.png","asset/bus_b_hover.png","asset/bus_b_idle.png");
 
-		Label bus_label = new Label(Integer.toString(game.getInventory().getRemainingBus()), new Vector2f(Map.WIDTH/3-Map.GRID_SIZE,Map.HEIGHT-Map.GRID_SIZE));
+		bus_label = new Label(Integer.toString(game.getInventory().getRemainingBus()), new Vector2f(Map.WIDTH/3-Map.GRID_SIZE,Map.HEIGHT-Map.GRID_SIZE));
 		
 		
 		
-		bus_b.setEventCallback(new EventEntityMouseClicked() {
+		bus_button.setEventCallback(new EventEntityMouseClicked() {
 			
 			@Override
 			public void mouseClicked() {
-				// TODO Auto-generated method stub
-				
+				bus_button.setToggled(!bus_button.getToggled());
 			}
 		});
-		entities.add(bus_b);
+		entities.add(bus_button);
 		entities.add(bus_label);
 
 		
@@ -173,8 +176,8 @@ public class MainGameState extends BasicGameState
 		
 		current_line = 0;
 		
-		bus_test = new ClassicBus(new org.newdawn.slick.geom.Vector2f(50,50), Color.green);
-		entities.add(bus_test);
+		//bus_test = new ClassicBus(new org.newdawn.slick.geom.Vector2f(50,50), Color.green);
+		//entities.add(bus_test);
 	}
 
 	@Override
@@ -204,6 +207,8 @@ public class MainGameState extends BasicGameState
 		Random rand = new Random();
 		counter += arg2;
 		
+		bus_label.setText(game.getInventory().getRemainingBus()+"");
+		
 		fr.utbm.lo43.logic.Line _line = Map.getInstance().getLine(current_line);
 		
 		if(counter >5000){
@@ -223,6 +228,19 @@ public class MainGameState extends BasicGameState
 		}
 
 
+		if(input.isMousePressed(Input.MOUSE_LEFT_BUTTON) && bus_button.getToggled()){
+			for (fr.utbm.lo43.logic.Line line : game.map.getInstance().getLines()) {
+				for (Segment segment : line.getSegments()) {
+					if(segment.isOnSegment(new Vector2f(input.getMouseX(),input.getMouseY())) && game.getInventory().getRemainingBus() > 0){
+						//Alors on ajoute un bus sur le segment
+						System.out.println("Ajoute");
+						bus_button.setToggled(false);
+						game.getInventory().setRemainingBus(-1);
+						entities.add(new ClassicBus(new Vector2f(input.getMouseX(), input.getMouseY()),game.map.getLine(segment.getLineIndex()).getColor(),segment));
+					}
+				}
+			}
+		}
 
 		if(input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON)){
 			
