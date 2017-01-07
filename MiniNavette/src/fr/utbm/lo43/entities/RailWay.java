@@ -18,6 +18,7 @@ public class RailWay extends Entity implements EntityDrawable
 	public RailWay() 
 	{
 		super(new Vector2f(0, 0));
+		drawable = true;
 		
 		plot = new Polygon();
 		plot.setClosed(false);
@@ -65,7 +66,7 @@ public class RailWay extends Entity implements EntityDrawable
 	public void render(Graphics arg2) 
 	{
 		arg2.setLineWidth(plotWidth * 1.0f);
-		arg2.setColor(new Color(74, 100, 145));
+		arg2.setColor(new Color(26, 31, 43));
 		arg2.draw(plot);
 	}
 }

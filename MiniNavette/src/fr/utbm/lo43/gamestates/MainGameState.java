@@ -20,6 +20,7 @@ import fr.utbm.lo43.entities.ClassicBus;
 import fr.utbm.lo43.entities.EntityCollection;
 import fr.utbm.lo43.entities.EventEntityMouseClicked;
 import fr.utbm.lo43.entities.Label;
+import fr.utbm.lo43.entities.RailWay;
 import fr.utbm.lo43.entities.Segment;
 import fr.utbm.lo43.entities.Station;
 import fr.utbm.lo43.entities.ToggledButton;
@@ -46,6 +47,8 @@ public class MainGameState extends BasicGameState
 	private Segment segmentTemp = null;
 	private boolean editLine;
 	private Vector2f drag_station_position;
+	
+	private RailWay railWay;
 	
 	@Override
 	public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException 
@@ -126,6 +129,7 @@ public class MainGameState extends BasicGameState
 			});
 			entities.add(line_b);
 
+			railWay = new RailWay();
 		}
 		
 		ToggledButton bus_b = new ToggledButton(new Vector2f(Map.WIDTH/3,Map.HEIGHT-Map.GRID_SIZE-Map.GRID_SIZE/4),new Vector2f(Map.GRID_SIZE,Map.GRID_SIZE
@@ -175,13 +179,14 @@ public class MainGameState extends BasicGameState
 
 	@Override
 	public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2) throws SlickException 
-	{
-		
+	{	
 		arg2.setColor(new Color(238,238,238));
 		arg2.setLineWidth(1);
 		for (Line grid_line : game.map.grid) {
 			arg2.draw(grid_line);
 		}
+		
+		railWay.render(arg2);
 		
 		arg2.setColor(Color.gray);
 		arg2.draw(menu_inventary);
@@ -190,8 +195,6 @@ public class MainGameState extends BasicGameState
 		entities.render(arg2);
 
 		//bus_test.render(arg2);
-		
-
 	}
 
 	@Override
