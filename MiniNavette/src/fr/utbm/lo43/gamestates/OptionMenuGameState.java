@@ -10,6 +10,7 @@ import org.newdawn.slick.state.StateBasedGame;
 import fr.utbm.lo43.GameWindow;
 import fr.utbm.lo43.entities.Button;
 import fr.utbm.lo43.entities.EventEntityMouseClicked;
+import fr.utbm.lo43.entities.Label;
 import fr.utbm.lo43.entities.Slider;
 import fr.utbm.lo43.logic.Map;
 
@@ -18,6 +19,7 @@ public class OptionMenuGameState extends BasicGameState
 	Button btn_quit;
 	
 	Slider slider_music;
+	Label lb_slider_value;
 	
 	@Override
 	public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException 
@@ -38,6 +40,7 @@ public class OptionMenuGameState extends BasicGameState
 		});
 		
 		slider_music = new Slider(new Vector2f(100, 100));
+		lb_slider_value = new Label("Volume : " + slider_music.getValue() + "%", new Vector2f(350, 90));
 	}
 
 	@Override
@@ -46,6 +49,7 @@ public class OptionMenuGameState extends BasicGameState
 		btn_quit.render(arg2);
 		
 		slider_music.render(arg2);
+		lb_slider_value.render(arg2);
 	}
 
 	@Override
@@ -54,6 +58,7 @@ public class OptionMenuGameState extends BasicGameState
 		btn_quit.update(arg0, arg1, arg2);
 		
 		slider_music.update(arg0, arg1, arg2);
+		lb_slider_value.setText("Volume : " + slider_music.getValue() + "%");
 	}
 
 	@Override

@@ -112,6 +112,18 @@ public class Segment extends EntityDragable implements EntityDrawable
 		return _positions;
 	}
 
+	/**
+	 * Renvoie le segment inverse (le point de depart deviens le point d'arrivé et inversement)
+	 * @return
+	 */
+	public Segment reverse(){
+		return new Segment(getEndSegment(), getStartSegment(), lineIndex);
+	}
+	
+	public boolean isReverse(Segment _segment){
+		return hasSameVectors(_segment.reverse());
+		
+	}
 	public Vector2f getMid(){
 		Line tempLine = new Line(getStartSegment(), getEndSegment());
 		return new Vector2f(tempLine.getCenterX(), tempLine.getCenterY());
@@ -234,12 +246,15 @@ public class Segment extends EntityDragable implements EntityDrawable
 		boolean _intersect = polygon.intersects(_segment.polygon);
 		
 		if(_intersect == false){
+		
 			return false;
 		}else
 		{
-			if(isOnSegment(_segment.getEndSegment()) || isOnSegment(_segment.getStartSegment())){
+			//if (isOnSegment(_segment.getEndSegment()) || isOnSegment(_segment.getStartSegment())){
+			if(getEndSegment().distance(_segment.getStartSegment())==0 || getStartSegment().distance(_segment.getEndSegment())==0){
+				
 				return false;
-			
+					
 			}
 		return true;	
 		}
@@ -250,10 +265,7 @@ public class Segment extends EntityDragable implements EntityDrawable
 	
 	public boolean hasSameVectors(Segment _seg){
 		if((_seg.getStartSegment().distance(getStartSegment()) == 0 &&
-		_seg.getEndSegment().distance(getEndSegment()) == 0) ||
-		(_seg.getStartSegment().distance(getEndSegment()) == 0 &&
-		_seg.getEndSegment().distance(getStartSegment()) == 0)
-		)
+		_seg.getEndSegment().distance(getEndSegment()) == 0))
 			return true;
 		return false;
 	}

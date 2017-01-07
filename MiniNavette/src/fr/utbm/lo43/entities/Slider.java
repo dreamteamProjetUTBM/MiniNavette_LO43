@@ -9,11 +9,21 @@ import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
 
+/**
+ * Classe Slider
+ * 
+ * Permet de règler des paramètres comme le volume de la musique
+ * par exemple
+ * @author Thomas Gredin
+ *
+ */
 public class Slider extends EntityClickable implements EntityDrawable
 {
-	Line slider;
-	Rectangle indicator;
-	int indicator_size;
+	private Line slider;
+	private Rectangle indicator;
+	private int indicator_size;
+	
+	private Color color;
 	
 	boolean isSliding;
 	
@@ -31,6 +41,7 @@ public class Slider extends EntityClickable implements EntityDrawable
 		);
 		
 		isSliding = false;
+		color = Color.blue;
 	}
 
 	@Override
@@ -64,20 +75,33 @@ public class Slider extends EntityClickable implements EntityDrawable
 		
 		if(indicator.getCenterX() < position.x)
 		{
-			indicator.setCenterX(position.x + indicator_size / 4);
+			indicator.setCenterX(position.x);
 		}
 		if(indicator.getCenterX() > slider.getMaxX())
 		{
-			indicator.setCenterX(slider.getMaxX() - indicator_size / 4);
+			indicator.setCenterX(slider.getMaxX());
 		}
 	}
 
 	@Override
 	public void render(Graphics arg2) 
 	{
-		arg2.setColor(Color.black);
+		arg2.setColor(color);
 		arg2.setLineWidth(5);
 		arg2.draw(slider);
 		arg2.fill(indicator);
-	}	
+	}
+	
+	/**
+	 * Permet de récupérer la valeur de slide en pourcentage
+	 * @return valeur en pourcent
+	 */
+	public float getValue()
+	{
+		float percentage = (indicator.getCenterX() - position.x);
+		percentage *= 100;
+		percentage /= (slider.getMaxX() - position.x);
+		
+		return percentage;
+	}
 }

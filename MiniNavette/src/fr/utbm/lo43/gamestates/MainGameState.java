@@ -283,16 +283,16 @@ public class MainGameState extends BasicGameState
 				if(_line.canAddSegment(previsualizedSegment)==-1){
 					canAdd = false;
 				}
-				
 				if(_line.canRemove(previsualizedSegment)){
 					
 					previsualizedSegment.setIcon("asset/poubelle.png");
 					canAdd = false;
 				}
+
 				if( _line.canCreateSegment(_positionFin) && _line.canCreateSegment(drag_station_position)){
 					if(indexLine == 0 || indexLine == _line.getSegments().size()){						
 						if(indexLine == 0){
-							previsualizedSegment = new Segment(_positionFin, drag_station_position, current_line);
+							previsualizedSegment = previsualizedSegment.reverse();
 						}
 							
 					
@@ -302,7 +302,6 @@ public class MainGameState extends BasicGameState
 					canAdd = false;
 				}
 				
-
 				
 				if(canAdd){
 					previsualizedSegment.setIcon("asset/add.png");
@@ -315,6 +314,17 @@ public class MainGameState extends BasicGameState
 					}
 				}
 
+			
+				for(Segment s : _line.getSegments()){
+					if (previsualizedSegment.isReverse(s)){
+						previsualizedSegment = previsualizedSegment.reverse();
+					}
+				}
+				if(_line.canRemove(previsualizedSegment)){
+					
+					previsualizedSegment.setIcon("asset/poubelle.png");
+				}
+				
 				segmentTemp = previsualizedSegment;
 				entities.addAt(previsualizedSegment, 0);
 				}
@@ -341,7 +351,7 @@ public class MainGameState extends BasicGameState
 						boolean canContinue = true;
 						
 						for (fr.utbm.lo43.logic.Line line : Map.getInstance().getLines()) {
-							if(line.isSegmentCrossingLine(_segment)){
+							if(line.isSegmentCrossingLine(_segment) && line.isSegmentCrossingLine(_segment.reverse())){
 								System.out.println("Merde");
 								canContinue = false;
 							}
@@ -350,7 +360,7 @@ public class MainGameState extends BasicGameState
 						if(canContinue && _line.canCreateSegment(_end) && _line.canCreateSegment(drag_station_position)){
 							if(index == 0 || index == _line.getSegments().size()){
 								if(index == 0){
-									_segment = new Segment(_end, drag_station_position, current_line);
+									_segment = _segment.reverse();
 								}
 							
 								

@@ -70,15 +70,12 @@ public class RailWay extends Entity implements EntityDrawable
 		
 		int actualX = startX;
 		int actualY = startY;
-		System.out.println("Actual X : " + actualX + " Actual Y : " + actualY);
 		Rectangle map_rect = new Rectangle(-1, -1, Map.WIDTH + 10, Map.HEIGHT + 10);
 		
 		while(map_rect.contains(actualX, actualY))
 		{
 			actualX += startX == 0 ? (random.nextInt(2) == 0 ? 64: 0) : (random.nextInt(2) == 0 ? -64: 0);
 			actualY += startY == 0 ? (random.nextInt(2) == 0 ? 64: 0) : (random.nextInt(2) == 0 ? -64: 0);
-			
-			System.out.println("Actual X : " + actualX + " Actual Y : " + actualY);
 			
 			plot.addPoint(actualX, actualY);
 		}
