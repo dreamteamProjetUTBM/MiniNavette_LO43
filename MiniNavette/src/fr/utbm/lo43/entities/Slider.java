@@ -75,11 +75,11 @@ public class Slider extends EntityClickable implements EntityDrawable
 		
 		if(indicator.getCenterX() < position.x)
 		{
-			indicator.setCenterX(position.x + indicator_size / 4);
+			indicator.setCenterX(position.x);
 		}
 		if(indicator.getCenterX() > slider.getMaxX())
 		{
-			indicator.setCenterX(slider.getMaxX() - indicator_size / 4);
+			indicator.setCenterX(slider.getMaxX());
 		}
 	}
 
