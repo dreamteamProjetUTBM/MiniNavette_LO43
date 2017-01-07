@@ -34,6 +34,10 @@ public abstract class Line extends Entity implements EntityUpdateable, EntityDra
 		return segments;
 	}
 	
+	public Segment getSegment(int index){
+		return segments.get(index);
+	}
+	
 	public void addSegment(Segment _seg,int index){
 		segments.add(index, _seg);
 		

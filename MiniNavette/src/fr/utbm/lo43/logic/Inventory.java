@@ -27,10 +27,9 @@ public class Inventory {
 		return remaining_bus;
 	}
 
-	/**
-	 * On considère qu'on peut uniquement décrémenter de un bus par appel de méthode
-	 */
-	public void setRemainingBus(){
-		remaining_bus--;
+	public void setRemainingBus(int value){
+		remaining_bus+= value;
 	}
+	
+	
 }
