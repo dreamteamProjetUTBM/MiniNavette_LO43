@@ -11,9 +11,23 @@ import org.newdawn.slick.geom.Vector2f;
 
 import fr.utbm.lo43.logic.Map;
 
+/**
+ * Classe RailWay
+ * 
+ * A la manière des rivières dans mini metro, les voix ferrées représentent des obstacles
+ * que les lignes ne peuvent traverser qu'avec des ponts
+ * @author Thomas Gredin
+ *
+ */
 public class RailWay extends Entity implements EntityDrawable
 {
+	/**
+	 * Tracé de la voie ferrée
+	 */
 	private Polygon plot;
+	/**
+	 * Largeur du tracé
+	 */
 	private int plotWidth;
 	
 	public RailWay() 
@@ -71,6 +85,12 @@ public class RailWay extends Entity implements EntityDrawable
 		arg2.draw(plot);
 	}
 	
+	/**
+	 * Permet de savoir si une autre instance de la classe shape est en collision
+	 * avec la voie ferrée
+	 * @param _shape la forme à vérifier
+	 * @return vrai si il y à collision et faux si ce n'est pas le cas
+	 */
 	public boolean intersects(Shape _shape)
 	{
 		return plot.intersects(_shape);
