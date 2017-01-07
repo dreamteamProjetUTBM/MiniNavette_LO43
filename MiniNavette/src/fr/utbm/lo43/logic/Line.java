@@ -36,6 +36,7 @@ public abstract class Line extends Entity implements EntityUpdateable, EntityDra
 	
 	public void addSegment(Segment _seg,int index){
 		segments.add(index, _seg);
+		
 	}
 	
 	/**
@@ -59,24 +60,19 @@ public abstract class Line extends Entity implements EntityUpdateable, EntityDra
 	//Return l'index ou l'insérer ou -1 s'il ne peut pas, -2 s'il existe
 	public int canAddSegment(Segment _segment){
 		
-		
 		if(existingSegment(_segment)){
 			return -2;
 		}
-
 		if(segments.size() == 0)
 			return 0;
 		
-
 		if(segments.size() > 0)
 		{
 			Segment first = segments.get(0), last = segments.get(segments.size()-1);
 
 			if(first.getStartSegment().distance(_segment.getStartSegment()) == 0)
 					return 0;
-			else if(last.getEndSegment().distance(_segment.getStartSegment()) == 0 ||
-					last.getEndSegment().distance(_segment.getEndSegment()) == 0 ||
-					first.getStartSegment().distance(_segment.getEndSegment())==0)
+			else if(last.getEndSegment().distance(_segment.getStartSegment()) == 0)
 				return segments.size();
 			
 		}
@@ -125,7 +121,7 @@ public abstract class Line extends Entity implements EntityUpdateable, EntityDra
 		if(!segments.contains(_seg)){
 			return false;
 		}
-		if(isLoop()){
+		/*if(isLoop()){
 			Segment temp;
 			while(!segments.get(0).equals(_seg)&&!segments.get(segments.size()-1).equals(_seg)){
 				temp = segments.get(segments.size() -1);
@@ -135,7 +131,7 @@ public abstract class Line extends Entity implements EntityUpdateable, EntityDra
 				}
 				segments.set(0,temp);
 			}
-		}
+		} */
 		
 		return segments.remove(_seg);
 	}

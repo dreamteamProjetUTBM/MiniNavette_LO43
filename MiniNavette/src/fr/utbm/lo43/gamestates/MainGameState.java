@@ -200,6 +200,7 @@ public class MainGameState extends BasicGameState
 		entities.update(arg0, arg1,arg2);
 		Random rand = new Random();
 		counter += arg2;
+		
 		fr.utbm.lo43.logic.Line _line = Map.getInstance().getLine(current_line);
 		
 		if(counter >5000){
@@ -221,20 +222,27 @@ public class MainGameState extends BasicGameState
 
 
 		if(input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON)){
+			
 			Vector2f _position = new Vector2f(input.getMouseX(),input.getMouseY());
 			if(!editLine){
 		
 				for (Station station : Map.getInstance().getStations()) {
 					if(station.isOnStation(_position)){
+						
 						editLine = true;
 						//On resize sur le centre de la case
 						drag_station_position = new Vector2f(station.getPosition().x+Map.GRID_SIZE, station.getPosition().y+Map.GRID_SIZE);
+						
+						
 					}
 				}
+
+				
 			}else{
 				
 				
 				entities.deleteObject(segmentTemp);
+				
 				boolean canAdd = false;
 				Vector2f _positionFin = new Vector2f(input.getMouseX(),input.getMouseY());
 				for (Station station : Map.getInstance().getStations()) {
@@ -245,29 +253,35 @@ public class MainGameState extends BasicGameState
 					}
 				} 
 				
+
+					
+				
 				Segment previsualizedSegment = new Segment(drag_station_position, _positionFin,current_line);
 				int indexLine = _line.canAddSegment(previsualizedSegment);
 				
+				if(_line.canAddSegment(previsualizedSegment)==-1){
+					canAdd = false;
+				}
+				
 				if(_line.canRemove(previsualizedSegment)){
-					System.out.println();
+					
 					previsualizedSegment.setIcon("asset/poubelle.png");
 					canAdd = false;
 				}
 				if( _line.canCreateSegment(_positionFin) && _line.canCreateSegment(drag_station_position)){
 					if(indexLine == 0 || indexLine == _line.getSegments().size()){						
-						if(_line.getSegments().size()!=0 &&( indexLine == 0 && _positionFin.distance(_line.getSegments().get(0).getEndSegment()) == 0 || 
-								indexLine ==_line.getSegments().size()  && drag_station_position.distance(_line.getSegments().get(indexLine-1).getEndSegment()) != 0 ))
+						if(indexLine == 0){
 							previsualizedSegment = new Segment(_positionFin, drag_station_position, current_line);
+						}
 							
-						if(_line.getSegments().size()!=0 && drag_station_position.distance(_line.getSegments().get(0).getStartSegment())==0 &&
-								_positionFin.distance(_line.getSegments().get(_line.getSegments().size()-1).getEndSegment())==0)
-							previsualizedSegment = new Segment(_positionFin, drag_station_position, current_line);
 					
 					}
 					
 				}else{
 					canAdd = false;
 				}
+				
+
 				
 				if(canAdd){
 					previsualizedSegment.setIcon("asset/add.png");
@@ -282,8 +296,9 @@ public class MainGameState extends BasicGameState
 
 				segmentTemp = previsualizedSegment;
 				entities.addAt(previsualizedSegment, 0);
+				}
 			}
-		}
+		
 		else {
 			
 			if(editLine){
@@ -313,23 +328,21 @@ public class MainGameState extends BasicGameState
 					
 						if(canContinue && _line.canCreateSegment(_end) && _line.canCreateSegment(drag_station_position)){
 							if(index == 0 || index == _line.getSegments().size()){
-								if(_line.getSegments().size()!=0 &&( index == 0 && _end.distance(_line.getSegments().get(0).getEndSegment()) == 0 || 
-										index ==_line.getSegments().size()  && drag_station_position.distance(_line.getSegments().get(index-1).getEndSegment()) != 0 ))
+								if(index == 0){
 									_segment = new Segment(_end, drag_station_position, current_line);
-									
-								if(_line.getSegments().size()!=0 && drag_station_position.distance(_line.getSegments().get(0).getStartSegment())==0 &&
-										_end.distance(_line.getSegments().get(_line.getSegments().size()-1).getEndSegment())==0)
-									_segment = new Segment(_end, drag_station_position, current_line);
+								}
 							
+								
 								_line.addSegment(_segment,index);
 								
 								entities.addAt(_segment,0);
 							}
 						}
-						
+
 					}
 				}
 				editLine = false;
+				
 			}
 		}
 		

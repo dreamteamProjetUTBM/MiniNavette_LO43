@@ -176,6 +176,15 @@ public class Segment extends EntityDragable implements EntityDrawable
 		
 	}
 	
+	
+	public boolean isFirstinLine(){
+		return Map.getInstance().getLines().get(lineIndex).getSegments().get(0) == this;
+	}
+	
+	public boolean isLastinLine(){
+		return Map.getInstance().getLines().get(lineIndex).getSegments().get(Map.getInstance().getLines().get(lineIndex).getSegments().size()-1) == this;
+	}
+	
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg,int delta)
 	{
