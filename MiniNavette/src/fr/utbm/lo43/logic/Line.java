@@ -112,7 +112,7 @@ public abstract class Line extends Entity implements EntityUpdateable, EntityDra
 		
 		if(segments.get(segments.size()-1).getLineIndex() == _seg.getLineIndex()){
 			//if(segments.get(segments.size()-1).equals(_seg))
-			if(segments.get(segments.size()-1).hasSameVectors(_seg))
+			if(segments.get(segments.size()-1).equals(_seg))
 				return true;
 			else if(segments.get(0).equals(_seg))
 				return true;
@@ -141,9 +141,12 @@ public abstract class Line extends Entity implements EntityUpdateable, EntityDra
 	}
 	
 	public boolean isSegmentCrossingLine(Segment _segment){
+
 		for (Segment segment : segments) {
-			if(segment.isCrossing(_segment))
+			if(segment.isCrossing(_segment)){
 				return true;
+			}
+				
 		}
 		return false;
 	}
