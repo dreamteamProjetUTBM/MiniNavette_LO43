@@ -8,7 +8,6 @@ public class Game {
 	private Inventory inventory;
 	private ModeGameStrategy strategy;
 	
-	
 	public Game(){
 		map = Map.getInstance();
 		inventory = Inventory.getInstance();
