@@ -25,10 +25,16 @@ public class RailWay extends Entity implements EntityDrawable
 	 * Tracé de la voie ferrée
 	 */
 	private Polygon plot;
+	
 	/**
 	 * Largeur du tracé
 	 */
 	private int plotWidth;
+	
+	/**
+	 * La couleur du tracé
+	 */
+	private Color color;
 	
 	public RailWay() 
 	{
@@ -38,6 +44,7 @@ public class RailWay extends Entity implements EntityDrawable
 		plot = new Polygon();
 		plot.setClosed(false);
 		plotWidth = 5;
+		color = new Color(26, 31, 43);
 		
 		int startX = 0;
 		int startY = 0;
@@ -81,7 +88,7 @@ public class RailWay extends Entity implements EntityDrawable
 	public void render(Graphics arg2) 
 	{
 		arg2.setLineWidth(plotWidth * 1.0f);
-		arg2.setColor(new Color(26, 31, 43));
+		arg2.setColor(color);
 		arg2.draw(plot);
 	}
 	
