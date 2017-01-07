@@ -6,6 +6,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Polygon;
 import org.newdawn.slick.geom.Rectangle;
+import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.geom.Vector2f;
 
 import fr.utbm.lo43.logic.Map;
@@ -68,5 +69,10 @@ public class RailWay extends Entity implements EntityDrawable
 		arg2.setLineWidth(plotWidth * 1.0f);
 		arg2.setColor(new Color(26, 31, 43));
 		arg2.draw(plot);
+	}
+	
+	public boolean intersects(Shape _shape)
+	{
+		return plot.intersects(_shape);
 	}
 }
