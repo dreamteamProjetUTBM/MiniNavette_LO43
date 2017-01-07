@@ -10,11 +10,14 @@ import org.newdawn.slick.state.StateBasedGame;
 import fr.utbm.lo43.GameWindow;
 import fr.utbm.lo43.entities.Button;
 import fr.utbm.lo43.entities.EventEntityMouseClicked;
+import fr.utbm.lo43.entities.Slider;
 import fr.utbm.lo43.logic.Map;
 
 public class OptionMenuGameState extends BasicGameState
 {
 	Button btn_quit;
+	
+	Slider slider_music;
 	
 	@Override
 	public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException 
@@ -33,18 +36,24 @@ public class OptionMenuGameState extends BasicGameState
 				arg1.enterState(GameWindow.GS_MAIN_MENU);
 			}
 		});
+		
+		slider_music = new Slider(new Vector2f(100, 100));
 	}
 
 	@Override
 	public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2) throws SlickException 
 	{
 		btn_quit.render(arg2);
+		
+		slider_music.render(arg2);
 	}
 
 	@Override
 	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException 
 	{
 		btn_quit.update(arg0, arg1, arg2);
+		
+		slider_music.update(arg0, arg1, arg2);
 	}
 
 	@Override

@@ -12,7 +12,6 @@ import org.newdawn.slick.state.StateBasedGame;
 import fr.utbm.lo43.GameWindow;
 import fr.utbm.lo43.entities.Button;
 import fr.utbm.lo43.entities.EventEntityMouseClicked;
-import fr.utbm.lo43.entities.RailWay;
 import fr.utbm.lo43.logic.Map;
 
 public class MainMenuGameState extends BasicGameState
