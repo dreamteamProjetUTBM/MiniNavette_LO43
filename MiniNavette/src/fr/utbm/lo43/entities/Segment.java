@@ -4,8 +4,11 @@ import java.util.ArrayList;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
+import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Line;
+import org.newdawn.slick.geom.Polygon;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -14,9 +17,10 @@ import fr.utbm.lo43.logic.Map;
 public class Segment extends EntityDragable implements EntityDrawable
 {
 	
-	
+	private Polygon polygon;
 	private ArrayList<Station> stations;
 	
+	private String iconPath;
 	//Line de Slick2D
 	Line line;
 	fr.utbm.lo43.logic.Line line_bus;
@@ -25,8 +29,13 @@ public class Segment extends EntityDragable implements EntityDrawable
 	public Segment(Vector2f _start, Vector2f _end,int index) 
 	{
 		super(_start);
-		//line = new Line(_start, _end);
-		line = new Line(_start.x, _start.y, _end.x, _end.y);
+		polygon = new Polygon();
+		polygon.setClosed(false);
+		polygon.addPoint(_start.x, _start.y);
+		Vector2f angle = calculateAnglePosition(_start, _end);
+		polygon.addPoint(angle.x, angle.y);
+		polygon.addPoint(_end.x,_end.y);
+
 		lineIndex = index;
 		dragedEvent = new EventEntityMouseDraged() {
 			
@@ -35,7 +44,7 @@ public class Segment extends EntityDragable implements EntityDrawable
 				// TODO Auto-generated method stub
 				boolean notOnStation = true;
 				for (Station station : Map.getInstance().getStations()) {
-					if(station.position == line.getEnd())
+					if(station.position == getEndSegment())
 					{
 						notOnStation = false;
 					}
@@ -60,6 +69,13 @@ public class Segment extends EntityDragable implements EntityDrawable
 		
 	}
 	
+
+	public void setIcon(String imgPath){
+		iconPath = imgPath;
+	}
+	public Vector2f getPointPolygon(int index){
+		return new Vector2f(polygon.getPoint(index)[0], polygon.getPoint(index)[1]);
+	}
 	/***
 	 * Get line number of the segment
 	 * @return
@@ -69,11 +85,11 @@ public class Segment extends EntityDragable implements EntityDrawable
 	}
 	
 	public Vector2f getStartSegment(){
-		return new Vector2f(line.getX1(),line.getY1());
+		return getPointPolygon(0);
 	}
 	
 	public Vector2f getEndSegment(){
-		return new Vector2f(line.getX2(),line.getY2());
+		return getPointPolygon(polygon.getPointCount()-1);
 	}
 	
 	/**
@@ -87,14 +103,26 @@ public class Segment extends EntityDragable implements EntityDrawable
 	
 	public ArrayList<Vector2f> getPositions(){
 		ArrayList<Vector2f> _positions = new ArrayList<>();
-		Vector2f _start = new Vector2f(line.getX1(),line.getY1());
-		Vector2f _end = new Vector2f(line.getX2(),line.getY2());
+		
+		
+		for(int i = 0; i<polygon.getPointCount();++i){
+			_positions.add(new Vector2f(polygon.getPoint(i)[0], polygon.getPoint(i)[1]));
+		}
 
-		_positions.add(_start);
-		_positions.add(_end);
 		return _positions;
 	}
 
+	public Vector2f getMid(){
+		Line tempLine = new Line(getStartSegment(), getEndSegment());
+		return new Vector2f(tempLine.getCenterX(), tempLine.getCenterY());
+	}
+	
+	public Vector2f getAngle(){
+		
+		
+		return calculateAnglePosition(getStartSegment(), getEndSegment());
+		
+	}
 	@Override
 	public void render(Graphics arg2) {
 		
@@ -102,21 +130,59 @@ public class Segment extends EntityDragable implements EntityDrawable
 		for (int i = lineIndex ; i < Map.getInstance().getLines().size(); i++) {
 			fr.utbm.lo43.logic.Line _line = Map.getInstance().getLine(i);
 			for (Segment segment : _line.getSegments()) {
-				Vector2f _intersect = segment.line.intersect(line);
-				if(_intersect == null && segment.hasSameVectors(this)){ // donc parallèle
+				if(!isCrossing(segment) && segment.hasSameVectors(this)){ // donc parallèle
 					offset++;
 				}
 			}
 		}
 		
+		//permet de centrer les segments si il y a des offsets
+		if(offset%2 == 0){
+			offset = -offset;
+		}
+		offset = offset/2;
+		
 		arg2.setLineWidth(5);
 		arg2.setColor(Map.getInstance().getLine(lineIndex).getColor());
-		Line _linerender;
-		if(line.getX1() == line.getX2())
-			_linerender = new Line(new Vector2f(line.getX1()+5*offset, line.getY1()), new Vector2f(line.getX2()+5*offset, line.getY2()));
-		else
-			_linerender = new Line(new Vector2f(line.getX1(), line.getY1()+5*offset), new Vector2f(line.getX2(), line.getY2()+5*offset));
-		arg2.draw(_linerender);
+	
+
+		Polygon _polygonrender = new Polygon();
+		_polygonrender.setClosed(false);
+
+			
+			
+			for(int i = 0; i<polygon.getPointCount();++i){
+				//if(polygon.getPoint(i)[0] == polygon.getPoint(i+1)[0] || polygon.getPoint(i)[1] == polygon.getPoint(i+1)[1]){
+					_polygonrender.addPoint(polygon.getPoint(i)[0]+5*offset, polygon.getPoint(i)[1]);
+				//}
+		
+			}
+		
+
+		arg2.draw(_polygonrender);
+		if(iconPath != null){
+			Image icon;
+			try {
+				icon = new Image(iconPath);
+				icon.drawFlash(getMid().x-Map.GRID_SIZE/2,getMid().y-Map.GRID_SIZE/2,Map.GRID_SIZE,Map.GRID_SIZE, Map.getInstance().getLine(lineIndex).getColor());
+	
+			} catch (SlickException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+			
+		
+	}
+	
+	
+	public boolean isFirstinLine(){
+		return Map.getInstance().getLines().get(lineIndex).getSegments().get(0) == this;
+	}
+	
+	public boolean isLastinLine(){
+		return Map.getInstance().getLines().get(lineIndex).getSegments().get(Map.getInstance().getLines().get(lineIndex).getSegments().size()-1) == this;
 	}
 	
 	@Override
@@ -161,22 +227,32 @@ public class Segment extends EntityDragable implements EntityDrawable
 	 * false if not
 	 */
 	public boolean isCrossing(Segment _segment){
-		Vector2f _intersect = line.intersect(_segment.line,true);
 		
-		if(_intersect == null)
+		if(this == _segment){
 			return false;
+		}
+		boolean _intersect = polygon.intersects(_segment.polygon);
 		
-		if(!_intersect.equals(_segment.getStartSegment()) && !_intersect.equals(_segment.getEndSegment()))
-			return true;
+		if(_intersect == false){
+			return false;
+		}else
+		{
+			if(isOnSegment(_segment.getEndSegment()) || isOnSegment(_segment.getStartSegment())){
+				return false;
+			
+			}
+		return true;	
+		}
+		
+
 		//System.out.println(_segment.line.getpo);
-		return false;
 	}
 	
 	public boolean hasSameVectors(Segment _seg){
-		if((_seg.getPositions().get(0).distance(getPositions().get(0)) == 0 &&
-				_seg.getPositions().get(1).distance(getPositions().get(1)) == 0) ||
-					(_seg.getPositions().get(0).distance(getPositions().get(1)) == 0 &&
-				_seg.getPositions().get(1).distance(getPositions().get(0)) == 0)
+		if((_seg.getStartSegment().distance(getStartSegment()) == 0 &&
+		_seg.getEndSegment().distance(getEndSegment()) == 0) ||
+		(_seg.getStartSegment().distance(getEndSegment()) == 0 &&
+		_seg.getEndSegment().distance(getStartSegment()) == 0)
 		)
 			return true;
 		return false;
@@ -196,10 +272,10 @@ public class Segment extends EntityDragable implements EntityDrawable
 		
 		else 
 			if(_obj.getLineIndex() == lineIndex)
-				if((_obj.getPositions().get(0).distance(getPositions().get(0)) == 0 &&
-				_obj.getPositions().get(1).distance(getPositions().get(1)) == 0) ||
-				(_obj.getPositions().get(0).distance(getPositions().get(1)) == 0 &&
-				_obj.getPositions().get(1).distance(getPositions().get(0)) == 0)
+				if((_obj.getStartSegment().distance(getStartSegment()) == 0 &&
+				_obj.getEndSegment().distance(getEndSegment()) == 0) ||
+				(_obj.getStartSegment().distance(getEndSegment()) == 0 &&
+				_obj.getEndSegment().distance(getStartSegment()) == 0)
 				){
 					return true;
 				}
@@ -222,12 +298,90 @@ public class Segment extends EntityDragable implements EntityDrawable
 	 * Retourne la longueur d'un segment
 	 * @return
 	 */
-	public float getLenght(){
-		return line.length();
-	
+	public float getLength(){
+		float length = 0;
+		for(int i = 0; i<getPositions().size()-1;++i){
+			length += getPositions().get(i).distance(getPositions().get(i+1));
+		}
+		return length;
 	}
 	
+	/**
+	 * Verifie si un point est sur le segment
+	 * @param _vector
+	 * @return
+	 */
 	public boolean isOnSegment(Vector2f _vector){
-		return line.contains(_vector.x, _vector.y);
+		Line _line;
+		for(int i = 0; i<getPositions().size()-1; ++i ){
+			_line = new Line(getPositions().get(i), getPositions().get(i+1));
+			if(_line.on(_vector)){
+				return true;
+			}
+		}
+		return false;
 	}
+	
+	/**
+	 * Calcule la position de l'angle du segment qui relie 2 positions
+	 * @param position1
+	 * @param position2
+	 * @return
+	 */
+	public static Vector2f calculateAnglePosition(Vector2f position1, Vector2f position2){
+		Vector2f anglePosition;
+		float distancePosition1;
+		float distancePosition2;
+		Line lineTemp1 = new Line(position1.x, position1.y, 0, 1, true);
+		Line lineTemp2 = new Line(position2.x, position2.y, 1, 1, true);
+	
+		distancePosition1 = position1.distance(lineTemp1.intersect(lineTemp2));
+		distancePosition2 = position2.distance(lineTemp1.intersect(lineTemp2));
+	
+		anglePosition = lineTemp1.intersect(lineTemp2);
+		
+		lineTemp1 = new Line(position1.x, position1.y, 1, 0, true);
+		lineTemp2 = new Line(position2.x, position2.y, 1, 1, true);
+		if(distancePosition1>position1.distance(lineTemp1.intersect(lineTemp2))){
+			anglePosition = lineTemp1.intersect(lineTemp2);
+			distancePosition1 = position1.distance(lineTemp1.intersect(lineTemp2));
+			distancePosition2 = position2.distance(lineTemp1.intersect(lineTemp2));
+		}else if(distancePosition1==position1.distance(lineTemp1.intersect(lineTemp2))){
+			if(distancePosition2>position2.distance(lineTemp1.intersect(lineTemp2))){
+				anglePosition = lineTemp1.intersect(lineTemp2);
+				distancePosition1 = position1.distance(lineTemp1.intersect(lineTemp2));
+				distancePosition2 = position2.distance(lineTemp1.intersect(lineTemp2));
+			}
+		}
+		
+		lineTemp1 = new Line(position1.x, position1.y, 0, 1, true);
+		lineTemp2 = new Line(position2.x, position2.y, -1, 1, true);	
+		if(distancePosition1>position1.distance(lineTemp1.intersect(lineTemp2))){
+			anglePosition = lineTemp1.intersect(lineTemp2);
+			distancePosition1 = position1.distance(lineTemp1.intersect(lineTemp2));
+			distancePosition2 = position2.distance(lineTemp1.intersect(lineTemp2));
+		}else if(distancePosition1==position1.distance(lineTemp1.intersect(lineTemp2))){
+			if(distancePosition2>position2.distance(lineTemp1.intersect(lineTemp2))){
+				anglePosition = lineTemp1.intersect(lineTemp2);
+				distancePosition1 = position1.distance(lineTemp1.intersect(lineTemp2));
+				distancePosition2 = position2.distance(lineTemp1.intersect(lineTemp2));
+			}
+		}
+		
+		lineTemp1 = new Line(position1.x, position1.y, 1, 0, true);
+		lineTemp2 = new Line(position2.x, position2.y, -1, 1, true);	
+		if(distancePosition1>position1.distance(lineTemp1.intersect(lineTemp2))){
+			anglePosition = lineTemp1.intersect(lineTemp2);
+			distancePosition1 = position1.distance(lineTemp1.intersect(lineTemp2));
+			distancePosition2 = position2.distance(lineTemp1.intersect(lineTemp2));
+		}else if(distancePosition1==position1.distance(lineTemp1.intersect(lineTemp2))){
+			if(distancePosition2>position2.distance(lineTemp1.intersect(lineTemp2))){
+				anglePosition = lineTemp1.intersect(lineTemp2);
+				distancePosition1 = position1.distance(lineTemp1.intersect(lineTemp2));
+				distancePosition2 = position2.distance(lineTemp1.intersect(lineTemp2));
+			}
+		}
+		return anglePosition;
+	}
+	
 }

@@ -30,6 +30,20 @@ public class EntityCollection implements EntityUpdateable, EntityDrawable
 		
 	}
 
+	/**
+	 * Permet de supprimer avec une égalité profonde, contrairement a delete (qui utilise la methode equals pour comparer les objets)
+	 * @param _entity
+	 * @return
+	 */
+	public boolean deleteObject(Entity _entity){
+		for(int i = 0; i<entities.size(); ++i){
+			if(entities.get(i) == _entity){
+				entities.remove(i);
+				return true;
+			}
+		}
+		return false;
+	}
 	@Override
 	public void render(Graphics arg2) 
 	{
