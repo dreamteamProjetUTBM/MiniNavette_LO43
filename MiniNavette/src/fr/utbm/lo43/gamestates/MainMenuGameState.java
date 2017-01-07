@@ -37,13 +37,13 @@ public class MainMenuGameState extends BasicGameState
 	
 		//Change de State
 		play_button.setEventCallback(
-				new EventEntityMouseClicked() {
-					
-					@Override
-					public void mouseClicked() {
-						arg1.enterState(GameWindow.GS_GAME);
-					}
+			new EventEntityMouseClicked() 
+			{	
+				@Override
+				public void mouseClicked() {
+					arg1.enterState(GameWindow.GS_GAME);
 				}
+			}
 		);
 		
 		option_button = new Button(
