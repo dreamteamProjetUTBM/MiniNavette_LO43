@@ -38,16 +38,13 @@ public class Slider extends EntityClickable implements EntityDrawable
 	{
 		Input input = gc.getInput();
 		
-		if(indicator.contains(input.getMouseX(), input.getMouseY()))
+		if(input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON))
 		{
-			System.out.println("Dedans");
-			if(input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON))
+			if(indicator.contains(input.getMouseX(), input.getMouseY()))
 			{
-				System.out.println("cliqué");
 				if(indicator.getCenterX() >= position.x && indicator.getCenterX() <= slider.getMaxX())
 				{
 					isSliding = true;
-					System.out.println("bouge");
 				}
 				else
 				{
@@ -55,10 +52,23 @@ public class Slider extends EntityClickable implements EntityDrawable
 				}
 			}
 		}
+		else
+		{
+			isSliding = false;
+		}
 		
 		if(isSliding)
 		{
 			indicator.setCenterX(input.getMouseX());
+		}
+		
+		if(indicator.getCenterX() < position.x)
+		{
+			indicator.setCenterX(position.x + indicator_size / 4);
+		}
+		if(indicator.getCenterX() > slider.getMaxX())
+		{
+			indicator.setCenterX(slider.getMaxX() - indicator_size / 4);
 		}
 	}
 
