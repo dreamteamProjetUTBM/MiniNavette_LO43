@@ -12,10 +12,12 @@ import org.newdawn.slick.state.StateBasedGame;
 import fr.utbm.lo43.GameWindow;
 import fr.utbm.lo43.entities.Button;
 import fr.utbm.lo43.entities.EventEntityMouseClicked;
+import fr.utbm.lo43.entities.RailWay;
 import fr.utbm.lo43.logic.Map;
 
 public class MainMenuGameState extends BasicGameState
 {
+	private RailWay railWay;
 
 	private Button play_button;
 	private Button option_button;
@@ -27,6 +29,8 @@ public class MainMenuGameState extends BasicGameState
 	public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException 
 	{
 		arg0.getGraphics().setBackground(Color.white);
+		
+		railWay = new RailWay();
 		
 		play_button = new Button(
 				new Vector2f((Map.WIDTH / 2) - (600 / 2), 375),
@@ -79,6 +83,8 @@ public class MainMenuGameState extends BasicGameState
 		quit_button.render(arg2);
 		
 		logo.draw((Map.WIDTH / 2) - (logo.getWidth() / 2), 0);
+		
+		railWay.render(arg2);
 	}
 
 	@Override
