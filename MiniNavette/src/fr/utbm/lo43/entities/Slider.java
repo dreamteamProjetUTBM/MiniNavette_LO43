@@ -92,6 +92,10 @@ public class Slider extends EntityClickable implements EntityDrawable
 		arg2.fill(indicator);
 	}
 	
+	/**
+	 * Permet de récupérer la valeur de slide en pourcentage
+	 * @return valeur en pourcent
+	 */
 	public float getValue()
 	{
 		float percentage = (indicator.getCenterX() - position.x);

@@ -40,7 +40,7 @@ public class OptionMenuGameState extends BasicGameState
 		});
 		
 		slider_music = new Slider(new Vector2f(100, 100));
-		lb_slider_value = new Label("Volume : " + slider_music.getValue() + "%", new Vector2f(100, 350));
+		lb_slider_value = new Label("Volume : " + slider_music.getValue() + "%", new Vector2f(350, 90));
 	}
 
 	@Override
