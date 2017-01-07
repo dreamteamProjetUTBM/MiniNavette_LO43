@@ -34,8 +34,6 @@ public class MainMenuGameState extends BasicGameState
 				"asset/b_play_hover.png",
 				"asset/b_play_pressed.png"
 		);
-	
-		//Change de State
 		play_button.setEventCallback(
 			new EventEntityMouseClicked() 
 			{	
@@ -52,6 +50,14 @@ public class MainMenuGameState extends BasicGameState
 				"asset/b_option_hover.png", 
 				"asset/b_option_pressed.png"
 		);
+		option_button.setEventCallback(new EventEntityMouseClicked() 
+		{	
+			@Override
+			public void mouseClicked() 
+			{
+				arg1.enterState(GameWindow.GS_OPTION_MENU);
+			}
+		});
 		
 		quit_button = new Button(
 				new Vector2f((Map.WIDTH / 2) - (600 / 2), 505), 
