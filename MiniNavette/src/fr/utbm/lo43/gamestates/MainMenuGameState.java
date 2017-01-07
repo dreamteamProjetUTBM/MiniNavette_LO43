@@ -12,11 +12,11 @@ import org.newdawn.slick.state.StateBasedGame;
 import fr.utbm.lo43.GameWindow;
 import fr.utbm.lo43.entities.Button;
 import fr.utbm.lo43.entities.EventEntityMouseClicked;
+import fr.utbm.lo43.entities.RailWay;
 import fr.utbm.lo43.logic.Map;
 
 public class MainMenuGameState extends BasicGameState
 {
-
 	private Button play_button;
 	private Button option_button;
 	private Button quit_button;
@@ -34,16 +34,14 @@ public class MainMenuGameState extends BasicGameState
 				"asset/b_play_hover.png",
 				"asset/b_play_pressed.png"
 		);
-	
-		//Change de State
 		play_button.setEventCallback(
-				new EventEntityMouseClicked() {
-					
-					@Override
-					public void mouseClicked() {
-						arg1.enterState(GameWindow.GS_GAME);
-					}
+			new EventEntityMouseClicked() 
+			{	
+				@Override
+				public void mouseClicked() {
+					arg1.enterState(GameWindow.GS_GAME);
 				}
+			}
 		);
 		
 		option_button = new Button(
@@ -52,6 +50,14 @@ public class MainMenuGameState extends BasicGameState
 				"asset/b_option_hover.png", 
 				"asset/b_option_pressed.png"
 		);
+		option_button.setEventCallback(new EventEntityMouseClicked() 
+		{	
+			@Override
+			public void mouseClicked() 
+			{
+				arg1.enterState(GameWindow.GS_OPTION_MENU);
+			}
+		});
 		
 		quit_button = new Button(
 				new Vector2f((Map.WIDTH / 2) - (600 / 2), 505), 

@@ -1,12 +1,8 @@
 package fr.utbm.lo43.logic;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Random;
 
 import org.newdawn.slick.geom.Line;
-import org.newdawn.slick.geom.Vector2f;
-import org.newdawn.slick.particles.ConfigurableEmitter.RandomValue;
 
 import fr.utbm.lo43.entities.Bus;
 import fr.utbm.lo43.entities.Passenger;
@@ -17,7 +13,6 @@ public class Map {
 	public static final int WIDTH = 1280;
 	public static final int HEIGHT = 720;
 	public static final int GRID_SIZE = 32;
-
 	
 	public ArrayList<Station> stations;
 	private ArrayList<fr.utbm.lo43.logic.Line> lines;
@@ -37,9 +32,8 @@ public class Map {
 		for(int i = 0;i < HEIGHT ; i+=GRID_SIZE){
 			grid.add(new Line(0,i,WIDTH,i));
 		}
-				
 	}
- 
+
 	/** Instance unique pré-initialisée */
 	private static Map INSTANCE;
  
