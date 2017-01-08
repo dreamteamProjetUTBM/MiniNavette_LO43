@@ -7,7 +7,9 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Circle;
 import org.newdawn.slick.geom.Line;
+import org.newdawn.slick.geom.Point;
 import org.newdawn.slick.geom.Polygon;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
@@ -16,6 +18,7 @@ import fr.utbm.lo43.logic.Map;
 
 public class Segment extends EntityDragable implements EntityDrawable {
 
+	public static final float SEGMENT_THICKNESS = 5;
 	private Polygon polygon;
 	private ArrayList<Station> stations;
 
@@ -144,6 +147,7 @@ public class Segment extends EntityDragable implements EntityDrawable {
 	@Override
 	public void render(Graphics arg2) {
 
+		arg2.setAntiAlias(true);
 		Line tempLine;
 		int offset = 0;
 		int dxStart = 0;
@@ -170,7 +174,7 @@ public class Segment extends EntityDragable implements EntityDrawable {
 		}
 		offset = offset / 2;
 
-		arg2.setLineWidth(5);
+		arg2.setLineWidth(SEGMENT_THICKNESS);
 		arg2.setColor(Map.getInstance().getLine(lineIndex).getColor());
 
 		Polygon _polygonrender = new Polygon();
@@ -206,16 +210,16 @@ public class Segment extends EntityDragable implements EntityDrawable {
 			}
 
 			if(Math.abs(dxStart) == 1 && Math.abs(dyStart) == 0){
-				_polygonrender.setLocation(_polygonrender.getX(), _polygonrender.getY() +5*offset);
+				_polygonrender.setLocation(_polygonrender.getX(), _polygonrender.getY() +SEGMENT_THICKNESS*offset);
 			}
 			if(Math.abs(dxStart) == 0 && Math.abs(dyStart) == 1){
-				_polygonrender.setLocation(_polygonrender.getX()+5*offset, _polygonrender.getY());
+				_polygonrender.setLocation(_polygonrender.getX()+SEGMENT_THICKNESS*offset, _polygonrender.getY());
 			}
 			if(dxStart == dyStart){
-				_polygonrender.setLocation(_polygonrender.getX()+5*offset, _polygonrender.getY()-5*offset);
+				_polygonrender.setLocation(_polygonrender.getX()+SEGMENT_THICKNESS*offset, _polygonrender.getY()-SEGMENT_THICKNESS*offset);
 			}
 			if(dxStart == -dyStart){
-				_polygonrender.setLocation(_polygonrender.getX()+5*offset, _polygonrender.getY()+5*offset);
+				_polygonrender.setLocation(_polygonrender.getX()+SEGMENT_THICKNESS*offset, _polygonrender.getY()+SEGMENT_THICKNESS*offset);
 			}
 			
 		if(isFirstinLine()){
@@ -257,15 +261,22 @@ public class Segment extends EntityDragable implements EntityDrawable {
 		}
 		
 		
-		
 
 		//_polygonrender.setLocation(_polygonrender.getX()+5*offset, _polygonrender.getY() +5*offset);
 		arg2.draw(_polygonrender);
 		
+
+		
+		for(int i = 0; i<_polygonrender.getPointCount(); ++i){
+		
+			arg2.fillOval(_polygonrender.getPoint(i)[0]-SEGMENT_THICKNESS/2, _polygonrender.getPoint(i)[1] -SEGMENT_THICKNESS/2, SEGMENT_THICKNESS, SEGMENT_THICKNESS);
+		}
+
+		
 		try {
 			Image imgPont = new Image("asset/bridge.png");
 			for(Vector2f pont : ponts){
-				imgPont.drawFlash(pont.x - Map.GRID_SIZE + 5*offset, pont.y - Map.GRID_SIZE + 5*offset, Map.GRID_SIZE*2,
+				imgPont.drawFlash(pont.x - Map.GRID_SIZE + SEGMENT_THICKNESS*offset, pont.y - Map.GRID_SIZE + SEGMENT_THICKNESS*offset, Map.GRID_SIZE*2,
 						Map.GRID_SIZE*2, Map.getInstance().getLine(lineIndex).getColor());
 			}
 		} catch (SlickException e1) {
