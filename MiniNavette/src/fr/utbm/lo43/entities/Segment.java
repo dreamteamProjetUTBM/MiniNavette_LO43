@@ -137,6 +137,7 @@ public class Segment extends EntityDragable implements EntityDrawable {
 
 	}
 
+	
 	@Override
 	public void render(Graphics arg2) {
 
@@ -144,9 +145,11 @@ public class Segment extends EntityDragable implements EntityDrawable {
 		for (int i = lineIndex; i < Map.getInstance().getLines().size(); i++) {
 			fr.utbm.lo43.logic.Line _line = Map.getInstance().getLine(i);
 			for (Segment segment : _line.getSegments()) {
-				if (!isCrossing(segment) && segment.hasSameVectors(this)) { // donc
+				if (!isCrossing(segment) && (segment.hasSameVectors(this) || isOnSegment(segment.getAngle())|| segment.isOnSegment(getAngle()))) { // donc
 																			// parallèle
 					offset++;
+					
+					
 				}
 			}
 		}
