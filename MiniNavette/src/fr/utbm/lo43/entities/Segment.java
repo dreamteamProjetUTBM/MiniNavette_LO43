@@ -254,13 +254,15 @@ public class Segment extends EntityDragable implements EntityDrawable
 					tempLine2 = new Line(new Vector2f(_segment.polygon.getPoint(j)[0],_segment.polygon.getPoint(j)[1]), new Vector2f(_segment.polygon.getPoint(j+1)[0],_segment.polygon.getPoint(j+1)[1]));
 					intersection = null;
 					intersection = tempLine1.intersect(tempLine2, true);
+
 					if(intersection != null){
-						if(intersection.distance(_segment.getStartSegment()) == 0 ||intersection.distance(_segment.getEndSegment()) == 0){
+						if(intersection.distance(_segment.getStartSegment()) == 0 ||intersection.distance(_segment.getEndSegment()) == 0 || intersection.distance(_segment.getAngle()) == 0 || intersection.distance(getAngle()) == 0){
 						
 						}else{
 							intersect = true;
 						}
 					}
+					
 				}
 			
 		}
