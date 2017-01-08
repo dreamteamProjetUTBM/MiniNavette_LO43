@@ -18,7 +18,7 @@ import fr.utbm.lo43.logic.Score;
 public class Passenger extends Entity implements EntityDrawable, EntityUpdateable
 {
 	private Date arrivalTime;
-	private Filiere filiere;
+	protected Filiere filiere;
 	private Image preview;
 	protected Station nextStop;
 	

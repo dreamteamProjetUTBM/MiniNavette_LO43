@@ -27,6 +27,7 @@ import fr.utbm.lo43.entities.ToggledButton;
 import fr.utbm.lo43.logic.ClassicLine;
 import fr.utbm.lo43.logic.Filiere;
 import fr.utbm.lo43.logic.Game;
+import fr.utbm.lo43.logic.Inventory;
 import fr.utbm.lo43.logic.Map;
 
 public class MainGameState extends BasicGameState {
@@ -41,12 +42,12 @@ public class MainGameState extends BasicGameState {
 	// Bus button
 	private ToggledButton bus_button;
 	private Label bus_label;
+	private Label bridge_label;
 
 	int current_line;
 
 	ClassicBus bus_test;
 
-	private Segment previsualizedSegment;
 	private Segment segmentTemp = null;
 	private boolean editLine;
 	private Vector2f drag_station_position;
@@ -129,9 +130,16 @@ public class MainGameState extends BasicGameState {
 				new Vector2f(Map.GRID_SIZE, Map.GRID_SIZE), "asset/bus_b_idle.png", "asset/bus_b_hover.png",
 				"asset/bus_b_pressed.png");
 
+
+		
 		bus_label = new Label(Integer.toString(game.getInventory().getRemainingBus()),
 				new Vector2f(Map.WIDTH / 3 - Map.GRID_SIZE, Map.HEIGHT - Map.GRID_SIZE));
 
+		bridge_label = new Label(Integer.toString(game.getInventory().getRemainingBridges()),
+				new Vector2f(Map.WIDTH/3 *2- Map.GRID_SIZE, Map.HEIGHT - Map.GRID_SIZE));
+		
+		
+		
 		bus_button.setEventCallback(new EventEntityMouseClicked() {
 
 			@Override
@@ -141,7 +149,9 @@ public class MainGameState extends BasicGameState {
 		});
 		entities.add(bus_button);
 		entities.add(bus_label);
-
+		entities.add(bridge_label);
+		
+		
 		Station station1 = new Station(new Vector2f(10 * Map.GRID_SIZE * 2, 3 * Map.GRID_SIZE * 2), Filiere.GI);
 		Station station2 = new Station(new Vector2f(5 * Map.GRID_SIZE * 2, 5 * Map.GRID_SIZE * 2), Filiere.EDIM);
 		Station station3 = new Station(new Vector2f(7 * Map.GRID_SIZE * 2, 7 * Map.GRID_SIZE * 2), Filiere.IMSI);
@@ -182,13 +192,14 @@ public class MainGameState extends BasicGameState {
 
 	@Override
 	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException {
-		Map.getInstance().previsualizedSegment = null;
+
 		entities.update(arg0, arg1, arg2);
 		Random rand = new Random();
 		counter += arg2;
 
 		bus_label.setText(game.getInventory().getRemainingBus() + "");
-
+		bridge_label.setText(game.getInventory().getRemainingBridges() + "");
+		
 		fr.utbm.lo43.logic.Line _line = Map.getInstance().getLine(current_line);
 
 		if (counter > 5000) {
@@ -294,10 +305,15 @@ public class MainGameState extends BasicGameState {
 				if (_line.canRemove(previsualizedSegment)) {
 
 					previsualizedSegment.setIcon("asset/poubelle.png");
+				}else{
+					if(previsualizedSegment.getBridges().size()>0 && Inventory.getInstance().getRemainingBridges() <= 0){
+						previsualizedSegment.setForbiddenBridges(true);
+					}
 				}
 
+
 				segmentTemp = previsualizedSegment;
-				Map.getInstance().previsualizedSegment = previsualizedSegment;
+		
 				entities.addAt(previsualizedSegment, 0);
 			}
 		}
@@ -318,6 +334,9 @@ public class MainGameState extends BasicGameState {
 						if (_line.canRemove(_segment)) {
 							_line.removeSegment(_segment);
 							entities.delete(_segment);
+							if(_segment.getBridges().size()>0){
+								Inventory.getInstance().addBridge();
+							}
 						}
 
 						boolean canContinue = true;
@@ -344,9 +363,17 @@ public class MainGameState extends BasicGameState {
 									}
 								}
 								if(canContinue){
+									
+									if(_segment.getBridges().size() > 0){
+										if(Inventory.getInstance().getRemainingBridges()>0){
+											_line.addSegment(_segment, index);
+											entities.addAt(_segment, 0);
+											Inventory.getInstance().takeBridge();
+										}
+									}else{
 									_line.addSegment(_segment, index);
 									entities.addAt(_segment, 0);
-			
+									}
 
 								}
 							}

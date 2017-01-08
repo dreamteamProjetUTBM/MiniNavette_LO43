@@ -40,7 +40,7 @@ public class Station extends EntityClickable implements EntityDrawable, Dijkstra
 	
 	protected ArrayList<Passenger> waitingPassenger;
 	
-	//HashMap qui donne la prochaine station a atteindre pour chaque atteindre une filiere a partir de cette station 
+	//HashMap qui donne la prochaine station a atteindre pour atteindre une filiere a partir de cette station 
 	private HashMap<Filiere, Station> nextStop;
 	
 	public Station(Vector2f _position, Filiere type) 
@@ -126,10 +126,10 @@ public class Station extends EntityClickable implements EntityDrawable, Dijkstra
 	
 	public void notifyBus(Bus bus)
 	{
-		//mettre a jour chaque next station de chaque passager avec dijstruc
 		for(Passenger passenger : waitingPassenger)
 		{
-			//passenger.nextStation = la station qu'il lui faut
+			//on met à jour l'arrêt suivant de chaque passager qui attend à la station avant qu'ils vérifient si le bus y va
+			passenger.nextStop = this.nextStop.get(passenger.filiere);
 		}
 		if(bus.passengers.size() < bus.capacity) bus.unload(this);
 		if(waitingPassenger.size()!=0) bus.load(this);
