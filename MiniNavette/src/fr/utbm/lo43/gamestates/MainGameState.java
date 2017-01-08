@@ -352,6 +352,8 @@ public class MainGameState extends BasicGameState {
 								if(canContinue){
 									_line.addSegment(_segment, index);
 									entities.addAt(_segment, 0);
+			
+
 								}
 							}
 						}

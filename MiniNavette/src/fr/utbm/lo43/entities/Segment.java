@@ -137,19 +137,24 @@ public class Segment extends EntityDragable implements EntityDrawable {
 
 	}
 
-	
+
 	@Override
 	public void render(Graphics arg2) {
 
+		Line tempLine;
 		int offset = 0;
+		int dxStart = 0;
+		int dyStart = 0;
+		int dxEnd = 0;
+		int dyEnd = 0;
 		for (int i = lineIndex; i < Map.getInstance().getLines().size(); i++) {
 			fr.utbm.lo43.logic.Line _line = Map.getInstance().getLine(i);
 			for (Segment segment : _line.getSegments()) {
 				if (!isCrossing(segment) && (segment.hasSameVectors(this) || isOnSegment(segment.getAngle())|| segment.isOnSegment(getAngle()))) { // donc
-																			// parallèle
+					// parallèle
 					offset++;
-					
-					
+
+
 				}
 			}
 		}
@@ -166,6 +171,8 @@ public class Segment extends EntityDragable implements EntityDrawable {
 		Polygon _polygonrender = new Polygon();
 		_polygonrender.setClosed(false);
 
+
+
 		for (int i = 0; i < polygon.getPointCount(); ++i) {
 			// if(polygon.getPoint(i)[0] == polygon.getPoint(i+1)[0] ||
 			// polygon.getPoint(i)[1] == polygon.getPoint(i+1)[1]){
@@ -173,43 +180,80 @@ public class Segment extends EntityDragable implements EntityDrawable {
 			// }
 
 		} 
-		
+
 		try{
-		Line tempLine =  new Line(getPositions().get(0), getPositions().get(1));
-		
+			tempLine =  new Line(getPositions().get(0), getPositions().get(1));
+
+
+			dxStart = (int) tempLine.getDX();
+			dyStart = (int) tempLine.getDY();
+
+			try{
+				dxStart = Math.abs(dxStart)/dxStart;
+			}catch(ArithmeticException e)
+			{
+
+			}
+			try{
+				dyStart = Math.abs(dyStart)/dyStart;
+			}catch(ArithmeticException e){
+
+			}
+
+			if(Math.abs(dxStart) == 1 && Math.abs(dyStart) == 0){
+				_polygonrender.setLocation(_polygonrender.getX(), _polygonrender.getY() +5*offset);
+			}
+			if(Math.abs(dxStart) == 0 && Math.abs(dyStart) == 1){
+				_polygonrender.setLocation(_polygonrender.getX()+5*offset, _polygonrender.getY());
+			}
+			if(dxStart == dyStart){
+				_polygonrender.setLocation(_polygonrender.getX()+5*offset, _polygonrender.getY()-5*offset);
+			}
+			if(dxStart == -dyStart){
+				_polygonrender.setLocation(_polygonrender.getX()+5*offset, _polygonrender.getY()+5*offset);
+			}
 			
-		int dx = (int) tempLine.getDX();
-		int dy = (int) tempLine.getDY();
-		
-		try{
-			dx = Math.abs(dx)/dx;
-		}catch(ArithmeticException e)
-		{
-			
-		}
-		try{
-			dy = Math.abs(dy)/dy;
-		}catch(ArithmeticException e){
-			
+		if(isFirstinLine()){
+			tempLine = new Line(new Vector2f(_polygonrender.getPoint(0)[0], _polygonrender.getPoint(0)[1]), new Vector2f(_polygonrender.getPoint(0)[0]+ (-2)*dxStart*Map.GRID_SIZE, _polygonrender.getPoint(0)[1]+(-2)*dyStart*Map.GRID_SIZE));
+			arg2.draw(tempLine);
 		}
 
-		if(Math.abs(dx) == 1 && Math.abs(dy) == 0){
-			_polygonrender.setLocation(_polygonrender.getX(), _polygonrender.getY() +5*offset);
-		}
-		if(Math.abs(dx) == 0 && Math.abs(dy) == 1){
-			_polygonrender.setLocation(_polygonrender.getX()+5*offset, _polygonrender.getY());
-		}
-		if(dx == dy){
-			_polygonrender.setLocation(_polygonrender.getX()+5*offset, _polygonrender.getY()-5*offset);
-		}
-		if(dx == -dy){
-			_polygonrender.setLocation(_polygonrender.getX()+5*offset, _polygonrender.getY()+5*offset);
-		}
-		
 		}catch(IndexOutOfBoundsException e){
+
+		}
+
 		
+		
+		try{
+			tempLine =  new Line(getPositions().get(_polygonrender.getPointCount()-1), getPositions().get(_polygonrender.getPointCount()-2));
+
+
+			dxEnd = (int) tempLine.getDX();
+			dyEnd = (int) tempLine.getDY();
+
+			try{
+				dxEnd= Math.abs(dxEnd)/dxEnd;
+			}catch(ArithmeticException e)
+			{
+
+			}
+			try{
+				dyEnd = Math.abs(dyEnd)/dyEnd;
+			}catch(ArithmeticException e){
+
+			}
+
+		if(isLastinLine()){
+			tempLine = new Line(new Vector2f(_polygonrender.getPoint(_polygonrender.getPointCount()-1)[0], _polygonrender.getPoint(_polygonrender.getPointCount()-1)[1]), new Vector2f(_polygonrender.getPoint(_polygonrender.getPointCount()-1)[0]+ (-2)*dxEnd*Map.GRID_SIZE, _polygonrender.getPoint(_polygonrender.getPointCount()-1)[1]+(-2)*dyEnd*Map.GRID_SIZE));
+			arg2.draw(tempLine);
+		}
+		}catch(IndexOutOfBoundsException e){
+
 		}
 		
+		
+		
+
 		//_polygonrender.setLocation(_polygonrender.getX()+5*offset, _polygonrender.getY() +5*offset);
 		arg2.draw(_polygonrender);
 		if (iconPath != null) {
@@ -328,9 +372,9 @@ public class Segment extends EntityDragable implements EntityDrawable {
 
 		else if (_obj.getLineIndex() == lineIndex)
 			if ((_obj.getStartSegment().distance(getStartSegment()) == 0
-					&& _obj.getEndSegment().distance(getEndSegment()) == 0)
+			&& _obj.getEndSegment().distance(getEndSegment()) == 0)
 					|| (_obj.getStartSegment().distance(getEndSegment()) == 0
-							&& _obj.getEndSegment().distance(getStartSegment()) == 0)) {
+					&& _obj.getEndSegment().distance(getStartSegment()) == 0)) {
 				return true;
 			}
 
