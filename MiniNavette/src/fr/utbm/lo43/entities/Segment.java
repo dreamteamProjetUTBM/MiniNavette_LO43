@@ -169,11 +169,48 @@ public class Segment extends EntityDragable implements EntityDrawable {
 		for (int i = 0; i < polygon.getPointCount(); ++i) {
 			// if(polygon.getPoint(i)[0] == polygon.getPoint(i+1)[0] ||
 			// polygon.getPoint(i)[1] == polygon.getPoint(i+1)[1]){
-			_polygonrender.addPoint(polygon.getPoint(i)[0] + 5 * offset, polygon.getPoint(i)[1]+5 * offset);
+			_polygonrender.addPoint(polygon.getPoint(i)[0], polygon.getPoint(i)[1]);
 			// }
 
+		} 
+		
+		try{
+		Line tempLine =  new Line(getPositions().get(0), getPositions().get(1));
+		
+			
+		int dx = (int) tempLine.getDX();
+		int dy = (int) tempLine.getDY();
+		
+		try{
+			dx = Math.abs(dx)/dx;
+		}catch(ArithmeticException e)
+		{
+			
+		}
+		try{
+			dy = Math.abs(dy)/dy;
+		}catch(ArithmeticException e){
+			
 		}
 
+		if(Math.abs(dx) == 1 && Math.abs(dy) == 0){
+			_polygonrender.setLocation(_polygonrender.getX(), _polygonrender.getY() +5*offset);
+		}
+		if(Math.abs(dx) == 0 && Math.abs(dy) == 1){
+			_polygonrender.setLocation(_polygonrender.getX()+5*offset, _polygonrender.getY());
+		}
+		if(dx == dy){
+			_polygonrender.setLocation(_polygonrender.getX()+5*offset, _polygonrender.getY()-5*offset);
+		}
+		if(dx == -dy){
+			_polygonrender.setLocation(_polygonrender.getX()+5*offset, _polygonrender.getY()+5*offset);
+		}
+		
+		}catch(IndexOutOfBoundsException e){
+		
+		}
+		
+		//_polygonrender.setLocation(_polygonrender.getX()+5*offset, _polygonrender.getY() +5*offset);
 		arg2.draw(_polygonrender);
 		if (iconPath != null) {
 			Image icon;
