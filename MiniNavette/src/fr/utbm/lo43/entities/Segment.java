@@ -46,6 +46,7 @@ public class Segment extends EntityDragable implements EntityDrawable {
 		forbiddenBridges = false;
 		
 		lineIndex = index;
+		line_bus = Map.getInstance().getLine(lineIndex);
 		
 		bridges = intersectsRailway(Map.getInstance().railWay);
 
@@ -468,7 +469,6 @@ public class Segment extends EntityDragable implements EntityDrawable {
 		return false;
 	}
 	
-	//moi j'aime bien faire des methodes comme ça aussi
 	public Segment getNextSegment()
 	{	
 		if(line_bus.getSegments().size()-1 >= line_bus.getSegments().indexOf(this)+1){
