@@ -312,10 +312,13 @@ public class MainGameState extends BasicGameState {
 				if (_line.canRemove(previsualizedSegment)) {
 
 					previsualizedSegment.setIcon("asset/poubelle.png");
+				}else{
+					if(previsualizedSegment.getBridges().size()>0 && Inventory.getInstance().getRemainingBridges() <= 0){
+						previsualizedSegment.setForbiddenBridges(true);
+					}
 				}
 
 
-				
 				segmentTemp = previsualizedSegment;
 		
 				entities.addAt(previsualizedSegment, 0);

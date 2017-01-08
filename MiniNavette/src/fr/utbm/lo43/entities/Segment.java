@@ -2,6 +2,7 @@ package fr.utbm.lo43.entities;
 
 import java.util.ArrayList;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -24,14 +25,15 @@ public class Segment extends EntityDragable implements EntityDrawable {
 	private ArrayList<Station> stations;
 
 	private ArrayList<Vector2f> bridges;
-
+	
 
 	private String iconPath;
 	// Line de Slick2D
 	Line line;
 	fr.utbm.lo43.logic.Line line_bus;
 	int lineIndex;
-	
+	private boolean forbiddenBridges;
+
 
 	public Segment(Vector2f _start, Vector2f _end, int index) {
 		super(_start);
@@ -41,7 +43,8 @@ public class Segment extends EntityDragable implements EntityDrawable {
 		Vector2f angle = calculateAnglePosition(_start, _end);
 		polygon.addPoint(angle.x, angle.y);
 		polygon.addPoint(_end.x, _end.y);
-
+		forbiddenBridges = false;
+		
 		lineIndex = index;
 		
 		bridges = intersectsRailway(Map.getInstance().railWay);
@@ -78,6 +81,14 @@ public class Segment extends EntityDragable implements EntityDrawable {
 
 	}
 	
+
+	
+	public void setForbiddenBridges(boolean forbiddenBridges) {
+		this.forbiddenBridges = forbiddenBridges;
+	}
+
+
+
 	public ArrayList<Vector2f> getBridges() {
 		return bridges;
 	}
@@ -284,9 +295,15 @@ public class Segment extends EntityDragable implements EntityDrawable {
 		
 		try {
 			Image imgBridges = new Image("asset/bridge.png");
-			for(Vector2f bridges : bridges){
-				imgBridges.drawFlash(bridges.x - Map.GRID_SIZE + SEGMENT_THICKNESS*offset, bridges.y - Map.GRID_SIZE + SEGMENT_THICKNESS*offset, Map.GRID_SIZE*2,
+			Image imgForbidden = new Image("asset/forbidden.png"); 
+			for(Vector2f bridge : bridges){
+				imgBridges.drawFlash(bridge.x - Map.GRID_SIZE + SEGMENT_THICKNESS*offset, bridge.y - Map.GRID_SIZE + SEGMENT_THICKNESS*offset, Map.GRID_SIZE*2,
 						Map.GRID_SIZE*2, Map.getInstance().getLine(lineIndex).getColor());
+				
+				if(forbiddenBridges){
+					imgForbidden.drawFlash(bridge.x - Map.GRID_SIZE + SEGMENT_THICKNESS*offset, bridge.y - Map.GRID_SIZE + SEGMENT_THICKNESS*offset, Map.GRID_SIZE*2,
+							Map.GRID_SIZE*2, Color.red);
+				}
 			}
 		} catch (SlickException e1) {
 			// TODO Auto-generated catch block
