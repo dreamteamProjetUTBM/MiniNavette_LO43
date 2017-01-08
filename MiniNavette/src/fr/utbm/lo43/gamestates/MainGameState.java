@@ -188,6 +188,7 @@ public class MainGameState extends BasicGameState {
 
 	@Override
 	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException {
+		Map.getInstance().previsualizedSegment = null;
 		entities.update(arg0, arg1, arg2);
 		Random rand = new Random();
 		counter += arg2;
@@ -246,7 +247,6 @@ public class MainGameState extends BasicGameState {
 			} else {
 
 				entities.deleteObject(segmentTemp);
-
 				boolean canAdd = false;
 				Vector2f _positionFin = new Vector2f(input.getMouseX(), input.getMouseY());
 				for (Station station : Map.getInstance().getStations()) {
@@ -304,6 +304,7 @@ public class MainGameState extends BasicGameState {
 				}
 
 				segmentTemp = previsualizedSegment;
+				Map.getInstance().previsualizedSegment = previsualizedSegment;
 				entities.addAt(previsualizedSegment, 0);
 			}
 		}
