@@ -53,7 +53,7 @@ public class ClassicBus extends Bus
 					if(station.isOnStation(endpoint)){
 						isOnStation = true;
 						//Alors il est dans une station
-						//Roger tu peux décharger et charger ici
+						station.notifyBus(this);
 					}
 				}
 				

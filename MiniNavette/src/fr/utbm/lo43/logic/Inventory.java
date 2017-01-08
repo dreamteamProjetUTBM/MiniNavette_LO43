@@ -1,8 +1,9 @@
 package fr.utbm.lo43.logic;
 
 public class Inventory {
-	
+
 	private int remaining_bus;
+	private int remaining_bridges;
 	
 	/** Constructeur privé */
 	private Inventory()
@@ -29,6 +30,18 @@ public class Inventory {
 
 	public void setRemainingBus(int value){
 		remaining_bus+= value;
+	}
+	
+	public int getRemainingBridges(){
+		return remaining_bridges;
+	}
+
+	public void addBridge(){
+		remaining_bridges ++;
+	}
+
+	public void takeBridge(){
+		remaining_bridges ++;
 	}
 	
 	
