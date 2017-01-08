@@ -99,4 +99,5 @@ public class RailWay extends Entity implements EntityDrawable
 	{
 		return plot.intersects(_shape);
 	}
+	
 }
