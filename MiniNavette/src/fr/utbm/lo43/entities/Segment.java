@@ -14,6 +14,7 @@ import org.newdawn.slick.geom.Polygon;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
 
+import fr.utbm.lo43.logic.Inventory;
 import fr.utbm.lo43.logic.Map;
 
 public class Segment extends EntityDragable implements EntityDrawable {
@@ -48,16 +49,18 @@ public class Segment extends EntityDragable implements EntityDrawable {
 			public void mouseReleased() {
 				// TODO Auto-generated method stub
 				boolean notOnStation = true;
+				boolean needMoreBridges = ponts.size()> Inventory.getInstance().getRemainingBridges() ;
 				for (Station station : Map.getInstance().getStations()) {
 					if (station.position == getEndSegment()) {
 						notOnStation = false;
 					}
 				}
-				if (notOnStation) {
+				if (notOnStation||needMoreBridges) {
 					// J'adore faire des méthodes comme ça
 					Map.getInstance().getLine(lineIndex).removeSegment(Map.getInstance().getLine(lineIndex)
 							.getSegments().get(Map.getInstance().getLine(lineIndex).getSegments().size() - 1));
 				}
+				Inventory.getInstance().takeBridges(ponts.size()); //takeBridges devrait être écrite avec des exceptions
 				System.out.println("Segment.Segment(...).new EventEntityMouseDraged() {...}.mouseReleased()");
 			}
 
@@ -118,7 +121,7 @@ public class Segment extends EntityDragable implements EntityDrawable {
 	}
 
 	/**
-	 * Renvoie le segment inverse (le point de depart deviens le point d'arriv�
+	 * Renvoie le segment inverse (le point de depart deviens le point d'arriv�
 	 * et inversement)
 	 * 
 	 * @return

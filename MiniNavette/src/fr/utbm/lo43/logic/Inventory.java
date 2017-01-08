@@ -41,8 +41,12 @@ public class Inventory {
 	}
 
 	public void takeBridge(){
-		remaining_bridges ++;
+		if(remaining_bridges == 0)return; //envoie une exception plutôt
+		remaining_bridges -- ;
 	}
-	
+	public void takeBridges(int bridges){
+		if(remaining_bridges < bridges)return; //envoie une exception plutôt		
+		remaining_bridges -= bridges;
+	}
 	
 }
