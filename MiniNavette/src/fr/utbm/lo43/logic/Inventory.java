@@ -9,7 +9,7 @@ public class Inventory {
 	private Inventory()
 	{
 		remaining_bus = 3;
-		remaining_bridges = 0; 
+		remaining_bridges = 2; 
 	}
  
 	/** Instance unique pré-initialisée */

@@ -41,12 +41,12 @@ public class MainGameState extends BasicGameState {
 	// Bus button
 	private ToggledButton bus_button;
 	private Label bus_label;
+	private Label bridge_label;
 
 	int current_line;
 
 	ClassicBus bus_test;
 
-	private Segment previsualizedSegment;
 	private Segment segmentTemp = null;
 	private boolean editLine;
 	private Vector2f drag_station_position;
@@ -129,9 +129,16 @@ public class MainGameState extends BasicGameState {
 				new Vector2f(Map.GRID_SIZE, Map.GRID_SIZE), "asset/bus_b_idle.png", "asset/bus_b_hover.png",
 				"asset/bus_b_idle.png");
 
+
+		
 		bus_label = new Label(Integer.toString(game.getInventory().getRemainingBus()),
 				new Vector2f(Map.WIDTH / 3 - Map.GRID_SIZE, Map.HEIGHT - Map.GRID_SIZE));
 
+		bridge_label = new Label(Integer.toString(game.getInventory().getRemainingBridges()),
+				new Vector2f(Map.WIDTH/3 *2- Map.GRID_SIZE, Map.HEIGHT - Map.GRID_SIZE));
+		
+		
+		
 		bus_button.setEventCallback(new EventEntityMouseClicked() {
 
 			@Override
@@ -141,7 +148,9 @@ public class MainGameState extends BasicGameState {
 		});
 		entities.add(bus_button);
 		entities.add(bus_label);
-
+		entities.add(bridge_label);
+		
+		
 		Station station1 = new Station(new Vector2f(10 * Map.GRID_SIZE * 2, 3 * Map.GRID_SIZE * 2), Filiere.GI);
 		Station station2 = new Station(new Vector2f(5 * Map.GRID_SIZE * 2, 5 * Map.GRID_SIZE * 2), Filiere.EDIM);
 		Station station3 = new Station(new Vector2f(7 * Map.GRID_SIZE * 2, 7 * Map.GRID_SIZE * 2), Filiere.IMSI);
@@ -194,7 +203,8 @@ public class MainGameState extends BasicGameState {
 		counter += arg2;
 
 		bus_label.setText(game.getInventory().getRemainingBus() + "");
-
+		bridge_label.setText(game.getInventory().getRemainingBridges() + "");
+		
 		fr.utbm.lo43.logic.Line _line = Map.getInstance().getLine(current_line);
 
 		if (counter > 5000) {
