@@ -24,7 +24,7 @@ public class RailWay extends Entity implements EntityDrawable
 	/**
 	 * Tracé de la voie ferrée
 	 */
-	private Polygon plot;
+	protected Polygon plot;
 	
 	/**
 	 * Largeur du tracé
@@ -99,5 +99,7 @@ public class RailWay extends Entity implements EntityDrawable
 	{
 		return plot.intersects(_shape);
 	}
+
+
 	
 }
