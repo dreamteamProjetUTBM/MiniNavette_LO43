@@ -40,7 +40,7 @@ public class Station extends EntityClickable implements EntityDrawable, Dijkstra
 	
 	protected ArrayList<Passenger> waitingPassenger;
 	
-	//HashMap qui donne la prochaine station a atteindre pour chaque atteindre une filiere a partir de cette station 
+	//HashMap qui donne la prochaine station a atteindre pour atteindre une filiere a partir de cette station 
 	private HashMap<Filiere, Station> nextStop;
 	
 	public Station(Vector2f _position, Filiere type) 

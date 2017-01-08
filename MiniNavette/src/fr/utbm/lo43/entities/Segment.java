@@ -245,6 +245,7 @@ public class Segment extends EntityDragable implements EntityDrawable {
 		if(isFirstinLine()){
 			tempLine = new Line(new Vector2f(_polygonrender.getPoint(0)[0], _polygonrender.getPoint(0)[1]), new Vector2f(_polygonrender.getPoint(0)[0]+ (-2)*dxStart*Map.GRID_SIZE, _polygonrender.getPoint(0)[1]+(-2)*dyStart*Map.GRID_SIZE));
 			arg2.draw(tempLine);
+			arg2.fillOval(_polygonrender.getPoint(0)[0]+ (-2)*dxStart*Map.GRID_SIZE -SEGMENT_THICKNESS, _polygonrender.getPoint(0)[1]+(-2)*dyStart*Map.GRID_SIZE -SEGMENT_THICKNESS, SEGMENT_THICKNESS*2, SEGMENT_THICKNESS*2);
 		}
 
 		}catch(IndexOutOfBoundsException e){
@@ -275,6 +276,7 @@ public class Segment extends EntityDragable implements EntityDrawable {
 		if(isLastinLine()){
 			tempLine = new Line(new Vector2f(_polygonrender.getPoint(_polygonrender.getPointCount()-1)[0], _polygonrender.getPoint(_polygonrender.getPointCount()-1)[1]), new Vector2f(_polygonrender.getPoint(_polygonrender.getPointCount()-1)[0]+ (-2)*dxEnd*Map.GRID_SIZE, _polygonrender.getPoint(_polygonrender.getPointCount()-1)[1]+(-2)*dyEnd*Map.GRID_SIZE));
 			arg2.draw(tempLine);
+			arg2.fillOval(_polygonrender.getPoint(_polygonrender.getPointCount()-1)[0]+ (-2)*dxEnd*Map.GRID_SIZE -SEGMENT_THICKNESS, _polygonrender.getPoint(_polygonrender.getPointCount()-1)[1]+(-2)*dyEnd*Map.GRID_SIZE -SEGMENT_THICKNESS, SEGMENT_THICKNESS*2, SEGMENT_THICKNESS*2);
 		}
 		}catch(IndexOutOfBoundsException e){
 
