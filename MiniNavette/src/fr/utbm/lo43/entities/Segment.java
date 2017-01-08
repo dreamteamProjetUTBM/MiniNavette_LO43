@@ -25,6 +25,7 @@ public class Segment extends EntityDragable implements EntityDrawable {
 	Line line;
 	fr.utbm.lo43.logic.Line line_bus;
 	int lineIndex;
+	
 
 	public Segment(Vector2f _start, Vector2f _end, int index) {
 		super(_start);
@@ -36,6 +37,8 @@ public class Segment extends EntityDragable implements EntityDrawable {
 		polygon.addPoint(_end.x, _end.y);
 
 		lineIndex = index;
+		
+		ponts = intersectsRailway(Map.getInstance().railWay);
 		dragedEvent = new EventEntityMouseDraged() {
 
 			@Override
@@ -256,6 +259,18 @@ public class Segment extends EntityDragable implements EntityDrawable {
 
 		//_polygonrender.setLocation(_polygonrender.getX()+5*offset, _polygonrender.getY() +5*offset);
 		arg2.draw(_polygonrender);
+		
+		try {
+			Image imgPont = new Image("asset/bridge.png");
+			for(Vector2f pont : ponts){
+				imgPont.drawFlash(pont.x - Map.GRID_SIZE + 5*offset, pont.y - Map.GRID_SIZE + 5*offset, Map.GRID_SIZE*2,
+						Map.GRID_SIZE*2, Map.getInstance().getLine(lineIndex).getColor());
+			}
+		} catch (SlickException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
 		if (iconPath != null) {
 			Image icon;
 			try {
@@ -359,6 +374,36 @@ public class Segment extends EntityDragable implements EntityDrawable {
 		return false;
 	}
 
+	/**
+	 * Renvoie la liste des intersections avec un railway
+	 * @param r
+	 * @return
+	 */
+	public ArrayList<Vector2f> intersectsRailway(RailWay r){
+		ArrayList<Vector2f> intersections = new ArrayList<>();
+		
+		Line tempLine1;
+		Line tempLine2;
+		Vector2f intersection;
+
+		for (int i = 0; i < polygon.getPointCount() - 1; ++i) {
+			tempLine1 = new Line(new Vector2f(polygon.getPoint(i)[0], polygon.getPoint(i)[1]),
+					new Vector2f(polygon.getPoint(i + 1)[0], polygon.getPoint(i + 1)[1]));
+			 
+			for (int j = 0; j < r.plot.getPointCount() - 1; ++j) {
+				tempLine2 = new Line(new Vector2f(r.plot.getPoint(j)[0], r.plot.getPoint(j)[1]),
+						new Vector2f(r.plot.getPoint(j + 1)[0], r.plot.getPoint(j + 1)[1]));
+				intersection = null;
+				intersection = tempLine1.intersect(tempLine2, true);
+				if(intersection != null){
+					intersections.add(intersection);
+				}
+				
+			}
+		}
+		return intersections;
+		
+	}
 	@Override
 	public boolean equals(Object obj) {
 		// TODO Auto-generated method stub

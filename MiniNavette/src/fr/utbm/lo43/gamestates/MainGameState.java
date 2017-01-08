@@ -51,7 +51,7 @@ public class MainGameState extends BasicGameState {
 	private boolean editLine;
 	private Vector2f drag_station_position;
 
-	private RailWay railWay;
+	//private RailWay railWay;
 
 	@Override
 	public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException {
@@ -122,7 +122,7 @@ public class MainGameState extends BasicGameState {
 			});
 			entities.add(line_b);
 
-			railWay = new RailWay();
+			Map.getInstance().railWay = new RailWay();
 		}
 
 		bus_button = new ToggledButton(new Vector2f(Map.WIDTH / 3, Map.HEIGHT - Map.GRID_SIZE - Map.GRID_SIZE / 4),
@@ -175,7 +175,7 @@ public class MainGameState extends BasicGameState {
 			arg2.draw(grid_line);
 		}
 
-		railWay.render(arg2);
+		Map.getInstance().railWay.render(arg2);
 
 		arg2.setColor(Color.gray);
 		arg2.draw(menu_inventary);

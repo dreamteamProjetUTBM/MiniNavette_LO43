@@ -6,6 +6,7 @@ import org.newdawn.slick.geom.Line;
 
 import fr.utbm.lo43.entities.Bus;
 import fr.utbm.lo43.entities.Passenger;
+import fr.utbm.lo43.entities.RailWay;
 import fr.utbm.lo43.entities.Station;
 
 public class Map {
@@ -17,6 +18,7 @@ public class Map {
 	public ArrayList<Station> stations;
 	private ArrayList<fr.utbm.lo43.logic.Line> lines;
 	public ArrayList<Line> grid;
+	public RailWay railWay;
 	
 	/** Constructeur privé */
 	private Map()
