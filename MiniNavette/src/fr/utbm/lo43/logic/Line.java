@@ -40,7 +40,6 @@ public abstract class Line extends Entity implements EntityUpdateable, EntityDra
 	
 	public void addSegment(Segment _seg,int index){
 		segments.add(index, _seg);
-		
 	}
 	
 	/**

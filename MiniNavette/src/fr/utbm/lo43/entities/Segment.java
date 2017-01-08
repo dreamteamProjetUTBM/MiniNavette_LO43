@@ -36,9 +36,9 @@ public class Segment extends EntityDragable implements EntityDrawable {
 		polygon.addPoint(angle.x, angle.y);
 		polygon.addPoint(_end.x, _end.y);
 
-		lineIndex = index;
-		
+		lineIndex = index;		
 		ponts = intersectsRailway(Map.getInstance().railWay);
+		line_bus = Map.getInstance().getLine(index);
 		dragedEvent = new EventEntityMouseDraged() {
 
 			@Override
@@ -115,7 +115,7 @@ public class Segment extends EntityDragable implements EntityDrawable {
 	}
 
 	/**
-	 * Renvoie le segment inverse (le point de depart deviens le point d'arriv�
+	 * Renvoie le segment inverse (le point de depart deviens le point d'arriv�
 	 * et inversement)
 	 * 
 	 * @return
@@ -433,16 +433,25 @@ public class Segment extends EntityDragable implements EntityDrawable {
 
 		return false;
 	}
-
-	// moi j'aime bien faire des methodes comme ça aussi
-	public Segment getNextSegment() {
-		return (line_bus.getSegments().indexOf(this) + 1) <= (line_bus.getSegments().size())
-				? line_bus.getSegments().get(line_bus.getSegments().indexOf(this) + 1) : null;
+	
+	//moi j'aime bien faire des methodes comme ça aussi
+	public Segment getNextSegment()
+	{	
+		if(line_bus.getSegments().size()-1 >= line_bus.getSegments().indexOf(this)+1){
+			return line_bus.getSegment(line_bus.getSegments().indexOf(this)+1);
+		}
+		return null;
+		//return (line_bus.getSegments().indexOf(this)+1) <= ( line_bus.getSegments().size() ) ? line_bus.getSegments().get(line_bus.getSegments().indexOf(this)+1) : null ;
 	}
-
-	public Segment getPreviousSegment() {
-		return (line_bus.getSegments().indexOf(this) - 1) > 0
-				? line_bus.getSegments().get(line_bus.getSegments().indexOf(this) + 1) : null;
+	
+	public Segment getPreviousSegment()
+	{
+		if(line_bus.getSegments().indexOf(this)-1 >= 0){
+			return line_bus.getSegment(line_bus.getSegments().indexOf(this)-1);
+		}
+		return null;
+		
+		//return (line_bus.getSegments().indexOf(this)-1) > 0 ? line_bus.getSegments().get(line_bus.getSegments().indexOf(this)+1) : null ;
 	}
 
 	/**
@@ -537,5 +546,24 @@ public class Segment extends EntityDragable implements EntityDrawable {
 		}
 		return anglePosition;
 	}
-
+	
+	public Vector2f getPosition(int index){
+		return getPositions().get(index);
+	}
+	
+	public ArrayList<Vector2f> isBetween(Vector2f position){
+		ArrayList<Vector2f> vects = new ArrayList<>();
+				
+		for(int i = 0 ; i < getPositions().size()-1; i++){
+			Line line = new Line(new Vector2f(getPosition(i).x, getPosition(i).y),new Vector2f(getPosition(i+1).x, getPosition(i+1).y));
+			if(line.on(position))
+			{
+				vects.add(new Vector2f(getPosition(i).x, getPosition(i).y));
+				vects.add(new Vector2f(getPosition(i+1).x, getPosition(i+1).y));				
+			}
+		}
+		
+		return vects;
+	}
+	
 }
