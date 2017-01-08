@@ -23,7 +23,9 @@ public class Segment extends EntityDragable implements EntityDrawable {
 	private Polygon polygon;
 	private ArrayList<Station> stations;
 
-	private ArrayList<Vector2f> ponts;
+	private ArrayList<Vector2f> bridges;
+
+
 	private String iconPath;
 	// Line de Slick2D
 	Line line;
@@ -42,14 +44,14 @@ public class Segment extends EntityDragable implements EntityDrawable {
 
 		lineIndex = index;
 		
-		ponts = intersectsRailway(Map.getInstance().railWay);
+		bridges = intersectsRailway(Map.getInstance().railWay);
 		dragedEvent = new EventEntityMouseDraged() {
 
 			@Override
 			public void mouseReleased() {
 				// TODO Auto-generated method stub
 				boolean notOnStation = true;
-				boolean needMoreBridges = ponts.size()> Inventory.getInstance().getRemainingBridges() ;
+				boolean needMoreBridges = bridges.size()> Inventory.getInstance().getRemainingBridges() ;
 				for (Station station : Map.getInstance().getStations()) {
 					if (station.position == getEndSegment()) {
 						notOnStation = false;
@@ -60,7 +62,7 @@ public class Segment extends EntityDragable implements EntityDrawable {
 					Map.getInstance().getLine(lineIndex).removeSegment(Map.getInstance().getLine(lineIndex)
 							.getSegments().get(Map.getInstance().getLine(lineIndex).getSegments().size() - 1));
 				}
-				Inventory.getInstance().takeBridges(ponts.size()); //takeBridges devrait être écrite avec des exceptions
+				Inventory.getInstance().takeBridges(bridges.size()); //takeBridges devrait être écrite avec des exceptions
 				System.out.println("Segment.Segment(...).new EventEntityMouseDraged() {...}.mouseReleased()");
 			}
 
@@ -74,6 +76,10 @@ public class Segment extends EntityDragable implements EntityDrawable {
 
 		drawable = true;
 
+	}
+	
+	public ArrayList<Vector2f> getBridges() {
+		return bridges;
 	}
 
 	public void setIcon(String imgPath) {
@@ -277,9 +283,9 @@ public class Segment extends EntityDragable implements EntityDrawable {
 
 		
 		try {
-			Image imgPont = new Image("asset/bridge.png");
-			for(Vector2f pont : ponts){
-				imgPont.drawFlash(pont.x - Map.GRID_SIZE + SEGMENT_THICKNESS*offset, pont.y - Map.GRID_SIZE + SEGMENT_THICKNESS*offset, Map.GRID_SIZE*2,
+			Image imgBridges = new Image("asset/bridge.png");
+			for(Vector2f bridges : bridges){
+				imgBridges.drawFlash(bridges.x - Map.GRID_SIZE + SEGMENT_THICKNESS*offset, bridges.y - Map.GRID_SIZE + SEGMENT_THICKNESS*offset, Map.GRID_SIZE*2,
 						Map.GRID_SIZE*2, Map.getInstance().getLine(lineIndex).getColor());
 			}
 		} catch (SlickException e1) {

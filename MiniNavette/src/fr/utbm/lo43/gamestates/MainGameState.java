@@ -27,6 +27,7 @@ import fr.utbm.lo43.entities.ToggledButton;
 import fr.utbm.lo43.logic.ClassicLine;
 import fr.utbm.lo43.logic.Filiere;
 import fr.utbm.lo43.logic.Game;
+import fr.utbm.lo43.logic.Inventory;
 import fr.utbm.lo43.logic.Map;
 
 public class MainGameState extends BasicGameState {
@@ -313,6 +314,8 @@ public class MainGameState extends BasicGameState {
 					previsualizedSegment.setIcon("asset/poubelle.png");
 				}
 
+
+				
 				segmentTemp = previsualizedSegment;
 		
 				entities.addAt(previsualizedSegment, 0);
@@ -335,6 +338,9 @@ public class MainGameState extends BasicGameState {
 						if (_line.canRemove(_segment)) {
 							_line.removeSegment(_segment);
 							entities.delete(_segment);
+							if(_segment.getBridges().size()>0){
+								Inventory.getInstance().addBridge();
+							}
 						}
 
 						boolean canContinue = true;
@@ -361,9 +367,17 @@ public class MainGameState extends BasicGameState {
 									}
 								}
 								if(canContinue){
+									
+									if(_segment.getBridges().size() > 0){
+										if(Inventory.getInstance().getRemainingBridges()>0){
+											_line.addSegment(_segment, index);
+											entities.addAt(_segment, 0);
+											Inventory.getInstance().takeBridge();
+										}
+									}else{
 									_line.addSegment(_segment, index);
 									entities.addAt(_segment, 0);
-			
+									}
 
 								}
 							}
