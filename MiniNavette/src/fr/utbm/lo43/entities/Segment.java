@@ -162,14 +162,8 @@ public class Segment extends EntityDragable implements EntityDrawable {
 			}
 		}
 
-		try{
-		if (Map.getInstance().previsualizedSegment.getLineIndex() != getLineIndex() &&(!isCrossing(Map.getInstance().previsualizedSegment) && (Map.getInstance().previsualizedSegment.hasSameVectors(this) || isOnSegment(Map.getInstance().previsualizedSegment.getAngle())|| Map.getInstance().previsualizedSegment.isOnSegment(getAngle())))) { // donc
-			// parallèle
-			offset++;
-		}
-		}catch(NullPointerException e){ //si il n'ya pas de previsualizedsegment
-			
-		}
+
+
 		// permet de centrer les segments si il y a des offsets
 		if (offset % 2 == 0) {
 			offset = -offset;

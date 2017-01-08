@@ -21,7 +21,7 @@ public class Map {
 	public ArrayList<Line> grid;
 	public RailWay railWay;
 	
-	public Segment previsualizedSegment;
+
 	
 	/** Constructeur privé */
 	private Map()
