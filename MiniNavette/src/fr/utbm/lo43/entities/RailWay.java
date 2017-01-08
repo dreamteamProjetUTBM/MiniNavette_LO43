@@ -29,7 +29,7 @@ public class RailWay extends Entity implements EntityDrawable
 	/**
 	 * Largeur du tracé
 	 */
-	private int plotWidth;
+	private static final float RAILWAY_THICKNESS = 5;
 	
 	/**
 	 * La couleur du tracé
@@ -43,7 +43,7 @@ public class RailWay extends Entity implements EntityDrawable
 		
 		plot = new Polygon();
 		plot.setClosed(false);
-		plotWidth = 5;
+
 		color = new Color(26, 31, 43);
 		
 		int startX = 0;
@@ -84,9 +84,15 @@ public class RailWay extends Entity implements EntityDrawable
 	@Override
 	public void render(Graphics arg2) 
 	{
-		arg2.setLineWidth(plotWidth * 1.0f);
+		arg2.setAntiAlias(true);
+		arg2.setLineWidth(RAILWAY_THICKNESS * 1.0f);
 		arg2.setColor(color);
 		arg2.draw(plot);
+		for(int i = 0; i<plot.getPointCount(); ++i){
+			
+			arg2.fillOval(plot.getPoint(i)[0]-RAILWAY_THICKNESS/2, plot.getPoint(i)[1] -RAILWAY_THICKNESS/2, RAILWAY_THICKNESS, RAILWAY_THICKNESS);
+		}
+
 	}
 	
 	/**
