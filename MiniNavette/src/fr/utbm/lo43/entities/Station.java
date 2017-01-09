@@ -206,6 +206,7 @@ public class Station extends EntityClickable implements EntityDrawable, Dijkstra
 	
 	public boolean isOnStation(Vector2f _position){
 		return getRect().contains((int)_position.x, (int)_position.y);
+
 	}
 	
 	
