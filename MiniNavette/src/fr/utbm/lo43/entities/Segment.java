@@ -526,7 +526,7 @@ public class Segment extends EntityDragable implements EntityDrawable {
 	 */
 	public boolean isOnSegment(Vector2f _vector) {
 		Line _line;
-		for (int i = 0; i < getPositions().size() - 1; ++i) {
+		for (int i = 0; i < getPositions().size()-1 ; ++i) {
 			_line = new Line(getPositions().get(i), getPositions().get(i + 1));
 			if (_line.on(_vector)) {
 				return true;

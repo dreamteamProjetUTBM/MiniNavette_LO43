@@ -223,13 +223,23 @@ public class MainGameState extends BasicGameState {
 			for (fr.utbm.lo43.logic.Line line : game.map.getInstance().getLines()) {
 				for (Segment segment : line.getSegments()) {
 
-					if(segment.isOnSegment(new Vector2f(input.getMouseX(),input.getMouseY())) && game.getInventory().getRemainingBus() > 0){
-						//Alors on ajoute un bus sur le segment
-						bus_button.setToggled(false);
-						game.getInventory().setRemainingBus(-1);
-						entities.add(new ClassicBus(new Vector2f(input.getMouseX(), input.getMouseY()),
-								game.map.getLine(segment.getLineIndex()).getColor(), segment));
+					for(int i = -10; i < 11; i++){
+						for(int j = -10; j < 11 ; j++){
+							int mouseX = (input.getMouseX())+i;
+							int mouseY = (input.getMouseY())+j;
+							
+							if(segment.isOnSegment(new Vector2f(mouseX,mouseY)) && game.getInventory().getRemainingBus() > 0){
+								//Alors on ajoute un bus sur le segment
+								bus_button.setToggled(false);
+								game.getInventory().setRemainingBus(-1);
+
+								entities.add(new ClassicBus(new Vector2f(mouseX,mouseY),
+										game.map.getLine(segment.getLineIndex()).getColor(), segment));
+								return;
+							}
+						}
 					}
+					
 				}
 			}
 		}

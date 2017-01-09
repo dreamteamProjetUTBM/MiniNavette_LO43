@@ -47,7 +47,7 @@ public class ClassicBus extends Bus
 		polygon.addPoint(_position.x+5, _position.y+15);
 		polygon.addPoint(_position.x+5, _position.y-15);
 		polygon.addPoint(_position.x-5, _position.y-15);
-		
+		/*
 		setEventCallback(new EventEntityMouseDraged() {
 			
 			@Override
@@ -71,9 +71,9 @@ public class ClassicBus extends Bus
 			public void mousePressed() {
 				// TODO Auto-generated method stub
 			}
-		}); 
+		}); */
 		theta = getAngle();
-		polygon = (Polygon) polygon.transform(Transform.createRotateTransform((float) Math.toRadians(getAngle())));
+		polygon = (Polygon) polygon.transform(Transform.createRotateTransform((float) Math.toRadians(-getAngle())));
 
 	}
 	
@@ -330,9 +330,9 @@ public class ClassicBus extends Bus
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg,int delta) {
 		
-		//super.update(gc, sbg,delta);
+		super.update(gc, sbg,delta);
 		
-		Input input = gc.getInput();
+		/*Input input = gc.getInput();
 		
 		if(polygon.contains(input.getMouseX(), input.getMouseY()) && input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON))
 		{
@@ -358,7 +358,7 @@ public class ClassicBus extends Bus
 					dragedEvent.mouseReleased();
 				isGrabed = false;
 			}
-		}
+		}*/
 		
 		cpt += delta;
 		if(cpt >25 && !isGrabed)
