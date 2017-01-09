@@ -6,7 +6,9 @@ import org.lwjgl.Sys;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
+import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Polygon;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Transform;
@@ -20,7 +22,6 @@ import fr.utbm.lo43.logic.Map;
 
 public class ClassicBus extends Bus
 {	
-	private Polygon polygon;
 	
 	//Le bus navigue entre ces deux vecteurs
 	private Vector2f start,end;
@@ -33,7 +34,7 @@ public class ClassicBus extends Bus
 	private float theta;
 	//Compteur pour le temps depuis le dernier appel de update
 	private int cpt = 0;
-	
+		
 	public ClassicBus(Vector2f _position, Color _color,Segment current)
 	{
 		super(_position, _color);
@@ -41,11 +42,7 @@ public class ClassicBus extends Bus
 		capacity = 6;
 		currentSegment = current;
 		
-		polygon = new Polygon();
-		polygon.addPoint(_position.x-Map.GRID_SIZE/2, _position.y+Map.GRID_SIZE*0.75f);
-		polygon.addPoint(_position.x+Map.GRID_SIZE/2, _position.y+Map.GRID_SIZE*0.75f);
-		polygon.addPoint(_position.x+Map.GRID_SIZE/2, _position.y-Map.GRID_SIZE*0.75f);
-		polygon.addPoint(_position.x-Map.GRID_SIZE/2, _position.y-Map.GRID_SIZE*0.75f);
+		
 		/*
 		setEventCallback(new EventEntityMouseDraged() {
 			
@@ -108,10 +105,6 @@ public class ClassicBus extends Bus
 		theta_bis *= 180 / Math.PI;
 		
 		return theta_bis;
-		/*
-		System.out.println(theta);
-		 return (line.getDX()/line.getDY());*/
-		
 	}
 	
 	@Override
@@ -121,6 +114,21 @@ public class ClassicBus extends Bus
 		arg2.setColor(color);
 		arg2.fill(polygon);
 		arg2.draw(polygon);
+		
+		if(passenger_images.size() >0)
+			passenger_images.get(0).draw(getPosition().x-Map.GRID_SIZE/2,getPosition().y-Map.GRID_SIZE/2,Map.GRID_SIZE/2,Map.GRID_SIZE/2);
+		if(passenger_images.size() > 1)
+			passenger_images.get(1).draw(getPosition().x-Map.GRID_SIZE/2,getPosition().y,Map.GRID_SIZE/2,Map.GRID_SIZE/2);
+		if(passenger_images.size() > 2)
+			passenger_images.get(2).draw(getPosition().x,getPosition().y-Map.GRID_SIZE/2,Map.GRID_SIZE/2,Map.GRID_SIZE/2);
+		if(passenger_images.size() > 3)
+			passenger_images.get(3).draw(getPosition().x,getPosition().y,Map.GRID_SIZE/2,Map.GRID_SIZE/2);
+		if(passenger_images.size() > 4)
+			passenger_images.get(4).draw(getPosition().x+Map.GRID_SIZE/2,getPosition().y-Map.GRID_SIZE/2,Map.GRID_SIZE/2,Map.GRID_SIZE/2);
+		if(passenger_images.size() > 5)
+			passenger_images.get(5).draw(getPosition().x+Map.GRID_SIZE/2,getPosition().y,Map.GRID_SIZE/2,Map.GRID_SIZE/2);
+
+		
 	}
 
 	@Override
@@ -229,9 +237,6 @@ public class ClassicBus extends Bus
 			else
 				local_direction = -1;
 		}
-		
-		
-
 		
 		/*
 		float a,b;	
@@ -381,6 +386,19 @@ public class ClassicBus extends Bus
 				theta = getAngle();
 
 			}
+			
+			passenger_images = new ArrayList<>();
+			for (Passenger passenger : passengers) {
+				try {
+					passenger_images.add(new Image("asset/"+passenger.filiere+".png"));
+				} catch (SlickException e) {
+					// TODO Auto-generated catch block
+					System.out.println("Erreur");
+					e.printStackTrace();
+				}
+				
+			}
+			
 			polygon.setCenterX(getPosition().x + currentSegment.getOffset()*Segment.SEGMENT_THICKNESS/2);
 			polygon.setCenterY(getPosition().y +currentSegment.getOffset()*Segment.SEGMENT_THICKNESS/2);
 
@@ -402,5 +420,5 @@ public class ClassicBus extends Bus
 		}
 		return false;
 	}
-
+	
 }
