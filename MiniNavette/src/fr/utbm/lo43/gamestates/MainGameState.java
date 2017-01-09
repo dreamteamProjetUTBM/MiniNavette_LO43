@@ -128,7 +128,7 @@ public class MainGameState extends BasicGameState {
 
 		bus_button = new ToggledButton(new Vector2f(Map.WIDTH / 3, Map.HEIGHT - Map.GRID_SIZE - Map.GRID_SIZE / 4),
 				new Vector2f(Map.GRID_SIZE, Map.GRID_SIZE), "asset/bus_b_idle.png", "asset/bus_b_hover.png",
-				"asset/bus_b_idle.png");
+				"asset/bus_b_pressed.png");
 
 
 		
@@ -171,10 +171,6 @@ public class MainGameState extends BasicGameState {
 		entities.add(station5);
 
 		current_line = 0;
-
-		// bus_test = new ClassicBus(new org.newdawn.slick.geom.Vector2f(50,50),
-		// Color.green);
-		// entities.add(bus_test);
 	}
 
 	@Override
@@ -192,8 +188,6 @@ public class MainGameState extends BasicGameState {
 		arg2.fill(menu_inventary);
 
 		entities.render(arg2);
-
-		// bus_test.render(arg2);
 	}
 
 	@Override
@@ -212,7 +206,7 @@ public class MainGameState extends BasicGameState {
 			int index_station = rand.nextInt(game.map.getStationsLenght());
 			while (!game.map.getStations().get(index_station).canAddPassenger())
 				index_station = rand.nextInt(game.map.getStationsLenght());
-			entities.add(game.map.getStations().get(index_station).newPassenger());
+			//entities.add(game.map.getStations().get(index_station).newPassenger());
 			counter = 0;
 		}
 
@@ -226,10 +220,9 @@ public class MainGameState extends BasicGameState {
 		if (input.isMousePressed(Input.MOUSE_LEFT_BUTTON) && bus_button.getToggled()) {
 			for (fr.utbm.lo43.logic.Line line : game.map.getInstance().getLines()) {
 				for (Segment segment : line.getSegments()) {
-					if (segment.isOnSegment(new Vector2f(input.getMouseX(), input.getMouseY()))
-							&& game.getInventory().getRemainingBus() > 0) {
-						// Alors on ajoute un bus sur le segment
-						System.out.println("Ajoute");
+
+					if(segment.isOnSegment(new Vector2f(input.getMouseX(),input.getMouseY())) && game.getInventory().getRemainingBus() > 0){
+						//Alors on ajoute un bus sur le segment
 						bus_button.setToggled(false);
 						game.getInventory().setRemainingBus(-1);
 						entities.add(new ClassicBus(new Vector2f(input.getMouseX(), input.getMouseY()),

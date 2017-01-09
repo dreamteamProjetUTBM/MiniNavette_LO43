@@ -8,6 +8,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Circle;
 import org.newdawn.slick.geom.Line;
 import org.newdawn.slick.geom.Polygon;
 import org.newdawn.slick.geom.Vector2f;
@@ -43,6 +44,7 @@ public class Segment extends EntityDragable implements EntityDrawable {
 		forbiddenBridges = false;
 		
 		lineIndex = index;
+		line_bus = Map.getInstance().getLine(lineIndex);
 		
 		bridges = intersectsRailway(Map.getInstance().railWay);
 		
@@ -54,6 +56,7 @@ public class Segment extends EntityDragable implements EntityDrawable {
 			public void mouseReleased() {
 				// TODO Auto-generated method stub
 				boolean notOnStation = true;
+				
 				for (Station station : Map.getInstance().getStations()) {
 					if (station.position == getEndSegment()) {
 						notOnStation = false;
@@ -131,7 +134,6 @@ public class Segment extends EntityDragable implements EntityDrawable {
 	 * @return
 	 */
 	public void setStations() {
-		ArrayList<Station> stations = new ArrayList<>();
 		for(Station station : Map.getInstance().getStations()){
 			if(station.isOnStation(getStartSegment())){
 				stationDepart = station;
@@ -482,16 +484,24 @@ public class Segment extends EntityDragable implements EntityDrawable {
 
 		return false;
 	}
-
-	// moi j'aime bien faire des methodes comme ça aussi
-	public Segment getNextSegment() {
-		return (line_bus.getSegments().indexOf(this) + 1) <= (line_bus.getSegments().size())
-				? line_bus.getSegments().get(line_bus.getSegments().indexOf(this) + 1) : null;
+	
+	public Segment getNextSegment()
+	{	
+		if(line_bus.getSegments().size()-1 >= line_bus.getSegments().indexOf(this)+1){
+			return line_bus.getSegment(line_bus.getSegments().indexOf(this)+1);
+		}
+		return null;
+		//return (line_bus.getSegments().indexOf(this)+1) <= ( line_bus.getSegments().size() ) ? line_bus.getSegments().get(line_bus.getSegments().indexOf(this)+1) : null ;
 	}
-
-	public Segment getPreviousSegment() {
-		return (line_bus.getSegments().indexOf(this) - 1) > 0
-				? line_bus.getSegments().get(line_bus.getSegments().indexOf(this) + 1) : null;
+	
+	public Segment getPreviousSegment()
+	{
+		if(line_bus.getSegments().indexOf(this)-1 >= 0){
+			return line_bus.getSegment(line_bus.getSegments().indexOf(this)-1);
+		}
+		return null;
+		
+		//return (line_bus.getSegments().indexOf(this)-1) > 0 ? line_bus.getSegments().get(line_bus.getSegments().indexOf(this)+1) : null ;
 	}
 
 	/**
@@ -586,5 +596,24 @@ public class Segment extends EntityDragable implements EntityDrawable {
 		}
 		return anglePosition;
 	}
-
+	
+	public Vector2f getPosition(int index){
+		return getPositions().get(index);
+	}
+	
+	public ArrayList<Vector2f> isBetween(Vector2f position){
+		ArrayList<Vector2f> vects = new ArrayList<>();
+				
+		for(int i = 0 ; i < getPositions().size()-1; i++){
+			Line line = new Line(new Vector2f(getPosition(i).x, getPosition(i).y),new Vector2f(getPosition(i+1).x, getPosition(i+1).y));
+			if(line.on(position))
+			{
+				vects.add(new Vector2f(getPosition(i).x, getPosition(i).y));
+				vects.add(new Vector2f(getPosition(i+1).x, getPosition(i+1).y));				
+			}
+		}
+		
+		return vects;
+	}
+	
 }
