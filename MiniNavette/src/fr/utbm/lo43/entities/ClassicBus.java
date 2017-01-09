@@ -134,6 +134,7 @@ public class ClassicBus extends Bus
 						 * ROGER ICI
 						 */
 						station.notifyBus(this);
+						System.out.println("Bus a maintenant "+ passengers.size() + " passager(s).");
 						
 						if(direction){
 							if(currentSegment.getNextSegment() == null){

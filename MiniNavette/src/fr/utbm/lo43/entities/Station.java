@@ -2,6 +2,7 @@ package fr.utbm.lo43.entities;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Random;
 
 import org.newdawn.slick.Color;
@@ -40,7 +41,7 @@ public class Station extends EntityClickable implements EntityDrawable, Dijkstra
 	private int maxWaitingTime;
 	private int extraTime;
 	
-	protected ArrayList<Passenger> waitingPassenger;
+	protected List<Passenger> waitingPassenger;
 	
 	//HashMap qui donne la prochaine station a atteindre pour atteindre une filiere a partir de cette station 
 	private HashMap<Filiere, Station> nextStop;
@@ -49,7 +50,7 @@ public class Station extends EntityClickable implements EntityDrawable, Dijkstra
 	{
 		super(_position);
 		filiere = type;
-		waitingPassenger = new ArrayList<>();
+		waitingPassenger = new ArrayList<Passenger>();
 		Map.getInstance().calculateNextStopStations();
 		try 
 		{
