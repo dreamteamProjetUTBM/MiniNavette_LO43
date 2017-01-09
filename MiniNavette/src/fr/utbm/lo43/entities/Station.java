@@ -177,7 +177,8 @@ public class Station extends EntityClickable implements EntityDrawable, Dijkstra
 		}
 	
 		if(bus.passengers.size() < bus.capacity) bus.unload(this);
-		if(waitingPassenger.size()!=0) bus.load(this);
+		
+		if(waitingPassenger.size() > 0) bus.load(this);
 		
 	}
 	
