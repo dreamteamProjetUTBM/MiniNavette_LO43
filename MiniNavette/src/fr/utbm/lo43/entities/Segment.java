@@ -19,7 +19,7 @@ import fr.utbm.lo43.logic.Map;
 
 public class Segment extends EntityDragable implements EntityDrawable {
 
-	public static final float SEGMENT_THICKNESS = 5;
+	public static final float SEGMENT_THICKNESS = 10;
 	private Polygon polygon;
 	private ArrayList<Vector2f> bridges;
 	private Station stationDepart;
@@ -97,6 +97,12 @@ public class Segment extends EntityDragable implements EntityDrawable {
 				}
 			}
 		}
+		
+		//permet de centrer les segments si il y a des offsets
+		if(offset%2 == 0){
+			offset = -offset;
+		}
+		offset = offset/2;
 		return offset;
 	}
 	
