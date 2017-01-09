@@ -83,4 +83,9 @@ public class EntityDragable extends Entity implements EntityUpdateable
 			}
 		}
 	}
+	
+	public void setEventCallback(EventEntityMouseDraged _mouseDraged)
+	{
+		dragedEvent = _mouseDraged;
+	}
 }
