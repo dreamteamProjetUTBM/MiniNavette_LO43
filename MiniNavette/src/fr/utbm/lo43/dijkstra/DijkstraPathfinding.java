@@ -98,7 +98,7 @@ public class DijkstraPathfinding<T extends Dijkstrable> {
 						
 							node.weight = n.weight + n.element.calculateWeight(node.element);
 							node.antecedent = n;
-							System.out.println( node.weight);
+							//System.out.println( n.weight);
 						}
 					}
 				}
@@ -107,20 +107,21 @@ public class DijkstraPathfinding<T extends Dijkstrable> {
 		
 		
 		n = nodeEnd;
-		
+		shortestPath.weight = nodeEnd.weight;
+
 		if (n.antecedent == null){
 		
 			shortestPath.add(null);
 			return shortestPath;
 		}
 		System.out.println("test");
-	
+		System.out.println(shortestPath.weight);
 		do{
 			shortestPath.add(n.element);
 			n = n.antecedent;
 		}while(n != nodeStart);
 		
-		shortestPath.weight = nodeEnd.weight;
+		
 		return shortestPath;
 	}
 
