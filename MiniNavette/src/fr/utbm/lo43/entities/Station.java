@@ -171,7 +171,7 @@ public class Station extends EntityClickable implements EntityDrawable, Dijkstra
 		System.out.println("Station.notifyBus");
 
 	
-		if(bus.passengers.size() < bus.capacity) bus.unload(this);
+		if(bus.passengers.size() > 0) bus.unload(this);
 		
 		if(waitingPassenger.size()!=0){
 			for(Passenger passenger : waitingPassenger)
@@ -235,7 +235,7 @@ public class Station extends EntityClickable implements EntityDrawable, Dijkstra
 		// TODO Auto-generated method stub
 		super.update(gc, sbg,delta);
 		
-
+		//appeler ça à chaque seconde et pas chaque update !!
 		if(isCriticalPassenger()){
 			waitedTime ++; //l'incrémenter seconde par secondes c'est faisable ? S'il sait depuis combien de temps il a pas été appelé ça serait cool
 			checkWaitingTime();
