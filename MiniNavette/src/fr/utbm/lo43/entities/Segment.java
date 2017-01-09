@@ -19,7 +19,7 @@ import fr.utbm.lo43.logic.Map;
 
 public class Segment extends EntityDragable implements EntityDrawable {
 
-	public static final float SEGMENT_THICKNESS = 10;
+	public static final float SEGMENT_THICKNESS = 5;
 	private Polygon polygon;
 	private ArrayList<Vector2f> bridges;
 	private Station stationDepart;

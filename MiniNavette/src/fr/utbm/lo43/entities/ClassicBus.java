@@ -370,8 +370,8 @@ public class ClassicBus extends Bus
 				theta = getAngle();
 
 			}
-			polygon.setCenterX(getPosition().x);
-			polygon.setCenterY(getPosition().y);
+			polygon.setCenterX(getPosition().x + currentSegment.getOffset()*Segment.SEGMENT_THICKNESS/2);
+			polygon.setCenterY(getPosition().y +currentSegment.getOffset()*Segment.SEGMENT_THICKNESS/2);
 
 		}
 		
