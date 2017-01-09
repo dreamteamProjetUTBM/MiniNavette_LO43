@@ -20,7 +20,8 @@ public abstract class Bus extends EntityDragable implements EntityDrawable, Enti
 	public Bus(Vector2f _position, Color _color) 
 	{
 		super(_position);
-		
+
+		passengers = new ArrayList<>()  ; 
 		drawable = true;
 		color = _color;
 	}
@@ -31,21 +32,26 @@ public abstract class Bus extends EntityDragable implements EntityDrawable, Enti
 	
 	public void load(Station station)
 	{
+
+		System.out.println("Bus.load");
 		ArrayList<Station> nextStops = Map.getInstance().getNextStops(this, station);
 		
 		for(Passenger passenger : station.waitingPassenger)
 		{
 			if(passengers.size() >= capacity)
 			{
+				System.out.println("Bus a maintenant "+ passengers.size() + " passager(s).");
 				return;
 			}
 			passenger.busArrived(this,station,nextStops);
 		}
-		
+
+		System.out.println("Bus a maintenant "+ passengers.size() + " passager(s).");
 	}
 	
 	public void unload(Station station)
 	{
+		System.out.println("Bus.unload");
 		for(Passenger passenger : passengers)
 		{
 			if(passenger.nextStop==station)

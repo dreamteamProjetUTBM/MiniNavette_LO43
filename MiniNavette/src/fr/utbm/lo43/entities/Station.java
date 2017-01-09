@@ -110,17 +110,25 @@ public class Station extends EntityClickable implements EntityDrawable, Dijkstra
 			for(Station s : Map.getInstance().stations){
 				if(s.filiere == f){
 					shortestPath = pathfinding.getShortestPath(this, s);
+					/*for(Station test : shortestPath.getElements()){
+						
+						System.out.println(test);
+					}*/
 					if((shortestPath.getWeight()<minDistance || minDistance == -1) && shortestPath.getWeight()!=-1){
 						minDistance = shortestPath.getWeight();
 						tempStation = shortestPath.get(0);
+					
 					}
+					
 					
 				}
 			}
 			nextStop.put(f, tempStation);
 			}
 		}
-		
+		for(Filiere f : Filiere.values()){
+			//System.out.println("Prochaine station pour atteindre " +f+" : " +nextStop.get(f));
+		}
 		
 	}
 	
@@ -158,11 +166,18 @@ public class Station extends EntityClickable implements EntityDrawable, Dijkstra
 	
 	public void notifyBus(Bus bus)
 	{
-		for(Passenger passenger : waitingPassenger)
-		{
-			//on met à jour l'arrêt suivant de chaque passager qui attend à la station avant qu'ils vérifient si le bus y va
-			passenger.nextStop = this.nextStop.get(passenger.filiere);
+
+		System.out.println("Station.notifyBus");
+		if(waitingPassenger.size()!=0){
+			for(Passenger passenger : waitingPassenger)
+			{
+				//on met à jour l'arrêt suivant de chaque passager qui attend à la station avant qu'ils vérifient si le bus y va
+				passenger.nextStop = this.nextStop.get(passenger.filiere);
+
+				System.out.println("Passenger a un nouveau stop : " + this.nextStop.get(passenger.filiere));
+			}
 		}
+	
 		if(bus.passengers.size() < bus.capacity) bus.unload(this);
 		if(waitingPassenger.size()!=0) bus.load(this);
 		

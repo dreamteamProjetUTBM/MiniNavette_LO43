@@ -1,8 +1,8 @@
 package fr.utbm.lo43.dijkstra;
 
 import java.util.ArrayList;
-/**Classe réutilisable implémentant l'algorithme de Dijkstra pour trouver
- * le plus court chemin entre deux élements de type Dijkstrable
+/**Classe rï¿½utilisable implï¿½mentant l'algorithme de Dijkstra pour trouver
+ * le plus court chemin entre deux ï¿½lements de type Dijkstrable
  * 
  * @author Nahil Zamiati
  *
@@ -47,7 +47,7 @@ public class DijkstraPathfinding<T extends Dijkstrable> {
 
 	
 	/**
-	 * Retourne le noeud qui correspond a l'élément passé en parametre
+	 * Retourne le noeud qui correspond a l'ï¿½lï¿½ment passï¿½ en parametre
 	 * @param element
 	 * @return
 	 */
@@ -81,16 +81,22 @@ public class DijkstraPathfinding<T extends Dijkstrable> {
 		Node<T> nodeStart = getNode(start);
 		Node<T> n;		
 		init(start);
-
-		while(getLightestUnreachedNode() != null && getLightestUnreachedNode() != nodeEnd){
+		
+		
+		while(getLightestUnreachedNode() != null){
+			
 			n = getLightestUnreachedNode();
 			n.reached = true;
 			for(Node<T> node : nodesList){
-				if(!n.reached){
+			
+				if(!node.reached){
+				
 					if(n.element.isConnected(node.element)){
-						if(n.element.calculateWeight(node.element) == -1 || node.weight > n.weight + n.element.calculateWeight(node.element)){
+						
+						if(n.element.calculateWeight(node.element) != -1 || node.weight > n.weight + n.element.calculateWeight(node.element)){
 							node.weight = n.weight + n.element.calculateWeight(node.element);
 							node.antecedent = n;
+
 						}
 					}
 				}
@@ -99,10 +105,12 @@ public class DijkstraPathfinding<T extends Dijkstrable> {
 		
 		n = nodeEnd;
 		if (n.antecedent == null){
+		
 			shortestPath.add(null);
 			return shortestPath;
 		}
 		 
+	
 		do{
 			shortestPath.add(n.element);
 			n = n.antecedent;
@@ -123,7 +131,7 @@ public class DijkstraPathfinding<T extends Dijkstrable> {
 		float minWeight = 0;
 
 		for (Node<T> n : nodesList){
-			if(!n.reached && n.weight != -1 && n.weight < minWeight){
+			if(!n.reached && n.weight != -1 && n.weight <= minWeight){
 				minWeight = n.weight;
 				lightestNode = n;	
 			}

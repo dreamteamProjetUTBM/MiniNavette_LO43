@@ -26,4 +26,10 @@ public class Path<T> {
 	public T get(int index){
 		return elements.get(index);
 	}
+
+	public ArrayList<T> getElements() {
+		return elements;
+	}
+	
+	
 }

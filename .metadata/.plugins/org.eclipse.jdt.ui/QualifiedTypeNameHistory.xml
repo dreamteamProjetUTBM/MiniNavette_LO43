@@ -18,4 +18,5 @@
 <fullyQualifiedTypeName name="fr.utbm.lo43.logic.Map"/>
 <fullyQualifiedTypeName name="fr.utbm.lo43.entities.Passenger"/>
 <fullyQualifiedTypeName name="fr.utbm.lo43.logic.Score"/>
+<fullyQualifiedTypeName name="fr.utbm.lo43.logic.Inventory"/>
 </qualifiedTypeNameHistroy>

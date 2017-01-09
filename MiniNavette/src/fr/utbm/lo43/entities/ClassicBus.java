@@ -62,6 +62,7 @@ public class ClassicBus extends Bus
 						/*
 						 * ROGER ICI
 						 */
+						station.notifyBus(this);
 						
 						if(direction){
 							if(currentSegment.getNextSegment() == null){
