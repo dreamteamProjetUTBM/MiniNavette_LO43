@@ -1,6 +1,7 @@
 package fr.utbm.lo43.entities;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.geom.Vector2f;
@@ -13,7 +14,7 @@ public abstract class Bus extends EntityDragable implements EntityDrawable, Enti
 	protected boolean direction;
 //	protected Station[] listStation;
 	protected float segmentProgress;
-	ArrayList<Passenger> passengers ; 
+	List<Passenger> passengers ; 
 	Segment currentSegment ;
 	protected Color color;
 	
@@ -21,7 +22,7 @@ public abstract class Bus extends EntityDragable implements EntityDrawable, Enti
 	{
 		super(_position);
 
-		passengers = new ArrayList<>()  ; 
+		passengers = new ArrayList<Passenger>()  ; 
 		drawable = true;
 		color = _color;
 	}
@@ -36,7 +37,9 @@ public abstract class Bus extends EntityDragable implements EntityDrawable, Enti
 		System.out.println("Bus.load");
 		ArrayList<Station> nextStops = Map.getInstance().getNextStops(this, station);
 		
-		for(Passenger passenger : station.waitingPassenger)
+		ArrayList<Passenger> copy = new ArrayList<Passenger>(station.waitingPassenger);
+		
+		for(Passenger passenger : copy)
 		{
 			if(passengers.size() >= capacity)
 			{

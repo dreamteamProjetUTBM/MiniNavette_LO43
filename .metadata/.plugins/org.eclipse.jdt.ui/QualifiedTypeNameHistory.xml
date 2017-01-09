@@ -19,4 +19,6 @@
 <fullyQualifiedTypeName name="fr.utbm.lo43.entities.Passenger"/>
 <fullyQualifiedTypeName name="fr.utbm.lo43.logic.Score"/>
 <fullyQualifiedTypeName name="fr.utbm.lo43.logic.Inventory"/>
+<fullyQualifiedTypeName name="fr.utbm.lo43.logic.Filiere"/>
+<fullyQualifiedTypeName name="java.lang.NullPointerException"/>
 </qualifiedTypeNameHistroy>
