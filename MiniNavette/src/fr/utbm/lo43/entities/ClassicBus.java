@@ -147,23 +147,7 @@ public class ClassicBus extends Bus
 							canBeRemove = true;
 							return;
 						}
- 						if(direction){
-							if(currentSegment.getNextSegment() == null){
-								direction = false;
-							}
-							else{
-								currentSegment = currentSegment.getNextSegment();
-							}
-						}
-						else{
-							if (currentSegment.getPreviousSegment() == null){
-								direction = true;
-								//direction = !direction;
-							}
-							else{
-								currentSegment = currentSegment.getPreviousSegment();
-							}
-						}
+						nextSegment();
 					}
 				}
 			}
