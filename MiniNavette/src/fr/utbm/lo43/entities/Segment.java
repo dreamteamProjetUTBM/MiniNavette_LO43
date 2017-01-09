@@ -496,6 +496,8 @@ public class Segment extends EntityDragable implements EntityDrawable {
 	{	
 		if(line_bus.getSegments().size()-1 >= line_bus.getSegments().indexOf(this)+1){
 			return line_bus.getSegment(line_bus.getSegments().indexOf(this)+1);
+		}else if(line_bus.isLoop()){
+			return line_bus.getSegment(0);
 		}
 		return null;
 		//return (line_bus.getSegments().indexOf(this)+1) <= ( line_bus.getSegments().size() ) ? line_bus.getSegments().get(line_bus.getSegments().indexOf(this)+1) : null ;
@@ -505,6 +507,8 @@ public class Segment extends EntityDragable implements EntityDrawable {
 	{
 		if(line_bus.getSegments().indexOf(this)-1 >= 0){
 			return line_bus.getSegment(line_bus.getSegments().indexOf(this)-1);
+		}else if(line_bus.isLoop()){
+			return line_bus.getSegment(line_bus.getSegments().size()-1);
 		}
 		return null;
 		
