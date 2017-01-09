@@ -13,7 +13,7 @@ public abstract class Bus extends EntityDragable implements EntityDrawable, Enti
 	protected int capacity;
 	protected boolean direction;
 //	protected Station[] listStation;
-	protected float segmentProgress;
+	//protected float segmentProgress;
 	List<Passenger> passengers ; 
 	Segment currentSegment ;
 	protected Color color;
