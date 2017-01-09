@@ -21,4 +21,6 @@
 <fullyQualifiedTypeName name="fr.utbm.lo43.logic.Inventory"/>
 <fullyQualifiedTypeName name="fr.utbm.lo43.logic.Filiere"/>
 <fullyQualifiedTypeName name="java.lang.NullPointerException"/>
+<fullyQualifiedTypeName name="java.awt.List"/>
+<fullyQualifiedTypeName name="java.util.List"/>
 </qualifiedTypeNameHistroy>

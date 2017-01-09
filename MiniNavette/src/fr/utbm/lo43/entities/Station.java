@@ -38,8 +38,9 @@ public class Station extends EntityClickable implements EntityDrawable, Dijkstra
 	private Image preview;
 		
 	private boolean alcoolized;
-	private int maxWaitingTime;
-	private int extraTime;
+	
+	//Compteur pour le temps depuis le dernier appel de update
+	private int cpt = 0;
 	
 	protected List<Passenger> waitingPassenger;
 	
@@ -231,16 +232,19 @@ public class Station extends EntityClickable implements EntityDrawable, Dijkstra
 	}
 	
 	@Override
-	public void update(GameContainer gc, StateBasedGame sbg,int delta) {
+	public void update(GameContainer gc, StateBasedGame sbg, int delta) {
 		// TODO Auto-generated method stub
 		super.update(gc, sbg,delta);
 		
-		//appeler ça à chaque seconde et pas chaque update !!
-		if(isCriticalPassenger()){
-			waitedTime ++; //l'incrémenter seconde par secondes c'est faisable ? S'il sait depuis combien de temps il a pas été appelé ça serait cool
-			checkWaitingTime();
-		}else{
-			if(waitedTime >= 0 ) waitedTime --;
+		cpt+=delta ;
+		if(cpt>1000){
+			if(isCriticalPassenger()){
+				waitedTime ++; 
+				checkWaitingTime();
+			}else{
+				if(waitedTime >= 0 ) waitedTime --;
+			}
+			cpt = 0;
 		}
 	}
 	
