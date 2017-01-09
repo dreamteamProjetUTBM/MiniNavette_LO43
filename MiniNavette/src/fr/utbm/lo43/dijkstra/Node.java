@@ -12,12 +12,5 @@ public class Node<T extends Dijkstrable> {
 		this.element = element;
 		
 	}
-
-
-
-	
-	
-	
-	
 	
 }

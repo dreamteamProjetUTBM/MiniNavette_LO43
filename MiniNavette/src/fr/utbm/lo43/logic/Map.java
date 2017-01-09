@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.newdawn.slick.geom.Line;
 
+import fr.utbm.lo43.dijkstra.DijkstraPathfinding;
 import fr.utbm.lo43.entities.Bus;
 import fr.utbm.lo43.entities.Passenger;
 import fr.utbm.lo43.entities.RailWay;
@@ -20,7 +21,7 @@ public class Map {
 	private ArrayList<fr.utbm.lo43.logic.Line> lines;
 	public ArrayList<Line> grid;
 	public RailWay railWay;
-	
+	public DijkstraPathfinding<Station> pathfinding;
 
 	
 	/** Constructeur privé */
@@ -50,6 +51,12 @@ public class Map {
 		return INSTANCE;
 	}
 	
+	public void calculateNextStopStations(){
+		pathfinding = new DijkstraPathfinding<>(stations);
+		for(Station s : stations){
+			s.setNextStop(pathfinding);
+		}
+	}
 	public int getStationsLenght(){
 		return stations.size();
 	}

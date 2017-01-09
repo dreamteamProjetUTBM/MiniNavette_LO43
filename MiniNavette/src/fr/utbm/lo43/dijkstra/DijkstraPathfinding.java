@@ -1,12 +1,18 @@
 package fr.utbm.lo43.dijkstra;
 
-import java.time.chrono.IsoChronology;
 import java.util.ArrayList;
-import java.util.HashMap;
-
+/**Classe réutilisable implémentant l'algorithme de Dijkstra pour trouver
+ * le plus court chemin entre deux élements de type Dijkstrable
+ * 
+ * @author Nahil Zamiati
+ *
+ * @param <T>
+ * @see Dijkstrable, Node, Path
+ */
 public class DijkstraPathfinding<T extends Dijkstrable> {
 
 	private ArrayList<Node<T>> nodesList;
+
 
 	public DijkstraPathfinding(ArrayList<T> elementsList) {
 		super();
@@ -16,14 +22,17 @@ public class DijkstraPathfinding<T extends Dijkstrable> {
 
 			nodesList.add(new Node<T>(element));
 		}
+		
 
 	}
 
+	
 	/**
 	 * Initialise la liste des noeuds pour demarrer le pathfinding
 	 * @param start Element de depart
 	 */
 	public void init(T start){
+	
 		for (Node<T> n : nodesList){
 			if (n.element == start){
 				n.weight = 0;
@@ -36,6 +45,7 @@ public class DijkstraPathfinding<T extends Dijkstrable> {
 		}
 	}
 
+	
 	/**
 	 * Retourne le noeud qui correspond a l'élément passé en parametre
 	 * @param element
@@ -52,22 +62,27 @@ public class DijkstraPathfinding<T extends Dijkstrable> {
 
 	}
 
+	
+	
+	
+	
 	/**
-	 * Recupere le plus court chemin entre deux elements sous forme de liste
-	 * Retourne une liste coontenant un element vide dans le cas ou il n'existe aucun chemin entre les deux elements
+	 * Recupere le plus court chemin entre deux elements sous forme de Path (qui contient une liste et le float weight qui correspond au poids du chemin)
+	 * Retourne une liste contenant un element vide et un poid de -1 dans le cas ou il n'existe aucun chemin entre les deux elements
 	 * @param start Element de depart
 	 * @param end Element d'arrive
 	 * @return liste des elements a parcourir dans l'ordre pour arriver a l'element end
+	 * 			
 	 */
-	public ArrayList<T> getShortestPath(T start, T end){
+	public Path<T> getShortestPath(T start, T end){
 
-		ArrayList<T> shortestPath = new ArrayList<>();
+		Path<T> shortestPath = new Path<>();
 		Node<T> nodeEnd = getNode(end);
 		Node<T> nodeStart = getNode(start);
 		Node<T> n;		
 		init(start);
 
-		while(getLightestUnreachedNode() != null || getLightestUnreachedNode() != nodeEnd){
+		while(getLightestUnreachedNode() != null && getLightestUnreachedNode() != nodeEnd){
 			n = getLightestUnreachedNode();
 			n.reached = true;
 			for(Node<T> node : nodesList){
@@ -82,7 +97,6 @@ public class DijkstraPathfinding<T extends Dijkstrable> {
 			}
 		}
 		
-		
 		n = nodeEnd;
 		if (n.antecedent == null){
 			shortestPath.add(null);
@@ -90,10 +104,11 @@ public class DijkstraPathfinding<T extends Dijkstrable> {
 		}
 		 
 		do{
-			shortestPath.add(0,n.element);
+			shortestPath.add(n.element);
 			n = n.antecedent;
 		}while(n != nodeStart);
 		
+		shortestPath.weight = nodeEnd.weight;
 		return shortestPath;
 	}
 

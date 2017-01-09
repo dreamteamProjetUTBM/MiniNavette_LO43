@@ -13,7 +13,9 @@ import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
 
+import fr.utbm.lo43.dijkstra.DijkstraPathfinding;
 import fr.utbm.lo43.dijkstra.Dijkstrable;
+import fr.utbm.lo43.dijkstra.Path;
 import fr.utbm.lo43.logic.Filiere;
 import fr.utbm.lo43.logic.Line;
 import fr.utbm.lo43.logic.Map;
@@ -48,7 +50,7 @@ public class Station extends EntityClickable implements EntityDrawable, Dijkstra
 		super(_position);
 		filiere = type;
 		waitingPassenger = new ArrayList<>();
-		nextStop = new HashMap<>();
+		Map.getInstance().calculateNextStopStations();
 		try 
 		{
 			preview = new Image("asset/"+filiere.toString().toLowerCase()+".png");
@@ -91,7 +93,37 @@ public class Station extends EntityClickable implements EntityDrawable, Dijkstra
 		
 		return p;
 	}
-
+	
+	/**
+	 * Permet de remplir la HashMap nextStop
+	 */
+	public void setNextStop(DijkstraPathfinding<Station> pathfinding){
+		nextStop = new HashMap<>();
+		Path<Station> shortestPath;
+		Station tempStation;
+		float minDistance = -1;
+		
+		for(Filiere f : Filiere.values()){
+			if(f == filiere){
+			minDistance = -1;
+			tempStation = null;
+			for(Station s : Map.getInstance().stations){
+				if(s.filiere == f){
+					shortestPath = pathfinding.getShortestPath(this, s);
+					if((shortestPath.getWeight()<minDistance || minDistance == -1) && shortestPath.getWeight()!=-1){
+						minDistance = shortestPath.getWeight();
+						tempStation = shortestPath.get(0);
+					}
+					
+				}
+			}
+			nextStop.put(f, tempStation);
+			}
+		}
+		
+		
+	}
+	
 	public boolean canAddPassenger(){
 		if(waitingPassenger.size() >= MAXIMUM_PASSENGER){
 			return false;

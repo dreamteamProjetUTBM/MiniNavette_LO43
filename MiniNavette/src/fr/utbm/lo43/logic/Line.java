@@ -40,6 +40,7 @@ public abstract class Line extends Entity implements EntityUpdateable, EntityDra
 	
 	public void addSegment(Segment _seg,int index){
 		segments.add(index, _seg);
+		Map.getInstance().calculateNextStopStations();
 	}
 	
 	/**
@@ -124,19 +125,13 @@ public abstract class Line extends Entity implements EntityUpdateable, EntityDra
 		if(!segments.contains(_seg)){
 			return false;
 		}
-		/*if(isLoop()){
-			Segment temp;
-			while(!segments.get(0).equals(_seg)&&!segments.get(segments.size()-1).equals(_seg)){
-				temp = segments.get(segments.size() -1);
-				for(int i = segments.size()-1; i>0; --i){
-				
-					 segments.set(i,segments.get(i-1)); 
-				}
-				segments.set(0,temp);
-			}
-		} */
+
 		
-		return segments.remove(_seg);
+		boolean result = segments.remove(_seg);
+		if(result){
+			Map.getInstance().calculateNextStopStations();
+		}
+		return result;
 	}
 	
 	public boolean isSegmentCrossingLine(Segment _segment){
