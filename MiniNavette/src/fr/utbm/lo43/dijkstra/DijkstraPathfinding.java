@@ -84,21 +84,20 @@ public class DijkstraPathfinding<T extends Dijkstrable> {
 		
 		
 		while(getLightestUnreachedNode() != null && getLightestUnreachedNode() != nodeEnd){
-			
+
 			n = getLightestUnreachedNode();
 			n.reached = true;
-			
+
 			for(Node<T> node : nodesList){
-			
+		
 				if(!node.reached){
 		
 					if(n.element.isConnected(node.element)){
-
-						if(node.weight == -1 || node.weight > n.weight + n.element.calculateWeight(node.element)){
 						
+						if(node.weight == -1 || node.weight > n.weight + n.element.calculateWeight(node.element)){
 							node.weight = n.weight + n.element.calculateWeight(node.element);
 							node.antecedent = n;
-							//System.out.println( n.weight);
+							
 						}
 					}
 				}
@@ -114,8 +113,7 @@ public class DijkstraPathfinding<T extends Dijkstrable> {
 			shortestPath.add(null);
 			return shortestPath;
 		}
-		System.out.println("test");
-		System.out.println(shortestPath.weight);
+
 		do{
 			shortestPath.add(n.element);
 			n = n.antecedent;
@@ -133,10 +131,10 @@ public class DijkstraPathfinding<T extends Dijkstrable> {
 	public Node<T> getLightestUnreachedNode(){
 
 		Node<T> lightestNode = null;
-		float minWeight = 0;
+		float minWeight = -1;
 
 		for (Node<T> n : nodesList){
-			if(!n.reached && n.weight != -1 && n.weight <= minWeight){
+			if(!n.reached && n.weight != -1 && (n.weight <= minWeight || minWeight == -1)){
 				minWeight = n.weight;
 				lightestNode = n;	
 			}
