@@ -374,7 +374,7 @@ public class ClassicBus extends Bus
 			passenger_images = new ArrayList<>();
 			for (Passenger passenger : passengers) {
 				try {
-					passenger_images.add(new Image("asset/"+passenger.filiere+".png"));
+					passenger_images.add(new Image("asset/"+passenger.filiere.toString().toLowerCase()+".png"));
 				} catch (SlickException e) {
 					// TODO Auto-generated catch block
 					System.out.println("Erreur");
