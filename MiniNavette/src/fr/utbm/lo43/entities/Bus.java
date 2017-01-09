@@ -31,6 +31,14 @@ public abstract class Bus extends EntityDragable implements EntityDrawable, Enti
 	
 	
 	
+	public boolean getDirection() {
+		return direction;
+	}
+
+	public Segment getCurrentSegment() {
+		return currentSegment;
+	}
+
 	public void load(Station station)
 	{
 
@@ -50,6 +58,8 @@ public abstract class Bus extends EntityDragable implements EntityDrawable, Enti
 		}
 
 	}
+	
+	
 	
 	public void unload(Station station)
 	{

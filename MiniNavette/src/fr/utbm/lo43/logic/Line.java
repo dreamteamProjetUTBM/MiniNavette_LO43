@@ -12,6 +12,7 @@ import fr.utbm.lo43.entities.Entity;
 import fr.utbm.lo43.entities.EntityDrawable;
 import fr.utbm.lo43.entities.EntityUpdateable;
 import fr.utbm.lo43.entities.Segment;
+import fr.utbm.lo43.entities.Station;
 
 public abstract class Line extends Entity implements EntityUpdateable, EntityDrawable {
 
@@ -34,6 +35,18 @@ public abstract class Line extends Entity implements EntityUpdateable, EntityDra
 		return segments;
 	}
 	
+	/**
+	 * Retourne les stations desservis par cette ligne
+	 * @return
+	 */
+	public ArrayList<Station> getStations(){
+		ArrayList<Station> stations = new ArrayList<>();
+		for(Segment s : segments ){
+			stations.add(s.getStationDepart());
+		}
+		return stations;
+		
+	}
 	public Segment getSegment(int index){
 		return segments.get(index);
 	}
