@@ -84,6 +84,21 @@ public class Segment extends EntityDragable implements EntityDrawable {
 	}
 	
 
+	public int getOffset(){
+		int offset = 0;
+		for (int i = lineIndex; i < Map.getInstance().getLines().size(); i++) {
+			fr.utbm.lo43.logic.Line _line = Map.getInstance().getLine(i);
+			for (Segment segment : _line.getSegments()) {
+				if (!isCrossing(segment) && (segment.hasSameVectors(this) || isOnSegment(segment.getAngle())|| segment.isOnSegment(getAngle()))) { // donc
+					// parallèle
+					offset++;
+
+
+				}
+			}
+		}
+		return offset;
+	}
 	
 	public void setForbiddenBridges(boolean forbiddenBridges) {
 		this.forbiddenBridges = forbiddenBridges;
@@ -187,30 +202,16 @@ public class Segment extends EntityDragable implements EntityDrawable {
 
 		arg2.setAntiAlias(true);
 		Line tempLine;
-		int offset = 0;
+	
 		int dxStart = 0;
 		int dyStart = 0;
 		int dxEnd = 0;
 		int dyEnd = 0;
-		for (int i = lineIndex; i < Map.getInstance().getLines().size(); i++) {
-			fr.utbm.lo43.logic.Line _line = Map.getInstance().getLine(i);
-			for (Segment segment : _line.getSegments()) {
-				if (!isCrossing(segment) && (segment.hasSameVectors(this) || isOnSegment(segment.getAngle())|| segment.isOnSegment(getAngle()))) { // donc
-					// parallèle
-					offset++;
 
-
-				}
-			}
-		}
 
 
 
 		// permet de centrer les segments si il y a des offsets
-		if (offset % 2 == 0) {
-			offset = -offset;
-		}
-		offset = offset / 2;
 
 		arg2.setLineWidth(SEGMENT_THICKNESS);
 		arg2.setColor(Map.getInstance().getLine(lineIndex).getColor());
@@ -248,16 +249,16 @@ public class Segment extends EntityDragable implements EntityDrawable {
 			}
 
 			if(Math.abs(dxStart) == 1 && Math.abs(dyStart) == 0){
-				_polygonrender.setLocation(_polygonrender.getX(), _polygonrender.getY() +SEGMENT_THICKNESS*offset);
+				_polygonrender.setLocation(_polygonrender.getX(), _polygonrender.getY() +SEGMENT_THICKNESS*this.getOffset());
 			}
 			if(Math.abs(dxStart) == 0 && Math.abs(dyStart) == 1){
-				_polygonrender.setLocation(_polygonrender.getX()+SEGMENT_THICKNESS*offset, _polygonrender.getY());
+				_polygonrender.setLocation(_polygonrender.getX()+SEGMENT_THICKNESS*this.getOffset(), _polygonrender.getY());
 			}
 			if(dxStart == dyStart){
-				_polygonrender.setLocation(_polygonrender.getX()+SEGMENT_THICKNESS*offset, _polygonrender.getY()-SEGMENT_THICKNESS*offset);
+				_polygonrender.setLocation(_polygonrender.getX()+SEGMENT_THICKNESS*this.getOffset(), _polygonrender.getY()-SEGMENT_THICKNESS*this.getOffset());
 			}
 			if(dxStart == -dyStart){
-				_polygonrender.setLocation(_polygonrender.getX()+SEGMENT_THICKNESS*offset, _polygonrender.getY()+SEGMENT_THICKNESS*offset);
+				_polygonrender.setLocation(_polygonrender.getX()+SEGMENT_THICKNESS*this.getOffset(), _polygonrender.getY()+SEGMENT_THICKNESS*this.getOffset());
 			}
 			
 		if(isFirstinLine()){
@@ -302,7 +303,7 @@ public class Segment extends EntityDragable implements EntityDrawable {
 		
 		
 
-		//_polygonrender.setLocation(_polygonrender.getX()+5*offset, _polygonrender.getY() +5*offset);
+		//_polygonrender.setLocation(_polygonrender.getX()+5*this.getOffset(), _polygonrender.getY() +5*this.getOffset());
 		arg2.draw(_polygonrender);
 		
 
@@ -317,11 +318,11 @@ public class Segment extends EntityDragable implements EntityDrawable {
 			Image imgBridges = new Image("asset/bridge.png");
 			Image imgForbidden = new Image("asset/forbidden.png"); 
 			for(Vector2f bridge : bridges){
-				imgBridges.drawFlash(bridge.x - Map.GRID_SIZE + SEGMENT_THICKNESS*offset, bridge.y - Map.GRID_SIZE + SEGMENT_THICKNESS*offset, Map.GRID_SIZE*2,
+				imgBridges.drawFlash(bridge.x - Map.GRID_SIZE + SEGMENT_THICKNESS*this.getOffset(), bridge.y - Map.GRID_SIZE + SEGMENT_THICKNESS*this.getOffset(), Map.GRID_SIZE*2,
 						Map.GRID_SIZE*2, Map.getInstance().getLine(lineIndex).getColor());
 				
 				if(forbiddenBridges){
-					imgForbidden.drawFlash(bridge.x - Map.GRID_SIZE + SEGMENT_THICKNESS*offset, bridge.y - Map.GRID_SIZE + SEGMENT_THICKNESS*offset, Map.GRID_SIZE*2,
+					imgForbidden.drawFlash(bridge.x - Map.GRID_SIZE + SEGMENT_THICKNESS*this.getOffset(), bridge.y - Map.GRID_SIZE + SEGMENT_THICKNESS*this.getOffset(), Map.GRID_SIZE*2,
 							Map.GRID_SIZE*2, Color.red);
 				}
 			}
