@@ -106,6 +106,13 @@ public class Segment extends EntityDragable implements EntityDrawable {
 		return offset;
 	}
 	
+	
+	
+	public fr.utbm.lo43.logic.Line getLine_bus() {
+		return line_bus;
+	}
+
+
 	public void setForbiddenBridges(boolean forbiddenBridges) {
 		this.forbiddenBridges = forbiddenBridges;
 	}
