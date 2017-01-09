@@ -83,6 +83,7 @@ public class Map {
 	
 	public ArrayList<Station> getNextStops(Bus bus, Station _station){
 		//renvoyer les stations suivantes du bus de sa ligne
+		
 		return stations;
 	}
 	

@@ -143,17 +143,20 @@ public class Station extends EntityClickable implements EntityDrawable, Dijkstra
 	
 	public void checkWaitingTime()
 	{
+
 		if(this.alcoolized)
 		{
 			if(waitedTime >= MAX_WAITING_TIME + BONUS_WAITING_TIME)
 			{
-				//perdu
+				System.out.println("Perdu !! Les passagers ont attendu "+ waitedTime + "secondes");
 			}
+			else System.out.println("Attention, une station est en état critique : "+ ( MAX_WAITING_TIME + BONUS_WAITING_TIME- waitedTime)+ " secondes avant la défaite");
 		}else{
 			if(waitedTime >= MAX_WAITING_TIME)
 			{
-				//perdu
+				System.out.println("Perdu !! Les passagers ont attendu "+ waitedTime + "secondes");
 			}
+			else System.out.println("Attention, une station est en état critique : "+ ( MAX_WAITING_TIME - waitedTime)+ " secondes avant la défaite");
 		}
 	}
 	
@@ -166,6 +169,10 @@ public class Station extends EntityClickable implements EntityDrawable, Dijkstra
 	{
 
 		System.out.println("Station.notifyBus");
+
+	
+		if(bus.passengers.size() < bus.capacity) bus.unload(this);
+		
 		if(waitingPassenger.size()!=0){
 			for(Passenger passenger : waitingPassenger)
 			{
@@ -175,8 +182,6 @@ public class Station extends EntityClickable implements EntityDrawable, Dijkstra
 				System.out.println("Passenger a un nouveau stop : " + this.nextStop.get(passenger.filiere));
 			}
 		}
-	
-		if(bus.passengers.size() < bus.capacity) bus.unload(this);
 		
 		if(waitingPassenger.size() > 0) bus.load(this);
 		

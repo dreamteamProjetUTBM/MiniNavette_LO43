@@ -153,10 +153,6 @@ public class ClassicBus extends Bus
 								currentSegment = currentSegment.getPreviousSegment();
 							}
 						}
-						
-						/*
-						 * ROGER ICI
-						 */
 					}
 				}
 			}
