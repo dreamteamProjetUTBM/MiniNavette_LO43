@@ -224,18 +224,18 @@ public class MainGameState extends BasicGameState {
 			counter = 0;
 		}
 
+		/*
+		 * Supprime les bus bloqués
+		 */
 		for (Entity _entity : entities.getEntities()) {
-
 			if(_entity.getClass() == ClassicBus.class){
 				ClassicBus _tmp = (ClassicBus) _entity;
-				//System.out.println("Bus: y'en a un");
 				if(_tmp.canBeRemove()){
-					System.out.println("suppr");
-					entities.deleteObject(_tmp);
+					if(entities.deleteObject(_tmp))
+						game.getInventory().setRemainingBus(1);
 				}
 				break;
 			}
-			
 		}
 		
 		Input input = arg0.getInput();
