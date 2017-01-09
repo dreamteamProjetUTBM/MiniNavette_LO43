@@ -111,10 +111,7 @@ public class Station extends EntityClickable implements EntityDrawable, Dijkstra
 			for(Station s : Map.getInstance().stations){
 				if(s.filiere == f){
 					shortestPath = pathfinding.getShortestPath(this, s);
-					for(Station test : shortestPath.getElements()){
-						
-						System.out.println(test);
-					}
+
 					if((shortestPath.getWeight()<minDistance || minDistance == -1) && shortestPath.getWeight()!=-1){
 						minDistance = shortestPath.getWeight();
 						tempStation = shortestPath.get(0);
