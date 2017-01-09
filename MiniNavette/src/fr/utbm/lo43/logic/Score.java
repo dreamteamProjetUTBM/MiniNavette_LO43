@@ -10,11 +10,14 @@ public class Score {
 	}
  
 	/** Instance unique pré-initialisée */
-	private static Score INSTANCE = new Score();
+	private static Score INSTANCE = null;
  
 	/** Point d'accès pour l'instance unique du singleton */
 	public static Score getInstance()
-	{	return INSTANCE;
+	{	
+		if(INSTANCE == null)
+			INSTANCE = new Score();
+		return INSTANCE;
 	}
 
 	public void incrementScore()
