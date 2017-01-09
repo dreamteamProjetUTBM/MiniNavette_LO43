@@ -124,7 +124,7 @@ public class Station extends EntityClickable implements EntityDrawable, Dijkstra
 			
 		}
 		for(Filiere f : Filiere.values()){
-			//System.out.println("Prochaine station pour atteindre " +f+" : " +nextStop.get(f));
+			System.out.println("Prochaine station pour atteindre " +f+" : " +nextStop.get(f));
 		}
 		
 	}
