@@ -15,6 +15,10 @@ public class EntityCollection implements EntityUpdateable, EntityDrawable
 		entities = new ArrayList<Entity>();
 	}
 	
+	public ArrayList<Entity> getEntities(){
+		return entities;
+	}
+	
 	public void add(Entity _entity)
 	{
 		entities.add(_entity);
@@ -31,7 +35,7 @@ public class EntityCollection implements EntityUpdateable, EntityDrawable
 	}
 
 	/**
-	 * Permet de supprimer avec une égalité profonde, contrairement a delete (qui utilise la methode equals pour comparer les objets)
+	 * Permet de supprimer avec une ï¿½galitï¿½ profonde, contrairement a delete (qui utilise la methode equals pour comparer les objets)
 	 * @param _entity
 	 * @return
 	 */

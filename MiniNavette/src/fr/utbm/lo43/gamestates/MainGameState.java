@@ -16,7 +16,9 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 import fr.utbm.lo43.GameWindow;
+import fr.utbm.lo43.entities.Bus;
 import fr.utbm.lo43.entities.ClassicBus;
+import fr.utbm.lo43.entities.Entity;
 import fr.utbm.lo43.entities.EntityCollection;
 import fr.utbm.lo43.entities.EventEntityMouseClicked;
 import fr.utbm.lo43.entities.Label;
@@ -203,6 +205,8 @@ public class MainGameState extends BasicGameState {
 	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException {
 
 		entities.update(arg0, arg1, arg2);
+		
+		
 		Random rand = new Random();
 		counter += arg2;
 
@@ -220,6 +224,20 @@ public class MainGameState extends BasicGameState {
 			counter = 0;
 		}
 
+		for (Entity _entity : entities.getEntities()) {
+
+			if(_entity.getClass() == ClassicBus.class){
+				ClassicBus _tmp = (ClassicBus) _entity;
+				//System.out.println("Bus: y'en a un");
+				if(_tmp.canBeRemove()){
+					System.out.println("suppr");
+					entities.deleteObject(_tmp);
+				}
+				break;
+			}
+			
+		}
+		
 		Input input = arg0.getInput();
 
 		if (input.isKeyDown(Input.KEY_ESCAPE)) {
@@ -354,6 +372,7 @@ public class MainGameState extends BasicGameState {
 						if (_line.canRemove(_segment)) {
 							_line.removeSegment(_segment);
 							entities.delete(_segment);
+							//Suppr bus ici
 							if(_segment.getBridges().size()>0){
 								Inventory.getInstance().addBridge();
 							}

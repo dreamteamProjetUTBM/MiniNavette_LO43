@@ -19,10 +19,7 @@ import fr.utbm.lo43.logic.Line;
 import fr.utbm.lo43.logic.Map;
 
 public class ClassicBus extends Bus
-{
-	ClassicBus thisone = this;
-	
-	
+{	
 	private Polygon polygon;
 	
 	//Le bus navigue entre ces deux vecteurs
@@ -30,6 +27,8 @@ public class ClassicBus extends Bus
 	//Direction du bus
 	int local_direction = -1;
 	
+	boolean lock = false;
+	boolean canBeRemove = false;
 	//Contient l'actuelle angle du bus
 	private float theta;
 	//Compteur pour le temps depuis le dernier appel de update
@@ -43,10 +42,10 @@ public class ClassicBus extends Bus
 		currentSegment = current;
 		
 		polygon = new Polygon();
-		polygon.addPoint(_position.x-5, _position.y+15);
-		polygon.addPoint(_position.x+5, _position.y+15);
-		polygon.addPoint(_position.x+5, _position.y-15);
-		polygon.addPoint(_position.x-5, _position.y-15);
+		polygon.addPoint(_position.x-Map.GRID_SIZE/2, _position.y+Map.GRID_SIZE*0.75f);
+		polygon.addPoint(_position.x+Map.GRID_SIZE/2, _position.y+Map.GRID_SIZE*0.75f);
+		polygon.addPoint(_position.x+Map.GRID_SIZE/2, _position.y-Map.GRID_SIZE*0.75f);
+		polygon.addPoint(_position.x-Map.GRID_SIZE/2, _position.y-Map.GRID_SIZE*0.75f);
 		/*
 		setEventCallback(new EventEntityMouseDraged() {
 			
@@ -73,8 +72,12 @@ public class ClassicBus extends Bus
 			}
 		}); */
 		theta = getAngle();
-		polygon = (Polygon) polygon.transform(Transform.createRotateTransform((float) Math.toRadians(-getAngle())));
+		polygon = (Polygon) polygon.transform(Transform.createRotateTransform((float) Math.toRadians(-getAngle()),getPosition().x,getPosition().y));
 
+	}
+	
+	public boolean canBeRemove(){
+		return canBeRemove;
 	}
 	
 	public float getAngle(){
@@ -124,6 +127,9 @@ public class ClassicBus extends Bus
 	public void move() 
 	{
 		
+		if(!currentSegment.line_bus.existingSegment(currentSegment))
+			lock = true;
+		
 		for (Vector2f endpoint : currentSegment.getPositions()) {
 			if(endpoint.distance(getPosition()) == 0){
 				//Alors on est arrivé soit dans une station soit à la fin d'une partie du segment
@@ -134,9 +140,14 @@ public class ClassicBus extends Bus
 						 * ROGER ICI
 						 */
 						station.notifyBus(this);
-						System.out.println("Bus "+ this.color +" a maintenant "+ passengers.size() + " passager(s).");
-						
-						if(direction){
+
+						System.out.println("Bus a maintenant "+ passengers.size() + " passager(s).");
+					
+						if(lock){
+							canBeRemove = true;
+							return;
+						}
+ 						if(direction){
 							if(currentSegment.getNextSegment() == null){
 								direction = false;
 							}
@@ -210,7 +221,7 @@ public class ClassicBus extends Bus
 		}
 		
 		if(currentSegment.isOnSegment(newpos)){
-			setPosition(newpos);
+			setPosition(newpos);	
 		}
 		else{
 			if(local_direction == -1)
@@ -359,14 +370,14 @@ public class ClassicBus extends Bus
 		}*/
 		
 		cpt += delta;
-		if(cpt >25 && !isGrabed)
+		if(cpt >15 && !isGrabed)
 		{
 			cpt = 0;
 			move();
 			
 			if(getAngle() != theta) //Donc on a changé d'angle
 			{
-				polygon = (Polygon) polygon.transform(Transform.createRotateTransform((float) Math.toRadians(theta-getAngle())));	
+				polygon = (Polygon) polygon.transform(Transform.createRotateTransform((float) Math.toRadians(theta-getAngle()),getPosition().x,getPosition().y));	
 				theta = getAngle();
 
 			}
@@ -374,9 +385,22 @@ public class ClassicBus extends Bus
 			polygon.setCenterY(getPosition().y +currentSegment.getOffset()*Segment.SEGMENT_THICKNESS/2);
 
 		}
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		// TODO Auto-generated method stub
+		//return super.equals(obj);
 		
+		if(obj.getClass() != ClassicBus.class)
+			return false;
 		
-
+		ClassicBus _obj = (ClassicBus) obj;
+		
+		if(color == _obj.color && currentSegment == _obj.currentSegment) { //Donc même ligne
+			return true;
+		}
+		return false;
 	}
 
 }
