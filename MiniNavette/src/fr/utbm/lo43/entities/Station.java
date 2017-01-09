@@ -104,16 +104,16 @@ public class Station extends EntityClickable implements EntityDrawable, Dijkstra
 		float minDistance = -1;
 		
 		for(Filiere f : Filiere.values()){
-			if(f == filiere){
+	
 			minDistance = -1;
 			tempStation = null;
 			for(Station s : Map.getInstance().stations){
 				if(s.filiere == f){
 					shortestPath = pathfinding.getShortestPath(this, s);
-					/*for(Station test : shortestPath.getElements()){
+					for(Station test : shortestPath.getElements()){
 						
 						System.out.println(test);
-					}*/
+					}
 					if((shortestPath.getWeight()<minDistance || minDistance == -1) && shortestPath.getWeight()!=-1){
 						minDistance = shortestPath.getWeight();
 						tempStation = shortestPath.get(0);
@@ -124,7 +124,7 @@ public class Station extends EntityClickable implements EntityDrawable, Dijkstra
 				}
 			}
 			nextStop.put(f, tempStation);
-			}
+			
 		}
 		for(Filiere f : Filiere.values()){
 			//System.out.println("Prochaine station pour atteindre " +f+" : " +nextStop.get(f));
