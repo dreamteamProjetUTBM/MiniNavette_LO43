@@ -6,23 +6,32 @@ import org.lwjgl.Sys;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.geom.Polygon;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Transform;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
 
+import fr.utbm.lo43.gamestates.MainGameState;
+import fr.utbm.lo43.logic.Inventory;
 import fr.utbm.lo43.logic.Line;
 import fr.utbm.lo43.logic.Map;
 
 public class ClassicBus extends Bus
 {
-	int current_part_index;
+	ClassicBus thisone = this;
+	
+	
 	private Polygon polygon;
 	
-	Vector2f start,end;
+	//Le bus navigue entre ces deux vecteurs
+	private Vector2f start,end;
+	//Direction du bus
 	int local_direction = -1;
 	
+	//Contient l'actuelle angle du bus
+	private float theta;
 	//Compteur pour le temps depuis le dernier appel de update
 	private int cpt = 0;
 	
@@ -38,6 +47,68 @@ public class ClassicBus extends Bus
 		polygon.addPoint(_position.x+5, _position.y+15);
 		polygon.addPoint(_position.x+5, _position.y-15);
 		polygon.addPoint(_position.x-5, _position.y-15);
+		
+		setEventCallback(new EventEntityMouseDraged() {
+			
+			@Override
+			public void mouseReleased() {
+				// TODO Auto-generated method stub
+				boolean isOnSegment = false;
+				for(Line line : Map.getInstance().getLines()){
+					for (Segment seg : line.getSegments()) {
+						if(seg.isOnSegment(getPosition()))
+							isOnSegment = true;
+					}
+				}
+				
+				if(!isOnSegment){
+					Inventory.getInstance().setRemainingBus(1);
+					//MainGameState.entities.delete(thisone);
+				}
+			}
+			
+			@Override
+			public void mousePressed() {
+				// TODO Auto-generated method stub
+			}
+		}); 
+		theta = getAngle();
+		polygon = (Polygon) polygon.transform(Transform.createRotateTransform((float) Math.toRadians(getAngle())));
+
+	}
+	
+	public float getAngle(){
+		ArrayList<Vector2f> vects = currentSegment.isBetween(getPosition());
+		Vector2f _start,_end;
+		
+		if(vects.get(0) == null || vects.get(1) == null)
+			return 0;
+		
+		if(vects.size() == 4 && direction){
+			_start = vects.get(2);
+			_end = vects.get(3);
+			
+		}
+		else {
+			if(direction){
+				_start = vects.get(0);
+				_end = vects.get(1);
+			}
+			else {
+				_start = vects.get(1);
+				_end = vects.get(0);
+			}
+		}
+		
+		org.newdawn.slick.geom.Line line= new org.newdawn.slick.geom.Line(_start, _end);
+		float theta_bis = (float) Math.atan2(line.getDX(), line.getDY());
+		theta_bis *= 180 / Math.PI;
+		
+		return theta_bis;
+		/*
+		System.out.println(theta);
+		 return (line.getDX()/line.getDY());*/
+		
 	}
 	
 	@Override
@@ -66,7 +137,6 @@ public class ClassicBus extends Bus
 						if(direction){
 							if(currentSegment.getNextSegment() == null){
 								direction = false;
-								System.out.println("Euh");
 							}
 							else{
 								currentSegment = currentSegment.getNextSegment();
@@ -76,7 +146,6 @@ public class ClassicBus extends Bus
 							if (currentSegment.getPreviousSegment() == null){
 								direction = true;
 								//direction = !direction;
-								System.out.println("Euh");
 							}
 							else{
 								currentSegment = currentSegment.getPreviousSegment();
@@ -98,7 +167,6 @@ public class ClassicBus extends Bus
 		
 		if(vects.size() > 0){
 			if(vects.size() == 4 && direction){
-				System.out.println("Quatre");
 				start = vects.get(2);
 				end = vects.get(3);
 				
@@ -112,6 +180,7 @@ public class ClassicBus extends Bus
 					start = vects.get(1);
 					end = vects.get(0);
 				}
+
 			}
 		}
 		
@@ -152,8 +221,7 @@ public class ClassicBus extends Bus
 				local_direction = -1;
 		}
 		
-		polygon.setCenterX(getPosition().x);
-		polygon.setCenterY(getPosition().y);
+		
 
 		
 		/*
@@ -262,16 +330,55 @@ public class ClassicBus extends Bus
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg,int delta) {
 		
-		super.update(gc, sbg,delta);
+		//super.update(gc, sbg,delta);
+		
+		Input input = gc.getInput();
+		
+		if(polygon.contains(input.getMouseX(), input.getMouseY()) && input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON))
+		{
+			if(isGrabed == true)
+			{
+				setPosition(new Vector2f(input.getMouseX(),input.getMouseY()));
+				
+				//position.x = input.getMouseX();
+				//position.y = input.getMouseY();
+				if(dragedEvent != null)
+					dragedEvent.mousePressed();
+			}
+			else
+			{
+				isGrabed = true;
+			}
+		}
+		else
+		{
+			if(isGrabed != false)
+			{
+				if(dragedEvent != null)
+					dragedEvent.mouseReleased();
+				isGrabed = false;
+			}
+		}
 		
 		cpt += delta;
-		if(cpt >25)
+		if(cpt >25 && !isGrabed)
 		{
 			cpt = 0;
 			move();
+			
+			if(getAngle() != theta) //Donc on a changé d'angle
+			{
+				polygon = (Polygon) polygon.transform(Transform.createRotateTransform((float) Math.toRadians(theta-getAngle())));	
+				theta = getAngle();
+
+			}
+			polygon.setCenterX(getPosition().x);
+			polygon.setCenterY(getPosition().y);
 
 		}
 		
+		
+
 	}
 
 }

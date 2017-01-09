@@ -34,7 +34,9 @@ public class MainGameState extends BasicGameState {
 
 	Game game;
 	int counter = 0;
-	EntityCollection entities;
+	
+	//Je sais pas si ca va vous plaire
+	public static EntityCollection entities;
 
 	Rectangle menu_inventary;
 	ArrayList<ToggledButton> lines_button;
