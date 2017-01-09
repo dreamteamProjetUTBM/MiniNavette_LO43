@@ -192,19 +192,13 @@ public class Station extends EntityClickable implements EntityDrawable, Dijkstra
 		}
 	}
 	
-	private int calculateDistance(Station d){
-		int weight = 0;
-		int weightTemp = 0;
-
+	private float calculateDistance(Station d){
+		float weight = -1;
 		for(Line l : Map.getInstance().getLines()){
 			
 			for(Segment s : l.getSegments()){
-				if(d.isOnStation(s.getStartSegment())){
-					while(true){ //boucle a definir
-					
-					}
-				}else if(isOnStation(s.getEndSegment())){
-					
+				if(s.getStationDepart() == this && s.getStationArrival()==d || s.getStationDepart() == d && s.getStationArrival()==this){
+					weight = s.getLength();
 				}
 			}
 		}
@@ -212,8 +206,13 @@ public class Station extends EntityClickable implements EntityDrawable, Dijkstra
 	}
 	
 	@Override
-	public int calculateWeight(Dijkstrable d){
+	public float calculateWeight(Dijkstrable d){
 
 		return this.calculateDistance((Station) d);
+	}
+
+	@Override
+	public boolean isConnected(Dijkstrable d) {
+		return (calculateWeight(d) != -1);
 	}
 }

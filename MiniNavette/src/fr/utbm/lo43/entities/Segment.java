@@ -8,9 +8,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.geom.Circle;
 import org.newdawn.slick.geom.Line;
-import org.newdawn.slick.geom.Point;
 import org.newdawn.slick.geom.Polygon;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
@@ -22,11 +20,10 @@ public class Segment extends EntityDragable implements EntityDrawable {
 
 	public static final float SEGMENT_THICKNESS = 5;
 	private Polygon polygon;
-	private ArrayList<Station> stations;
-
 	private ArrayList<Vector2f> bridges;
+	private Station stationDepart;
+	private Station stationArrival;
 	
-
 	private String iconPath;
 	// Line de Slick2D
 	Line line;
@@ -48,19 +45,21 @@ public class Segment extends EntityDragable implements EntityDrawable {
 		lineIndex = index;
 		
 		bridges = intersectsRailway(Map.getInstance().railWay);
+		
+		
+		setStations();
 		dragedEvent = new EventEntityMouseDraged() {
 
 			@Override
 			public void mouseReleased() {
 				// TODO Auto-generated method stub
 				boolean notOnStation = true;
-				boolean needMoreBridges = bridges.size()> Inventory.getInstance().getRemainingBridges() ;
 				for (Station station : Map.getInstance().getStations()) {
 					if (station.position == getEndSegment()) {
 						notOnStation = false;
 					}
 				}
-				if (notOnStation||needMoreBridges) {
+				if (notOnStation) {
 					// J'adore faire des méthodes comme ça
 					Map.getInstance().getLine(lineIndex).removeSegment(Map.getInstance().getLine(lineIndex)
 							.getSegments().get(Map.getInstance().getLine(lineIndex).getSegments().size() - 1));
@@ -87,7 +86,15 @@ public class Segment extends EntityDragable implements EntityDrawable {
 		this.forbiddenBridges = forbiddenBridges;
 	}
 
+	public Station getStationDepart() {
+		return stationDepart;
+	}
 
+
+
+	public Station getStationArrival() {
+		return stationArrival;
+	}
 
 	public ArrayList<Vector2f> getBridges() {
 		return bridges;
@@ -123,8 +130,17 @@ public class Segment extends EntityDragable implements EntityDrawable {
 	 * 
 	 * @return
 	 */
-	public ArrayList<Station> getStations() {
-		return stations;
+	public void setStations() {
+		ArrayList<Station> stations = new ArrayList<>();
+		for(Station station : Map.getInstance().getStations()){
+			if(station.isOnStation(getStartSegment())){
+				stationDepart = station;
+			}else if(station.isOnStation(getEndSegment())){
+				stationArrival = station;
+			}
+			
+		}
+		
 	}
 
 	public ArrayList<Vector2f> getPositions() {

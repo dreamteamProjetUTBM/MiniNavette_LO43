@@ -1,21 +1,24 @@
 package fr.utbm.lo43.dijkstra;
 
+import java.time.chrono.IsoChronology;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class DijkstraPathfinding<T extends Dijkstrable> {
 
 	private ArrayList<Node<T>> nodesList;
 
-	public DijkstraPathfinding(ArrayList<T> ElementsList) {
+	public DijkstraPathfinding(ArrayList<T> elementsList) {
 		super();
 		nodesList = new ArrayList<>();
-		for(T element : ElementsList ){
+
+		for(T element : elementsList ){
+
 			nodesList.add(new Node<T>(element));
 		}
-		
-		
+
 	}
-	
+
 	/**
 	 * Initialise la liste des noeuds pour demarrer le pathfinding
 	 * @param start Element de depart
@@ -24,7 +27,7 @@ public class DijkstraPathfinding<T extends Dijkstrable> {
 		for (Node<T> n : nodesList){
 			if (n.element == start){
 				n.weight = 0;
-				
+
 			}else{
 				n.weight = -1;
 			}	
@@ -32,35 +35,78 @@ public class DijkstraPathfinding<T extends Dijkstrable> {
 			n.antecedent = null;
 		}
 	}
-	
+
 	/**
-	 * Recupere le plus court chemin sous forme de liste
+	 * Retourne le noeud qui correspond a l'élément passé en parametre
+	 * @param element
+	 * @return
+	 */
+	public Node<T> getNode(T element){
+		Node<T> node = null;
+		for(Node<T> n : nodesList){
+			if(n.element == element){
+				node = n;
+			}
+		}
+		return node;
+
+	}
+
+	/**
+	 * Recupere le plus court chemin entre deux elements sous forme de liste
+	 * Retourne une liste coontenant un element vide dans le cas ou il n'existe aucun chemin entre les deux elements
 	 * @param start Element de depart
 	 * @param end Element d'arrive
 	 * @return liste des elements a parcourir dans l'ordre pour arriver a l'element end
- 	 */
+	 */
 	public ArrayList<T> getShortestPath(T start, T end){
+
+		ArrayList<T> shortestPath = new ArrayList<>();
+		Node<T> nodeEnd = getNode(end);
+		Node<T> nodeStart = getNode(start);
 		Node<T> n;		
 		init(start);
-		
-		//while(){
+
+		while(getLightestUnreachedNode() != null || getLightestUnreachedNode() != nodeEnd){
 			n = getLightestUnreachedNode();
-			n.element.calculateWeight(n.element);
-		//}
+			n.reached = true;
+			for(Node<T> node : nodesList){
+				if(!n.reached){
+					if(n.element.isConnected(node.element)){
+						if(n.element.calculateWeight(node.element) == -1 || node.weight > n.weight + n.element.calculateWeight(node.element)){
+							node.weight = n.weight + n.element.calculateWeight(node.element);
+							node.antecedent = n;
+						}
+					}
+				}
+			}
+		}
 		
-		return null;
+		
+		n = nodeEnd;
+		if (n.antecedent == null){
+			shortestPath.add(null);
+			return shortestPath;
+		}
+		 
+		do{
+			shortestPath.add(0,n.element);
+			n = n.antecedent;
+		}while(n != nodeStart);
+		
+		return shortestPath;
 	}
-	
-	
+
+
 	/**
 	 * Recupere le noeud le plus leger non parcouru
 	 * @return
 	 */
 	public Node<T> getLightestUnreachedNode(){
-		
+
 		Node<T> lightestNode = null;
-		int minWeight = 0;
-		
+		float minWeight = 0;
+
 		for (Node<T> n : nodesList){
 			if(!n.reached && n.weight != -1 && n.weight < minWeight){
 				minWeight = n.weight;
@@ -68,20 +114,9 @@ public class DijkstraPathfinding<T extends Dijkstrable> {
 			}
 		}
 		return lightestNode;
-		
+
 	}
-	
-	/**
-	 * Recupere la liste des fils du noeud passé en parametre (noeuds qui lui sont reliés directement)
-	 * @param n
-	 * @return
-	 */
-	public ArrayList<Node<T>> getSons(Node<T> n){
-		ArrayList<Node<T>> sons = new ArrayList<>();
-			
-		return null;
-		
-	}
-	
+
+
 
 }
