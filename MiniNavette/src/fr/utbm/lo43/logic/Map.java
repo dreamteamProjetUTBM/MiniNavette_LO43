@@ -8,7 +8,6 @@ import fr.utbm.lo43.dijkstra.DijkstraPathfinding;
 import fr.utbm.lo43.entities.Bus;
 import fr.utbm.lo43.entities.Passenger;
 import fr.utbm.lo43.entities.RailWay;
-import fr.utbm.lo43.entities.Segment;
 import fr.utbm.lo43.entities.Station;
 
 public class Map {

@@ -29,6 +29,7 @@ import fr.utbm.lo43.logic.Filiere;
 import fr.utbm.lo43.logic.Game;
 import fr.utbm.lo43.logic.Inventory;
 import fr.utbm.lo43.logic.Map;
+import fr.utbm.lo43.logic.Score;
 
 public class MainGameState extends BasicGameState {
 
@@ -37,13 +38,14 @@ public class MainGameState extends BasicGameState {
 	
 	public EntityCollection entities;
 
-	Rectangle menu_inventary;
+	Image menu_inventory;
 	ArrayList<ToggledButton> lines_button;
 	ArrayList<String> lines_button_img;
 	// Bus button
 	private ToggledButton bus_button;
 	private Label bus_label;
 	private Label bridge_label;
+	private Label score_label;
 
 	int current_line;
 
@@ -62,7 +64,9 @@ public class MainGameState extends BasicGameState {
 
 		editLine = false;
 
-		menu_inventary = new Rectangle(0, Map.HEIGHT - Map.GRID_SIZE * 1.5f, Map.WIDTH, Map.GRID_SIZE * 1.5f);
+		menu_inventory = new Image("asset/info_barre.png");
+		//new Rectangle(0, Map.HEIGHT - Map.GRID_SIZE * 1.5f, Map.WIDTH, Map.GRID_SIZE * 1.5f);
+				
 		lines_button = new ArrayList<ToggledButton>();
 		lines_button_img = new ArrayList<String>();
 
@@ -104,7 +108,7 @@ public class MainGameState extends BasicGameState {
 		for (int i = 0; i < 6; i++) {
 			ToggledButton line_b = new ToggledButton(
 					new Vector2f(Map.WIDTH / 2 - 3 * Map.GRID_SIZE + Map.GRID_SIZE * i + 5 * i,
-							Map.HEIGHT - Map.GRID_SIZE - Map.GRID_SIZE / 4),
+							Map.HEIGHT - Map.GRID_SIZE - Map.GRID_SIZE / 5),
 					new Vector2f(Map.GRID_SIZE, Map.GRID_SIZE), lines_button_img.get((i * 3)),
 					lines_button_img.get((i * 3) + 1), lines_button_img.get((i * 3) + 2));
 
@@ -127,19 +131,23 @@ public class MainGameState extends BasicGameState {
 			Map.getInstance().railWay = new RailWay();
 		}
 
-		bus_button = new ToggledButton(new Vector2f(Map.WIDTH / 3, Map.HEIGHT - Map.GRID_SIZE - Map.GRID_SIZE / 4),
-				new Vector2f(Map.GRID_SIZE, Map.GRID_SIZE), "asset/bus_b_idle.png", "asset/bus_b_hover.png",
+		bus_button = new ToggledButton(new Vector2f(Map.GRID_SIZE / 2, Map.HEIGHT - Map.GRID_SIZE * 1.6f),
+				new Vector2f(Map.GRID_SIZE * 2, Map.GRID_SIZE * 2), "asset/bus_b_idle.png", "asset/bus_b_hover.png",
 				"asset/bus_b_pressed.png");
 
 
 		
 		bus_label = new Label(Integer.toString(game.getInventory().getRemainingBus()),
-				new Vector2f(Map.WIDTH / 3 - Map.GRID_SIZE, Map.HEIGHT - Map.GRID_SIZE));
+				new Vector2f(107, Map.HEIGHT - Map.GRID_SIZE / 1.1f));
+		bus_label.setColor(Color.white);
 
 		bridge_label = new Label(Integer.toString(game.getInventory().getRemainingBridges()),
-				new Vector2f(Map.WIDTH/3 *2- Map.GRID_SIZE, Map.HEIGHT - Map.GRID_SIZE));
+				new Vector2f(274, Map.HEIGHT - Map.GRID_SIZE / 1.1f));
+		bridge_label.setColor(Color.white);
 		
-		
+		score_label = new Label(Integer.toString(Score.getInstance().getScore()),
+				new Vector2f(Map.WIDTH - 102, Map.HEIGHT - Map.GRID_SIZE / 1.1f));
+		score_label.setColor(Color.white);
 		
 		bus_button.setEventCallback(new EventEntityMouseClicked() {
 
@@ -151,6 +159,7 @@ public class MainGameState extends BasicGameState {
 		entities.add(bus_button);
 		entities.add(bus_label);
 		entities.add(bridge_label);
+		entities.add(score_label);
 		
 		
 		Station station1 = new Station(new Vector2f(10 * Map.GRID_SIZE * 2, 3 * Map.GRID_SIZE * 2), Filiere.GI);
@@ -185,8 +194,7 @@ public class MainGameState extends BasicGameState {
 		Map.getInstance().railWay.render(arg2);
 
 		arg2.setColor(Color.gray);
-		arg2.draw(menu_inventary);
-		arg2.fill(menu_inventary);
+		menu_inventory.draw(0, Map.HEIGHT - Map.GRID_SIZE * 1.5f);
 
 		entities.render(arg2);
 	}
@@ -200,6 +208,7 @@ public class MainGameState extends BasicGameState {
 
 		bus_label.setText(game.getInventory().getRemainingBus() + "");
 		bridge_label.setText(game.getInventory().getRemainingBridges() + "");
+		score_label.setText(Score.getInstance().getScore() + "");
 		
 		fr.utbm.lo43.logic.Line _line = Map.getInstance().getLine(current_line);
 
