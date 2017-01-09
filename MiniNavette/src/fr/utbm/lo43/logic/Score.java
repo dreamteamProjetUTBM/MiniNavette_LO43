@@ -20,6 +20,7 @@ public class Score {
 	public void incrementScore()
 	{
 		passengersArrived ++ ;
+		System.out.println("Un passager arrivé à destination ! Le score est de : "+getScore());
 	}
 	
 	public int getScore()
