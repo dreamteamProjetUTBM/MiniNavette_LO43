@@ -41,6 +41,7 @@ public abstract class Bus extends EntityDragable implements EntityDrawable, Enti
 		
 		for(Passenger passenger : copy)
 		{
+			System.out.println("passenger à charger !!!!!!!!!!!!! ==> " + copy.size());
 			if(passengers.size() >= capacity)
 			{
 				return;
@@ -68,14 +69,14 @@ public abstract class Bus extends EntityDragable implements EntityDrawable, Enti
 	}
 	
 	
-	public void takeTheBus(Passenger passenger)
+	public boolean takeTheBus(Passenger passenger)
 	{
-
-		if(passengers.size() >= capacity)
+		if(passengers.size() <= capacity)
 		{
-			//exception
+			passengers.add(passenger);
+			return true;
 		}
-		passengers.add(passenger);
+		return false;
 	}
 	
 

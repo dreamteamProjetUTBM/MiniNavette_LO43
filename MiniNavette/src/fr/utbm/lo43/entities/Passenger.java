@@ -47,8 +47,11 @@ public class Passenger extends Entity implements EntityDrawable, EntityUpdateabl
 	{
 		if(nextStops.contains(nextStop))
 		{
-			bus.takeTheBus(this);
-			station.leaveStation(this);
+			boolean success = bus.takeTheBus(this);
+			if(success)
+			{
+				station.leaveStation(this);
+			}
 		}
 
 	}

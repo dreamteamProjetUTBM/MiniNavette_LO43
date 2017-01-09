@@ -63,7 +63,7 @@ public class EntityCollection implements EntityUpdateable, EntityDrawable
 		{
 			if(entitie.isUpdateble())
 			{
-				((EntityUpdateable)entitie).update(gc, sbg,delta);;
+				((EntityUpdateable)entitie).update(gc, sbg, delta);;
 			}
 		}
 	}

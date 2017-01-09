@@ -195,8 +195,19 @@ public class Station extends EntityClickable implements EntityDrawable, Dijkstra
 	
 	public void leaveStation(Passenger passenger)
 	{
-		if(!waitingPassenger.remove(passenger)){
-			//erreur
+		System.out.println("PASSAGERS AVANT SUPPRESSION : " + waitingPassenger.size());
+		if(waitingPassenger.remove(passenger))
+		{
+			for(Passenger p : waitingPassenger)
+			{
+				float offsetX = waitingPassenger.size()%4;
+				p.setPosition(
+						new Vector2f(
+								getPosition().x + offsetX * Map.GRID_SIZE/2,
+								getPosition().y + waitingPassenger.size()/4 * Map.GRID_SIZE*1.5f
+						)
+				);
+			}
 		}
 	}
 	

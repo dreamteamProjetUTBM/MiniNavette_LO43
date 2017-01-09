@@ -216,7 +216,7 @@ public class MainGameState extends BasicGameState {
 			int index_station = rand.nextInt(game.map.getStationsLenght());
 			while (!game.map.getStations().get(index_station).canAddPassenger())
 				index_station = rand.nextInt(game.map.getStationsLenght());
-			entities.add(game.map.getStations().get(index_station).newPassenger());
+			game.map.getStations().get(index_station).newPassenger();
 			counter = 0;
 		}
 
