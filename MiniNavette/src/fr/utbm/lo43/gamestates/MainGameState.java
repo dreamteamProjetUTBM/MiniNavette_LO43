@@ -113,7 +113,7 @@ public class MainGameState extends BasicGameState {
 
 		for (int i = 0; i < 6; i++) {
 			ToggledButton line_b = new ToggledButton(
-					new Vector2f(Map.WIDTH / 2 - 3 * Map.GRID_SIZE + Map.GRID_SIZE * i + 5 * i,
+					new Vector2f((Map.WIDTH / 2 - 3 * Map.GRID_SIZE + Map.GRID_SIZE * i + 5 * i) - Map.GRID_SIZE * 6,
 							Map.HEIGHT - Map.GRID_SIZE - Map.GRID_SIZE / 5),
 					new Vector2f(Map.GRID_SIZE, Map.GRID_SIZE), lines_button_img.get((i * 3)),
 					lines_button_img.get((i * 3) + 1), lines_button_img.get((i * 3) + 2));
@@ -163,12 +163,14 @@ public class MainGameState extends BasicGameState {
 			}
 		});
 		
-		gameSpeed_slider = new Slider(new Vector2f());
+		gameSpeed_slider = new Slider(new Vector2f(Map.WIDTH - Map.GRID_SIZE * 13, Map.HEIGHT - Map.GRID_SIZE / 1.5f));
+		gameSpeed_slider.setColor(Color.black);
 		
 		entities.add(bus_button);
 		entities.add(bus_label);
 		entities.add(bridge_label);
 		entities.add(score_label);
+		entities.add(gameSpeed_slider);
 		
 		
 		Station station1 = new Station(new Vector2f(10 * Map.GRID_SIZE * 2, 3 * Map.GRID_SIZE * 2), Filiere.GI);

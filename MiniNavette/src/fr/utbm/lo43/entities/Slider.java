@@ -42,6 +42,7 @@ public class Slider extends EntityClickable implements EntityDrawable
 		
 		isSliding = false;
 		color = Color.black;
+		drawable = true;
 	}
 
 	@Override
