@@ -18,6 +18,7 @@ public class Map {
 	public static final int HEIGHT = 720;
 	public static final int GRID_SIZE = 32;
 	public static final int GAMESPEED_MAX = 5; // valeur maximale du gamespeed 
+
 	public ArrayList<Station> stations;
 	private ArrayList<fr.utbm.lo43.logic.Line> lines;
 	public ArrayList<Line> grid;
@@ -65,16 +66,52 @@ public class Map {
 					rand.nextInt(HEIGHT/GRID_SIZE)*GRID_SIZE);
 			isRight = true;
 			for (Station station : stations) {
-				if(station.getPosition() == _newposition)
-					isRight = false;
+				Vector2f center = new Vector2f(station.getPosition().x+GRID_SIZE, station.getPosition().y+GRID_SIZE);
+				for(int i = -3; i < 4; i++){
+					for(int j = -3; j < 4; j++){
+						if (station.isOnStation(new Vector2f(_newposition.x+i*GRID_SIZE,_newposition.y+j*GRID_SIZE))){
+							isRight = false;
+							break;
+						}
+					}
+				}
+				
+			}
+			
+			
+			for(int i = -2 ; i < 3; i++){
+				for(int j = -2; j < 3 ; j++){
+					if(railWay.isOnRailWay(new Vector2f(_newposition.x+i*GRID_SIZE,_newposition.y+j*GRID_SIZE))){
+						isRight = false;
+						break;
+					}
+				}
+			}
+			
+			if((_newposition.x <= 3*GRID_SIZE || _newposition.x >= (WIDTH-2*GRID_SIZE)) ||
+					(_newposition.y <= 3*GRID_SIZE || _newposition.y >= HEIGHT- 4*GRID_SIZE)){
+				isRight = false;
 			}
 		}
-		
+				
+		_newposition = new Vector2f(_newposition.x-GRID_SIZE,_newposition.y-GRID_SIZE);
 		Station station = new Station(_newposition, getFiliere(rand.nextInt(5)));
 		stations.add(station);
 		
+		Inventory.getInstance().setRemainingStation(-1);
 		return station;
 	}
+	
+	
+	public boolean CanCreateStation(){
+		if(Inventory.getInstance().getRemainingStation() == 0)
+			return false;
+		
+		
+		
+		return true;
+	}
+	
 	
 	private Filiere getFiliere(int index){
 		switch(index){
