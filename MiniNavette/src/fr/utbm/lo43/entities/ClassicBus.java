@@ -79,7 +79,7 @@ public class ClassicBus extends Bus
 
 	}
 	
-	public synchronized boolean canBeRemove(){
+	public boolean canBeRemove(){
 		return canBeRemove;
 	}
 	

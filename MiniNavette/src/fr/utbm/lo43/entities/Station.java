@@ -181,15 +181,16 @@ public class Station extends EntityClickable implements EntityDrawable, Dijkstra
 		alcoolized = true;
 	}
 	
-	public synchronized void notifyBus(Bus bus)
+	public void notifyBus(Bus bus)
 	{
 
 		System.out.println("Station.notifyBus");
-
+		
+			
+		
 	
-		if(!bus.isEmpty()) bus.unload(this);
+			if(!bus.isEmpty()) bus.unload(this);
 
-			if(waitingPassenger.size()!=0){
 				for(Passenger passenger : waitingPassenger)
 				{
 					//on met à jour l'arrêt suivant de chaque passager qui attend à la station avant qu'ils vérifient si le bus y va
@@ -197,8 +198,6 @@ public class Station extends EntityClickable implements EntityDrawable, Dijkstra
 	
 					System.out.println("Passenger a un nouveau stop : " + this.nextStop.get(passenger.filiere));
 				}
-			}
-			
 			if(waitingPassenger.size() > 0) bus.load(this);
 		
 		
@@ -206,8 +205,13 @@ public class Station extends EntityClickable implements EntityDrawable, Dijkstra
 	
 	public void enterStation(Passenger passenger)
 	{
+		boolean success = false ;
+
 		synchronized(waitingPassenger){
-			if(waitingPassenger.add(passenger))
+			success =waitingPassenger.add(passenger);
+
+		}
+			if(success)
 			{
 				for(Passenger p : waitingPassenger)
 				{
@@ -221,7 +225,6 @@ public class Station extends EntityClickable implements EntityDrawable, Dijkstra
 					);
 				}
 			}
-		}
 	}
 	
 	public void leaveStation(Passenger passenger)

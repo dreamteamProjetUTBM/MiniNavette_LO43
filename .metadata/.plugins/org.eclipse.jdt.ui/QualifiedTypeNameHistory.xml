@@ -23,4 +23,7 @@
 <fullyQualifiedTypeName name="java.lang.NullPointerException"/>
 <fullyQualifiedTypeName name="java.awt.List"/>
 <fullyQualifiedTypeName name="java.util.List"/>
+<fullyQualifiedTypeName name="java.util.concurrent.ThreadPoolExecutor"/>
+<fullyQualifiedTypeName name="java.util.concurrent.LinkedBlockingQueue"/>
+<fullyQualifiedTypeName name="java.util.concurrent.TimeUnit"/>
 </qualifiedTypeNameHistroy>

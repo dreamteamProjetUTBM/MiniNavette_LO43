@@ -86,7 +86,7 @@ public class Segment extends EntityDragable implements EntityDrawable {
 	}
 
 
-	public synchronized int getOffset(){
+	public int getOffset(){
 		int offset = 0;
 		for (int i = lineIndex; i < Map.getInstance().getLines().size(); i++) {
 			fr.utbm.lo43.logic.Line _line = Map.getInstance().getLine(i);
@@ -108,7 +108,7 @@ public class Segment extends EntityDragable implements EntityDrawable {
 		return offset;
 	}
 
-	public synchronized void setPolygonRender(){
+	public void setPolygonRender(){
 		Line tempLine;
 
 		int dxStart = 0;
@@ -216,7 +216,7 @@ public class Segment extends EntityDragable implements EntityDrawable {
 		return stationArrival;
 	}
 
-	public synchronized ArrayList<Vector2f> getBridges() {
+	public ArrayList<Vector2f> getBridges() {
 		return bridges;
 	}
 
@@ -368,17 +368,17 @@ public class Segment extends EntityDragable implements EntityDrawable {
 
 	}
 
-	public synchronized boolean isFirstinLine() {
+	public boolean isFirstinLine() {
 		return Map.getInstance().getLines().get(lineIndex).getSegments().get(0) == this;
 	}
 
-	public synchronized boolean isLastinLine() {
+	public boolean isLastinLine() {
 		return Map.getInstance().getLines().get(lineIndex).getSegments()
 				.get(Map.getInstance().getLines().get(lineIndex).getSegments().size() - 1) == this;
 	}
 
 	@Override
-	public synchronized void update(GameContainer gc, StateBasedGame sbg, int delta) {
+	public void update(GameContainer gc, StateBasedGame sbg, int delta) {
 		super.update(gc, sbg, delta);
 		Input input = gc.getInput();
 		if (getRect().contains(input.getMouseX(), input.getMouseY())

@@ -129,17 +129,22 @@ public class Map {
 	}
 	
 	public void calculateNextStopStations(){
-		pathfinding = new DijkstraPathfinding<>(stations);
-		for(Station s : stations){
-			s.setNextStop(pathfinding);
+		synchronized(stations){
+			pathfinding = new DijkstraPathfinding<>(stations);
+			for(Station s : stations){
+				s.setNextStop(pathfinding);
+			}
 		}
 	}
 	public int getStationsLenght(){
 		return stations.size();
 	}
 	
-	public ArrayList<Station> getStations(){
-		return stations;
+	public synchronized ArrayList<Station> getStations(){
+		synchronized(stations){
+			return stations;
+			
+		}
 	}
 	
 	public ArrayList<fr.utbm.lo43.logic.Line> getLines(){
