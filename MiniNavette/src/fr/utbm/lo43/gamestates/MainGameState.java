@@ -241,7 +241,8 @@ public class MainGameState extends BasicGameState {
 		score_label.setText(Score.getInstance().getScore() + "");
 		
 		fr.utbm.lo43.logic.Line _line = Map.getInstance().getLine(current_line);
-
+		
+		
 		if (counter > 5000) {
 			int index_station = rand.nextInt(game.map.getStationsLenght());
 			while (!game.map.getStations().get(index_station).canAddPassenger())
@@ -251,7 +252,8 @@ public class MainGameState extends BasicGameState {
 		}
 		
 		if(counterStation > 15000){
-			entities.add(game.map.createStation());
+			if(game.map.CanCreateStation())
+				entities.add(game.map.createStation());
 			counterStation = 0;
 
 		}
