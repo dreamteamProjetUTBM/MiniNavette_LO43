@@ -273,7 +273,7 @@ public class ClassicBus extends Bus
 		
 		Input input = gc.getInput();
 
-		if(input.isMousePressed(input.MOUSE_RIGHT_BUTTON)){
+		if(input.isMousePressed(input.MOUSE_RIGHT_BUTTON) && polygon.contains(input.getMouseX(), input.getMouseY())){
 			if(isLock())
 				setCanBeRemove(true);
 			setLock(true);
