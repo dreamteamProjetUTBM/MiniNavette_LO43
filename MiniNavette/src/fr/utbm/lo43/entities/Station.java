@@ -27,7 +27,7 @@ public class Station extends EntityClickable implements EntityDrawable, Dijkstra
 	//Quadrillage
 	//Jerem: rajout de ma part, à voir s'il ne faut pas le mettre dans le diagramme
 	//En FR en plus
-	protected Filiere filiere;
+	protected volatile Filiere filiere;
 	public static final int MAXIMUM_PASSENGER = 8;
 	public static final int CRITICAL_PASSENGER = 6;	
 	private int waitedTime ;
@@ -35,17 +35,18 @@ public class Station extends EntityClickable implements EntityDrawable, Dijkstra
 	private static final int MAX_WAITING_TIME = 30;
 	private static final int BONUS_WAITING_TIME = 15;
 	
-	private Image preview;
+	private volatile Image preview;
 		
-	private boolean alcoolized;
+	private  boolean alcoolized;
 	
 	//Compteur pour le temps depuis le dernier appel de update
 	private int cpt = 0;
 	
-	protected List<Passenger> waitingPassenger;
+	private volatile List<Passenger> waitingPassenger;
 	
 	//HashMap qui donne la prochaine station a atteindre pour atteindre une filiere a partir de cette station 
-	private HashMap<Filiere, Station> nextStop;
+	private volatile HashMap<Filiere, Station> nextStop;
+
 	
 	public Station(Vector2f _position, Filiere type) 
 	{
@@ -69,7 +70,12 @@ public class Station extends EntityClickable implements EntityDrawable, Dijkstra
 		drawable = true;
 	}
 	
-	public Passenger newPassenger()
+	
+	public synchronized List<Passenger> getWaitingPassenger(){
+		return waitingPassenger ;
+	}
+	
+	public synchronized Passenger newPassenger()
 	{
 		Filiere passenger_type = filiere;
 		
@@ -101,7 +107,7 @@ public class Station extends EntityClickable implements EntityDrawable, Dijkstra
 	/**
 	 * Permet de remplir la HashMap nextStop
 	 */
-	public void setNextStop(DijkstraPathfinding<Station> pathfinding){
+	public synchronized void setNextStop(DijkstraPathfinding<Station> pathfinding){
 		nextStop = new HashMap<>();
 		Path<Station> shortestPath;
 		Station tempStation;
@@ -130,18 +136,18 @@ public class Station extends EntityClickable implements EntityDrawable, Dijkstra
 		
 	}
 	
-	public boolean canAddPassenger(){
+	public synchronized boolean canAddPassenger(){
 		if(waitingPassenger.size() >= MAXIMUM_PASSENGER){
 			return false;
 		}
 		return true;
 	}
 	
-	public boolean isCriticalPassenger(){
+	public synchronized boolean isCriticalPassenger(){
 		return (waitingPassenger.size() >= CRITICAL_PASSENGER) ;
 	}
 	
-	public void checkWaitingTime()
+	private void checkWaitingTime()
 	{
 
 		if(this.alcoolized)
@@ -160,12 +166,12 @@ public class Station extends EntityClickable implements EntityDrawable, Dijkstra
 		}
 	}
 	
-	public void alcoolise()
+	public synchronized void alcoolise()
 	{
 		alcoolized = true;
 	}
 	
-	public void notifyBus(Bus bus)
+	public synchronized void notifyBus(Bus bus)
 	{
 
 		System.out.println("Station.notifyBus");

@@ -28,8 +28,14 @@ public class ClassicBus extends Bus
 	//Direction du bus
 	int local_direction = -1;
 	
+	
+	
 	boolean lock = false;
+	
 	boolean canBeRemove = false;
+	
+	
+	
 	//Contient l'actuelle angle du bus
 	private float theta;
 	//Compteur pour le temps depuis le dernier appel de update
@@ -73,13 +79,11 @@ public class ClassicBus extends Bus
 
 	}
 	
-	public boolean canBeRemove(){
-		
-		
+	public synchronized boolean canBeRemove(){
 		return canBeRemove;
 	}
 	
-	public float getAngle(){
+	public synchronized float getAngle(){
 		ArrayList<Vector2f> vects = currentSegment.isBetween(getPosition());
 		Vector2f _start,_end;
 		
@@ -110,7 +114,7 @@ public class ClassicBus extends Bus
 	}
 	
 	@Override
-	public void render(Graphics arg2) 
+	public synchronized void render(Graphics arg2) 
 	
 	{
 		arg2.setColor(color);
@@ -134,7 +138,7 @@ public class ClassicBus extends Bus
 	}
 
 	@Override
-	public void move() 
+	protected void move() 
 	{
 		
 		if(!currentSegment.line_bus.existingSegment(currentSegment) && currentSegment.line_bus.getSegments().size() == 0 )
@@ -338,7 +342,7 @@ public class ClassicBus extends Bus
 	}
 
 	@Override
-	public void update(GameContainer gc, StateBasedGame sbg,int delta) {
+	public void  update(GameContainer gc, StateBasedGame sbg,int delta) {
 		
 		super.update(gc, sbg,delta);
 		
@@ -374,9 +378,9 @@ public class ClassicBus extends Bus
 		if(cpt >15 && !isGrabed)
 		{
 			cpt = 0;
-			for(int i = 0; i<Map.getInstance().gameSpeed;++i){
-				move();
-			}
+//			for(int i = 0; i<Map.getInstance().gameSpeed;++i){
+//				move();
+//			}
 			if(getAngle() != theta) //Donc on a changé d'angle
 			{
 				polygon = (Polygon) polygon.transform(Transform.createRotateTransform((float) Math.toRadians(theta-getAngle()),getPosition().x,getPosition().y));	
@@ -417,5 +421,33 @@ public class ClassicBus extends Bus
 		}
 		return false;
 	}
+	
+	
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		while(true){
+			
+			for(int i = 0; i<Map.getInstance().gameSpeed;++i){
+				move();
+	            
+			}
+			try {
+				Thread.sleep(15);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			if(this.canBeRemove) {
+				System.out.println("fin du thread bus");
+				break ;
+			}
+			
+		}
+		
+	}
+
+	
 	
 }

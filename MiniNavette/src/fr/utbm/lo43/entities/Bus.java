@@ -11,7 +11,7 @@ import org.newdawn.slick.geom.Vector2f;
 
 import fr.utbm.lo43.logic.Map;
 
-public abstract class Bus extends EntityDragable implements EntityDrawable, EntityUpdateable
+public abstract class Bus extends EntityDragable implements EntityDrawable, EntityUpdateable, Runnable
 {
 	protected Polygon polygon;
 
@@ -19,10 +19,10 @@ public abstract class Bus extends EntityDragable implements EntityDrawable, Enti
 	protected boolean direction;
 //	protected Station[] listStation;
 	//protected float segmentProgress;
-	List<Passenger> passengers ; 
-	Segment currentSegment ;
-	protected Color color;
-	ArrayList<Image> passenger_images;
+	protected volatile List<Passenger> passengers ; 
+	protected volatile Segment currentSegment ;
+	protected volatile Color color;
+	protected volatile ArrayList<Image> passenger_images;
 	
 	public Bus(Vector2f _position, Color _color) 
 	{
@@ -40,7 +40,7 @@ public abstract class Bus extends EntityDragable implements EntityDrawable, Enti
 		polygon.addPoint(_position.x-Map.GRID_SIZE/2, _position.y-Map.GRID_SIZE*0.75f);
 	}
 	
-	public abstract void move();
+	protected abstract void move();
 	
 	
 	
@@ -58,7 +58,7 @@ public abstract class Bus extends EntityDragable implements EntityDrawable, Enti
 		System.out.println("Bus.load");
 		ArrayList<Station> nextStops = Map.getInstance().getNextStops(this, station);
 		
-		ArrayList<Passenger> copy = new ArrayList<Passenger>(station.waitingPassenger);
+		ArrayList<Passenger> copy = new ArrayList<Passenger>(station.getWaitingPassenger());
 		
 		for(Passenger passenger : copy)
 		{
@@ -129,4 +129,7 @@ public abstract class Bus extends EntityDragable implements EntityDrawable, Enti
 	{
 		return  direction ? currentSegment.getNextSegment()==null : currentSegment.getPreviousSegment()==null;
 	}
+	
+	
+	
 }
