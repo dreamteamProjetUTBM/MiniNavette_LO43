@@ -83,6 +83,7 @@ public class Map {
 	public ArrayList<Station> getNextStops(Bus bus, Station _station){
 		//renvoyer les stations suivantes du bus de sa ligne
 		ArrayList<Station> nextStops = new ArrayList<>(bus.getCurrentSegment().getLine_bus().getStations());
+
 		if(bus.getCurrentSegment().getLine_bus().isLoop()){
 			nextStops.remove(_station);
 		}else{
@@ -90,17 +91,19 @@ public class Map {
 				for(Station s : bus.getCurrentSegment().getLine_bus().getStations()){
 					if(bus.getCurrentSegment().getLine_bus().getStations().indexOf(s)<= bus.getCurrentSegment().getLine_bus().getStations().indexOf(_station)){
 						nextStops.remove(s);
+					
 					}
 				}
 			}else{
 				for(Station s : bus.getCurrentSegment().getLine_bus().getStations()){
 					if(bus.getCurrentSegment().getLine_bus().getStations().indexOf(s)>= bus.getCurrentSegment().getLine_bus().getStations().indexOf(_station)){
 						nextStops.remove(s);
+					
 					}
 				}
 			}
 		}
-		
+
 		return nextStops;
 	}
 	

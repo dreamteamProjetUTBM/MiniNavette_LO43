@@ -38,13 +38,9 @@ public class Passenger extends Entity implements EntityDrawable, EntityUpdateabl
 		drawable = true;
 	}
 	
-	private void takeTheBus(Bus bus)
-	{
-		
-	}
-	
 	public void busArrived(Bus bus,Station station, ArrayList<Station> nextStops )
 	{
+
 		if(nextStops.contains(nextStop))
 		{
 			boolean success = bus.takeTheBus(this);

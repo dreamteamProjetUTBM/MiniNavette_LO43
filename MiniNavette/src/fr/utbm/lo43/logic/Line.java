@@ -41,8 +41,17 @@ public abstract class Line extends Entity implements EntityUpdateable, EntityDra
 	 */
 	public ArrayList<Station> getStations(){
 		ArrayList<Station> stations = new ArrayList<>();
+
 		for(Segment s : segments ){
+			if(!stations.contains(s.getStationDepart()))
+			{
 			stations.add(s.getStationDepart());
+			}
+			if(!stations.contains(s.getStationArrival()))
+			{
+			stations.add(s.getStationArrival());
+			}
+	
 		}
 		return stations;
 		
