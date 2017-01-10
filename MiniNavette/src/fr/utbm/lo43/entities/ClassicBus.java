@@ -85,31 +85,32 @@ public class ClassicBus extends Bus
 	
 	public synchronized float getAngle(){
 		ArrayList<Vector2f> vects = currentSegment.isBetween(getPosition());
+		float theta_bis = 0;
 		Vector2f _start,_end;
-		
-		if(vects.get(0) == null || vects.get(1) == null)
-			return 0;
-		
-		if(vects.size() == 4 && direction){
-			_start = vects.get(2);
-			_end = vects.get(3);
+		if(vects.size()>0){
+			if(vects.get(0) == null || vects.get(1) == null)
+				return 0;
 			
-		}
-		else {
-			if(direction){
-				_start = vects.get(0);
-				_end = vects.get(1);
+			if(vects.size() == 4 && direction){
+				_start = vects.get(2);
+				_end = vects.get(3);
+				
 			}
 			else {
-				_start = vects.get(1);
-				_end = vects.get(0);
+				if(direction){
+					_start = vects.get(0);
+					_end = vects.get(1);
+				}
+				else {
+					_start = vects.get(1);
+					_end = vects.get(0);
+				}
 			}
+			
+			org.newdawn.slick.geom.Line line= new org.newdawn.slick.geom.Line(_start, _end);
+			theta_bis = (float) Math.atan2(line.getDX(), line.getDY());
+			theta_bis *= 180 / Math.PI;
 		}
-		
-		org.newdawn.slick.geom.Line line= new org.newdawn.slick.geom.Line(_start, _end);
-		float theta_bis = (float) Math.atan2(line.getDX(), line.getDY());
-		theta_bis *= 180 / Math.PI;
-		
 		return theta_bis;
 	}
 	
@@ -342,7 +343,7 @@ public class ClassicBus extends Bus
 	}
 
 	@Override
-	public synchronized void  update(GameContainer gc, StateBasedGame sbg,int delta) {
+	public  void  update(GameContainer gc, StateBasedGame sbg,int delta) {
 		
 		super.update(gc, sbg,delta);
 		
@@ -389,15 +390,19 @@ public class ClassicBus extends Bus
 			}
 			
 			passenger_images = new ArrayList<>();
-			for (Passenger passenger : passengers) {
-				try {
-					passenger_images.add(new Image("asset/"+passenger.filiere.toString().toLowerCase()+".png"));
-				} catch (SlickException e) {
-					// TODO Auto-generated catch block
-					System.out.println("Erreur");
-					e.printStackTrace();
-				}
-				
+			
+			
+			synchronized(passengers){
+				for (Passenger passenger : passengers) {
+					try {
+						passenger_images.add(new Image("asset/"+passenger.filiere.toString().toLowerCase()+".png"));
+					} catch (SlickException e) {
+						// TODO Auto-generated catch block
+						System.out.println("Erreur");
+						e.printStackTrace();
+					}
+					
+				}				
 			}
 			
 			polygon.setCenterX(getPosition().x + currentSegment.getOffset()*Segment.SEGMENT_THICKNESS/2);

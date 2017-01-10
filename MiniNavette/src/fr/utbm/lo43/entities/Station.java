@@ -71,12 +71,16 @@ public class Station extends EntityClickable implements EntityDrawable, Dijkstra
 	}
 	
 	
-	public synchronized List<Passenger> getWaitingPassenger(){
-		return waitingPassenger ;
+	public  List<Passenger> getWaitingPassenger(){
+		synchronized(waitingPassenger){
+			return waitingPassenger ;
+			
+		}
 	}
 	
-	public synchronized Passenger newPassenger()
+	public Passenger newPassenger()
 	{
+		
 		Filiere passenger_type = filiere;
 		
 		int stations_size = Map.getInstance().getStationsLenght();
@@ -89,19 +93,21 @@ public class Station extends EntityClickable implements EntityDrawable, Dijkstra
 		}
 		
 		float offsetX,offsetY;
+
+		synchronized(waitingPassenger){
+			offsetX = waitingPassenger.size()%4;
+			offsetY = 0;
+			
+			offsetX = getPosition().x + offsetX * Map.GRID_SIZE/2;
+			//offsetY = getPosition().y + waitingPassenger.size()/4 * Map.GRID_SIZE*1.5f ;
+			offsetY = getPosition().y + waitingPassenger.size()/4 * Map.GRID_SIZE/2 ;
 		
-		offsetX = waitingPassenger.size()%4;
-		offsetY = 0;
-		
-		offsetX = getPosition().x + offsetX * Map.GRID_SIZE/2;
-		//offsetY = getPosition().y + waitingPassenger.size()/4 * Map.GRID_SIZE*1.5f ;
-		offsetY = getPosition().y + waitingPassenger.size()/4 * Map.GRID_SIZE/2 ;
-		
-		
-		Passenger p = new Passenger(new Vector2f(offsetX,offsetY), passenger_type);
-		waitingPassenger.add(p);
-		
+			Passenger p = new Passenger(new Vector2f(offsetX,offsetY), passenger_type);
+
+			waitingPassenger.add(p);
 		return p;
+		}
+		
 	}
 	
 	/**
@@ -137,14 +143,18 @@ public class Station extends EntityClickable implements EntityDrawable, Dijkstra
 	}
 	
 	public synchronized boolean canAddPassenger(){
-		if(waitingPassenger.size() >= MAXIMUM_PASSENGER){
-			return false;
+		synchronized(waitingPassenger){
+			if(waitingPassenger.size() >= MAXIMUM_PASSENGER){
+				return false;
+			}
+			return true;
 		}
-		return true;
 	}
 	
 	public synchronized boolean isCriticalPassenger(){
-		return (waitingPassenger.size() >= CRITICAL_PASSENGER) ;
+		synchronized(waitingPassenger){
+			return (waitingPassenger.size() >= CRITICAL_PASSENGER) ;
+		}
 	}
 	
 	private void checkWaitingTime()
@@ -177,56 +187,64 @@ public class Station extends EntityClickable implements EntityDrawable, Dijkstra
 		System.out.println("Station.notifyBus");
 
 	
-		if(bus.passengers.size() > 0) bus.unload(this);
-		
-		if(waitingPassenger.size()!=0){
-			for(Passenger passenger : waitingPassenger)
-			{
-				//on met à jour l'arrêt suivant de chaque passager qui attend à la station avant qu'ils vérifient si le bus y va
-				passenger.nextStop = this.nextStop.get(passenger.filiere);
+		if(!bus.isEmpty()) bus.unload(this);
 
-				System.out.println("Passenger a un nouveau stop : " + this.nextStop.get(passenger.filiere));
+			if(waitingPassenger.size()!=0){
+				for(Passenger passenger : waitingPassenger)
+				{
+					//on met à jour l'arrêt suivant de chaque passager qui attend à la station avant qu'ils vérifient si le bus y va
+					passenger.nextStop = this.nextStop.get(passenger.filiere);
+	
+					System.out.println("Passenger a un nouveau stop : " + this.nextStop.get(passenger.filiere));
+				}
 			}
-		}
+			
+			if(waitingPassenger.size() > 0) bus.load(this);
 		
-		if(waitingPassenger.size() > 0) bus.load(this);
 		
 	}
 	
 	public void enterStation(Passenger passenger)
 	{
-		if(waitingPassenger.add(passenger))
-		{
-			for(Passenger p : waitingPassenger)
+		synchronized(waitingPassenger){
+			if(waitingPassenger.add(passenger))
 			{
-				float offsetX = waitingPassenger.indexOf(p)%4;
-				p.setPosition(
-						new Vector2f(
-								getPosition().x + offsetX * Map.GRID_SIZE/2,
-								//getPosition().y + waitingPassenger.size()/4 * Map.GRID_SIZE*1.5f
-								getPosition().y + waitingPassenger.indexOf(p)/4 * Map.GRID_SIZE/2
-						)
-				);
+				for(Passenger p : waitingPassenger)
+				{
+					float offsetX = waitingPassenger.indexOf(p)%4;
+					p.setPosition(
+							new Vector2f(
+									getPosition().x + offsetX * Map.GRID_SIZE/2,
+									//getPosition().y + waitingPassenger.size()/4 * Map.GRID_SIZE*1.5f
+									getPosition().y + waitingPassenger.indexOf(p)/4 * Map.GRID_SIZE/2
+							)
+					);
+				}
 			}
 		}
 	}
 	
 	public void leaveStation(Passenger passenger)
 	{
-		System.out.println("PASSAGERS AVANT SUPPRESSION : " + waitingPassenger.size());
-		if(waitingPassenger.remove(passenger))
-		{
-			for(Passenger p : waitingPassenger)
+		synchronized(waitingPassenger){
+		
+			System.out.println("PASSAGERS AVANT SUPPRESSION : " + waitingPassenger.size());
+			
+			if(waitingPassenger.remove(passenger))
 			{
-				float offsetX = waitingPassenger.indexOf(p)%4;
-				p.setPosition(
-						new Vector2f(
-								getPosition().x + offsetX * Map.GRID_SIZE/2,
-								//getPosition().y + waitingPassenger.size()/4 * Map.GRID_SIZE*1.5f
-								getPosition().y + waitingPassenger.indexOf(p)/4 * Map.GRID_SIZE/2
-						)
-				);
+				for(Passenger p : waitingPassenger)
+				{
+					float offsetX = waitingPassenger.indexOf(p)%4;
+					p.setPosition(
+							new Vector2f(
+									getPosition().x + offsetX * Map.GRID_SIZE/2,
+									//getPosition().y + waitingPassenger.size()/4 * Map.GRID_SIZE*1.5f
+									getPosition().y + waitingPassenger.indexOf(p)/4 * Map.GRID_SIZE/2
+							)
+					);
+				}
 			}
+		
 		}
 	}
 	
@@ -255,9 +273,10 @@ public class Station extends EntityClickable implements EntityDrawable, Dijkstra
 		arg2.fill(rec);
 		arg2.draw(rec);
 		preview.draw(getPosition().x+Map.GRID_SIZE/2,getPosition().y+Map.GRID_SIZE/2,Map.GRID_SIZE,Map.GRID_SIZE);
-
-		for (Passenger passenger : waitingPassenger) {
-			passenger.render(arg2);
+		synchronized(waitingPassenger){
+			for (Passenger passenger : waitingPassenger) {
+				passenger.render(arg2);
+			}
 		}
 	}
 	

@@ -78,8 +78,9 @@ public abstract class Bus extends EntityDragable implements EntityDrawable, Enti
 	{
 		System.out.println("Bus.unload");
 
-		ArrayList<Passenger> copy = new ArrayList<Passenger>(passengers);
-		
+			
+			ArrayList<Passenger> copy = new ArrayList<Passenger>(passengers);
+	
 		for(Passenger passenger : copy)
 		{
 			if(passenger.nextStop==station)
@@ -96,7 +97,10 @@ public abstract class Bus extends EntityDragable implements EntityDrawable, Enti
 	{
 		if(passengers.size() <= capacity)
 		{
-			passengers.add(passenger);
+			synchronized(passengers)
+			{		
+				passengers.add(passenger);
+			}
 			return true;
 		}
 		return false;
@@ -117,7 +121,10 @@ public abstract class Bus extends EntityDragable implements EntityDrawable, Enti
 	
 	protected void removePassenger(Passenger passenger)
 	{
-		passengers.remove(passenger);	
+		synchronized(passengers)
+		{		
+			passengers.remove(passenger);	
+		}
 	}
 	
 	private void changeDirection()
@@ -128,6 +135,13 @@ public abstract class Bus extends EntityDragable implements EntityDrawable, Enti
 	private boolean endLine()
 	{
 		return  direction ? currentSegment.getNextSegment()==null : currentSegment.getPreviousSegment()==null;
+	}
+	
+	public synchronized boolean isEmpty()
+	{
+		synchronized(passengers){
+			return this.passengers.size() <=0 ;
+		}
 	}
 	
 	
