@@ -23,22 +23,35 @@ import fr.utbm.lo43.logic.Map;
 public class ClassicBus extends Bus
 {	
 	
-	//Le bus navigue entre ces deux vecteurs
+	/*
+	 * Start désigne le vecteur de départ, et end celui ou le bus doitd'arriver
+	 */
 	private volatile Vector2f start,end;
-	//Direction du bus
+	
+	/*
+	 * Permet de connaitre la direction du bus
+	 */
 	int local_direction = -1;
 	
 	
-	
+	/*
+	 * Si le bus est bloqué, il sera à True, sinon il sera à False
+	 */
 	boolean lock = false;
 	
+	/*
+	 * Si le bus doit être supprimé, il sera à True
+	 */
 	boolean canBeRemove = false;
 	
-	
-	
-	//Contient l'actuelle angle du bus
+	/*
+	 * Contient l'angle de rotation du bus
+	 */
 	private float theta;
-	//Compteur pour le temps depuis le dernier appel de update
+	
+	/*
+	 * Compteur de temps du bus
+	 */
 	private int cpt = 0;
 		
 	public ClassicBus(Vector2f _position, Color _color,Segment current)
@@ -48,41 +61,18 @@ public class ClassicBus extends Bus
 		capacity = 6;
 		currentSegment = current;
 		
-		
-		/*
-		setEventCallback(new EventEntityMouseDraged() {
-			
-			@Override
-			public void mouseReleased() {
-				// TODO Auto-generated method stub
-				boolean isOnSegment = false;
-				for(Line line : Map.getInstance().getLines()){
-					for (Segment seg : line.getSegments()) {
-						if(seg.isOnSegment(getPosition()))
-							isOnSegment = true;
-					}
-				}
-				
-				if(!isOnSegment){
-					Inventory.getInstance().setRemainingBus(1);
-					//MainGameState.entities.delete(thisone);
-				}
-			}
-			
-			@Override
-			public void mousePressed() {
-				// TODO Auto-generated method stub
-			}
-		}); */
 		theta = getAngle();
 		polygon = (Polygon) polygon.transform(Transform.createRotateTransform((float) Math.toRadians(-getAngle()),getPosition().x,getPosition().y));
 
 	}
 	
-	public boolean canBeRemove(){
+	public synchronized boolean canBeRemove(){
 		return canBeRemove;
 	}
 	
+	/*
+	 * Permet de calculer l'angle de rotation du bus selon le segment ou il se trouve
+	 */
 	public synchronized float getAngle(){
 		ArrayList<Vector2f> vects = currentSegment.isBetween(getPosition());
 		float theta_bis = 0;
@@ -146,12 +136,10 @@ public class ClassicBus extends Bus
 			lock = true;
 		
 		for (Vector2f endpoint : currentSegment.getPositions()) {
-
-			if(endpoint.distance(getPosition()) == 0 && (endpoint.equals(currentSegment.getEndSegment()) || endpoint.equals(currentSegment.getStartSegment()))){
+			if(endpoint.distance(getPosition()) == 0 && (endpoint.equals(currentSegment.getEndSegment()) || 
+					endpoint.equals(currentSegment.getStartSegment()))){
 				//Alors on est arrivé soit dans une station soit à la fin d'une partie du segment
-				
 				for (Station station : Map.getInstance().getStations()) {
-
 					if(station.isOnStation(endpoint)){
 						
 						/*
@@ -176,17 +164,16 @@ public class ClassicBus extends Bus
 						}
 						nextSegment();
 						station.notifyBus(this);
-						break;
 					}
 				}
 			}
 		}
 		
 		//On avance
-
+		
 		ArrayList<Vector2f> vects = currentSegment.isBetween(getPosition());
 		
-
+		
 		if(vects.size() > 0){
 			if(vects.size() == 4 && direction){
 				start = vects.get(2);
@@ -208,6 +195,8 @@ public class ClassicBus extends Bus
 		
 
 		Vector2f newpos = new Vector2f();
+		
+		//Test les différentes combinaisons pour avancer
 		if(start.x < end.x && start.y < end.y){
 			newpos = new Vector2f(getPosition().x-local_direction,getPosition().y-local_direction);
 		}
@@ -233,153 +222,23 @@ public class ClassicBus extends Bus
 			newpos = new Vector2f(getPosition().x-local_direction,getPosition().y);
 		}
 		
-
-		
 		if(currentSegment.isOnSegment(newpos)){
 			setPosition(newpos);	
 		}
-		else{
+		else{ 
+			//s'il la prochaine position n'est pas sur le segment 
+			//alors le bus fait demi-tour
 			if(local_direction == -1)
 				local_direction = 1;
 			else
 				local_direction = -1;
 		}
-		
-		/*
-		float a,b;	
-		
-		for (Vector2f endpoint : currentSegment.getPositions()) {
-			
-			if(endpoint.distance(getPosition()) == 0){
-				//Alors on est arrivé soit dans une station soit à la fin d'une partie du segment
-				for (Station station : Map.getInstance().getStations()) {
-					if(station.isOnStation(endpoint)){
-						//LOOP - Bug pour l'instant
-						/*if(currentSegment.line_bus.isLoop()){
-							if(direction && currentSegment.getNextSegment() == null){
-								currentSegment = currentSegment.line_bus.getSegment(0);
-							}
-							else {
-								currentSegment = currentSegment.line_bus.getSegment(currentSegment.line_bus.getSegments().size()-1);
-							}
-							//currentSegment = currentSegment.line_bus.getSegment(0);
-						}
-						else {*//*
-						if(currentSegment.getNextSegment() == null || currentSegment.getPreviousSegment() == null){
-							direction = !direction;
-						}	
-						else {
-						if(direction){
-								System.out.println("Direction");
-
-								if(currentSegment.getNextSegment() == null){
-									System.out.println("Next null");
-									direction = !direction;
-								}
-								else{
-									currentSegment = currentSegment.getNextSegment();
-									System.out.println("!Next null");
-
-								}
-							}
-							else{
-								System.out.println("!Direction");
-
-								if (currentSegment.getPreviousSegment() == null){
-									System.out.println("Prev null");
-									direction = !direction;
-								}
-								else{
-									System.out.println("!Prev null");
-									currentSegment = currentSegment.getPreviousSegment();
-								}
-							}
-						}
-						System.out.println("On station");
-					}
-					
-
-						//
-					//polygon.transform(Transform.createTranslateTransform(currentSegment.getAngle().x,currentSegment.getAngle().y));
-						//Roger tu peux décharger et charger ici
-					}
-				
-			}
-			
-			
-		}
-			
-			
-		if(currentSegment.isOnSegment(new Vector2f(getPosition().x+local_direction,getPosition().y+local_direction)))
-			setPosition(new Vector2f(getPosition().x+local_direction,getPosition().y+local_direction));
-
-		else if(currentSegment.isOnSegment(new Vector2f(getPosition().x,getPosition().y+local_direction)))
-			setPosition(new Vector2f(getPosition().x,getPosition().y+local_direction));
-			
-		else if(currentSegment.isOnSegment(new Vector2f(getPosition().x+local_direction,getPosition().y)))
-			setPosition(new Vector2f(getPosition().x+local_direction,getPosition().y));	
-		
-		else if (currentSegment.isOnSegment(new Vector2f(getPosition().x+local_direction,getPosition().y-local_direction)))
-			setPosition(new Vector2f(getPosition().x+local_direction,getPosition().y-local_direction));	
-		
-
-		else{
-			System.out.println("else");
-			if(local_direction == 1)
-				local_direction = -1;
-			else
-				local_direction = 1;
-			
-			if(currentSegment.isOnSegment(new Vector2f(getPosition().x+local_direction,getPosition().y+local_direction)))
-				setPosition(new Vector2f(getPosition().x+local_direction,getPosition().y+local_direction));
-
-			else if(currentSegment.isOnSegment(new Vector2f(getPosition().x,getPosition().y+local_direction)))
-				setPosition(new Vector2f(getPosition().x,getPosition().y+local_direction));
-				
-			else if(currentSegment.isOnSegment(new Vector2f(getPosition().x+local_direction,getPosition().y)))
-				setPosition(new Vector2f(getPosition().x+local_direction,getPosition().y));	
-			
-			else if (currentSegment.isOnSegment(new Vector2f(getPosition().x+local_direction,getPosition().y-local_direction)))
-				setPosition(new Vector2f(getPosition().x+local_direction,getPosition().y-local_direction));
-		}
-		
-		//shape.setBounds(getPosition().x-5, getPosition().y-15, 10, 30);
-		polygon.setCenterX(getPosition().x);
-		polygon.setCenterY(getPosition().y);*/
 	}
 
 	@Override
 	public  void  update(GameContainer gc, StateBasedGame sbg,int delta) {
 		
 		super.update(gc, sbg,delta);
-		
-		/*Input input = gc.getInput();
-		
-		if(polygon.contains(input.getMouseX(), input.getMouseY()) && input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON))
-		{
-			if(isGrabed == true)
-			{
-				setPosition(new Vector2f(input.getMouseX(),input.getMouseY()));
-				
-				//position.x = input.getMouseX();
-				//position.y = input.getMouseY();
-				if(dragedEvent != null)
-					dragedEvent.mousePressed();
-			}
-			else
-			{
-				isGrabed = true;
-			}
-		}
-		else
-		{
-			if(isGrabed != false)
-			{
-				if(dragedEvent != null)
-					dragedEvent.mouseReleased();
-				isGrabed = false;
-			}
-		}*/
 		
 		cpt += delta;
 		if(cpt >15 && !isGrabed)
