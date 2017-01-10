@@ -146,9 +146,12 @@ public class ClassicBus extends Bus
 			lock = true;
 		
 		for (Vector2f endpoint : currentSegment.getPositions()) {
+
 			if(endpoint.distance(getPosition()) == 0 && (endpoint.equals(currentSegment.getEndSegment()) || endpoint.equals(currentSegment.getStartSegment()))){
 				//Alors on est arrivé soit dans une station soit à la fin d'une partie du segment
+				
 				for (Station station : Map.getInstance().getStations()) {
+
 					if(station.isOnStation(endpoint)){
 						
 						/*
@@ -173,16 +176,17 @@ public class ClassicBus extends Bus
 						}
 						nextSegment();
 						station.notifyBus(this);
+						break;
 					}
 				}
 			}
 		}
 		
 		//On avance
-		
+
 		ArrayList<Vector2f> vects = currentSegment.isBetween(getPosition());
 		
-		
+
 		if(vects.size() > 0){
 			if(vects.size() == 4 && direction){
 				start = vects.get(2);
@@ -228,6 +232,8 @@ public class ClassicBus extends Bus
 		else if(start.x < end.x && start.y == end.y){
 			newpos = new Vector2f(getPosition().x-local_direction,getPosition().y);
 		}
+		
+
 		
 		if(currentSegment.isOnSegment(newpos)){
 			setPosition(newpos);	
