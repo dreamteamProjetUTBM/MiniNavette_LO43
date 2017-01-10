@@ -193,13 +193,18 @@ public class MainGameState extends BasicGameState {
 		//Station station4 = new Station(new Vector2f(3 * Map.GRID_SIZE * 2, 8 * Map.GRID_SIZE * 2), Filiere.GI);
 		//Station station5 = new Station(new Vector2f(13 * Map.GRID_SIZE * 2, 8 * Map.GRID_SIZE * 2), Filiere.ENERGIE);
 
+		
+		entities.add(game.map.createStation());
+		entities.add(game.map.createStation());
+		entities.add(game.map.createStation());
+/*
 		game.map.addStation(station1);
 		game.map.addStation(station2);
 		game.map.addStation(station3);
 		
 		entities.add(station1);
 		entities.add(station2);
-		entities.add(station3);
+		entities.add(station3);*/
 		
 		
 		//entities.add(game.map.createStation());
