@@ -120,12 +120,14 @@ public class Segment extends EntityDragable implements EntityDrawable {
 		polygonRender.setClosed(false);
 
 
-
+		try{
 		tempLine =  new Line(getPositions().get(0), getPositions().get(1));
 
 		dxStart = (int) tempLine.getDX();
 		dyStart = (int) tempLine.getDY();
-
+		}catch(IndexOutOfBoundsException e){
+			
+		}
 		try{
 
 			dxStart = Math.abs(dxStart)/dxStart;
@@ -150,11 +152,13 @@ public class Segment extends EntityDragable implements EntityDrawable {
 			polygonRender.addPoint(polygon.getPoint(i)[0], polygon.getPoint(i)[1]);
 		} 
 
-
+		try{
 		tempLine =  new Line(getPositions().get(polygon.getPointCount()-1), getPositions().get(polygon.getPointCount()-2));
 		dxEnd = (int) tempLine.getDX();
 		dyEnd = (int) tempLine.getDY();
-
+		}catch(IndexOutOfBoundsException e){
+			
+		}
 		try{
 			dxEnd= Math.abs(dxEnd)/dxEnd;
 		}catch(ArithmeticException e)
