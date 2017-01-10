@@ -10,19 +10,16 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Line;
-import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 import fr.utbm.lo43.GameWindow;
-import fr.utbm.lo43.entities.Bus;
 import fr.utbm.lo43.entities.ClassicBus;
 import fr.utbm.lo43.entities.Entity;
 import fr.utbm.lo43.entities.EntityCollection;
 import fr.utbm.lo43.entities.EventEntityMouseClicked;
 import fr.utbm.lo43.entities.Label;
-import fr.utbm.lo43.entities.Passenger;
 import fr.utbm.lo43.entities.RailWay;
 import fr.utbm.lo43.entities.Segment;
 import fr.utbm.lo43.entities.Slider;
@@ -54,6 +51,7 @@ public class MainGameState extends BasicGameState {
 	private Label score_label;
 	
 	private Slider gameSpeed_slider;
+	private Image gameSpeed_image;
 
 	int current_line;
 
@@ -165,8 +163,9 @@ public class MainGameState extends BasicGameState {
 			}
 		});
 		
-		gameSpeed_slider = new Slider(new Vector2f(Map.WIDTH - Map.GRID_SIZE * 13, Map.HEIGHT - Map.GRID_SIZE / 1.5f));
+		gameSpeed_slider = new Slider(new Vector2f(Map.WIDTH - Map.GRID_SIZE * 12.5f, Map.HEIGHT - Map.GRID_SIZE / 1.5f));
 		gameSpeed_slider.setColor(Color.black);
+		gameSpeed_image = new Image("asset/speed.png");
 		
 		entities.add(bus_button);
 		entities.add(bus_label);
@@ -221,6 +220,8 @@ public class MainGameState extends BasicGameState {
 		menu_inventory.draw(0, Map.HEIGHT - Map.GRID_SIZE * 1.5f);
 
 		entities.render(arg2);
+		
+		gameSpeed_image.draw(Map.WIDTH - Map.GRID_SIZE * 14.5f, Map.HEIGHT - Map.GRID_SIZE * 1.65f);
 	}
 
 	@Override
@@ -230,6 +231,8 @@ public class MainGameState extends BasicGameState {
 		
 		
 		Random rand = new Random();
+		
+		Map.getInstance().gameSpeed = (int) (gameSpeed_slider.getValue()/100*Map.GAMESPEED_MAX +1);
 		counter += arg2*game.map.gameSpeed;
 		counterStation += arg2*game.map.gameSpeed;
 		
@@ -278,7 +281,7 @@ public class MainGameState extends BasicGameState {
 		}
 
 		if (input.isMousePressed(Input.MOUSE_LEFT_BUTTON) && bus_button.getToggled()) {
-			for (fr.utbm.lo43.logic.Line line : game.map.getInstance().getLines()) {
+			for (fr.utbm.lo43.logic.Line line : Map.getInstance().getLines()) {
 				for (Segment segment : line.getSegments()) {
 
 					for(int i = -10; i < 11; i++){

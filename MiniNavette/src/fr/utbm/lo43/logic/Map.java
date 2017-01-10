@@ -17,9 +17,8 @@ public class Map {
 	public static final int WIDTH = 1280;
 	public static final int HEIGHT = 720;
 	public static final int GRID_SIZE = 32;
-	//par rapport au centre
-	public static final int DISTANCE_BETWEEN_STATION = GRID_SIZE*3;
-	
+	public static final int GAMESPEED_MAX = 5; // valeur maximale du gamespeed 
+
 	public ArrayList<Station> stations;
 	private ArrayList<fr.utbm.lo43.logic.Line> lines;
 	public ArrayList<Line> grid;
@@ -31,7 +30,7 @@ public class Map {
 	/** Constructeur privé */
 	private Map()
 	{
-		gameSpeed = 3;
+		gameSpeed = 1;
 		
 		stations = new ArrayList<>();
 		grid = new ArrayList<>();
