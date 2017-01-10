@@ -65,6 +65,8 @@ public abstract class Line extends Entity implements EntityUpdateable, EntityDra
 		Map.getInstance().calculateNextStopStations();
 	}
 	
+
+	
 	/**
 	 * Verfifie si la ligne est une boucle
 	 * @return

@@ -131,8 +131,8 @@ public class Station extends EntityClickable implements EntityDrawable, Dijkstra
 
 					if((shortestPath.getWeight()<minDistance || minDistance == -1) && shortestPath.getWeight()!=-1){
 						minDistance = shortestPath.getWeight();
-						tempStation = shortestPath.get(0);
-					
+						tempStation = s.getNextConnection(shortestPath);
+						//tempStation = shortestPath.get(0);
 					}
 					
 					
@@ -142,6 +142,43 @@ public class Station extends EntityClickable implements EntityDrawable, Dijkstra
 			
 		}
 		
+	}
+	
+	/**
+	 * Retourne la premiere correspondance dans un path de stations
+	 * @param shortestPath
+	 * @return
+	 */
+	public synchronized Station getNextConnection(Path<Station> shortestPath){
+		
+		if(shortestPath.getElements().get(0)==null){
+			return null;
+		}
+		
+		ArrayList<Line> lineInCommon = new ArrayList<>(this.getLines());
+		lineInCommon.retainAll(shortestPath.getElements().get(0).getLines());
+		for(int i = 1; i<shortestPath.getElements().size();++i){
+			lineInCommon.retainAll(shortestPath.getElements().get(i).getLines());
+			if(lineInCommon.size() == 0){
+				return shortestPath.getElements().get(i-1);
+			}
+		}
+
+		return shortestPath.getElements().get(shortestPath.getElements().size()-1);
+		
+	}
+	
+	
+	
+	public ArrayList<Line> getLines(){
+		ArrayList<Line> lines = new ArrayList<>();
+		for(Line l : Map.getInstance().getLines()){
+			if(l.getStations().contains(this)){
+				lines.add(l);
+			}
+		}
+		
+		return lines;
 	}
 	
 	public synchronized boolean canAddPassenger(){
