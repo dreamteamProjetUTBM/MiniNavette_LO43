@@ -78,7 +78,6 @@ public class Map {
 				
 			}
 			
-			
 			for(int i = -2 ; i < 3; i++){
 				for(int j = -2; j < 3 ; j++){
 					if(railWay.isOnRailWay(new Vector2f(_newposition.x+i*GRID_SIZE,_newposition.y+j*GRID_SIZE))){
@@ -106,9 +105,7 @@ public class Map {
 	public boolean CanCreateStation(){
 		if(Inventory.getInstance().getRemainingStation() == 0)
 			return false;
-		
-		
-		
+		System.out.println("Station "+Inventory.getInstance().getRemainingStation());
 		return true;
 	}
 	

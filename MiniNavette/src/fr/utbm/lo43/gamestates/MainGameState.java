@@ -298,6 +298,7 @@ public class MainGameState extends BasicGameState {
 			arg1.enterState(GameWindow.GS_PAUSE_MENU);
 		}
 
+		//Ajouter un bus sur une ligne
 		if (input.isMousePressed(Input.MOUSE_LEFT_BUTTON) && bus_button.getToggled()) {
 			for (fr.utbm.lo43.logic.Line line : Map.getInstance().getLines()) {
 				for (Segment segment : line.getSegments()) {
@@ -465,10 +466,30 @@ public class MainGameState extends BasicGameState {
 											_line.addSegment(_segment, index);
 											entities.addAt(_segment, 0);
 											Inventory.getInstance().takeBridge();
+											if(_line.getSegments().size() == 1 && game.getInventory().getRemainingBus() > 0){
+												game.getInventory().setRemainingBus(-1);
+											
+												ClassicBus busThread = new ClassicBus(new Vector2f(_segment.getPositions().get(1).x,_segment.getPositions().get(1).y),
+														game.map.getLine(_segment.getLineIndex()).getColor(), _segment); 
+												
+												entities.add(busThread);
+		
+								                threadPool.submit(busThread);
+											}
 										}
 									}else{
-									_line.addSegment(_segment, index);
-									entities.addAt(_segment, 0);
+										_line.addSegment(_segment, index);
+										entities.addAt(_segment, 0);
+										if(_line.getSegments().size() == 1 && game.getInventory().getRemainingBus() > 0){
+											game.getInventory().setRemainingBus(-1);
+										
+											ClassicBus busThread = new ClassicBus(new Vector2f(_segment.getPositions().get(1).x,_segment.getPositions().get(1).y),
+													game.map.getLine(_segment.getLineIndex()).getColor(), _segment); 
+											
+											entities.add(busThread);
+	
+							                threadPool.submit(busThread);
+										}
 									}
 
 								}
