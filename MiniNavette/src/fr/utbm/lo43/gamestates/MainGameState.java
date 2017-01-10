@@ -38,7 +38,9 @@ import fr.utbm.lo43.logic.Score;
 public class MainGameState extends BasicGameState {
 
 	Game game;
+	
 	int counter = 0;
+	int counterStation = 0;
 	
 	public EntityCollection entities;
 
@@ -178,21 +180,32 @@ public class MainGameState extends BasicGameState {
 		Station station1 = new Station(new Vector2f(10 * Map.GRID_SIZE * 2, 3 * Map.GRID_SIZE * 2), Filiere.GI);
 		Station station2 = new Station(new Vector2f(5 * Map.GRID_SIZE * 2, 5 * Map.GRID_SIZE * 2), Filiere.EDIM);
 		Station station3 = new Station(new Vector2f(7 * Map.GRID_SIZE * 2, 7 * Map.GRID_SIZE * 2), Filiere.IMSI);
-		Station station4 = new Station(new Vector2f(3 * Map.GRID_SIZE * 2, 8 * Map.GRID_SIZE * 2), Filiere.GI);
-		Station station5 = new Station(new Vector2f(13 * Map.GRID_SIZE * 2, 8 * Map.GRID_SIZE * 2), Filiere.ENERGIE);
+		//Station station4 = new Station(new Vector2f(3 * Map.GRID_SIZE * 2, 8 * Map.GRID_SIZE * 2), Filiere.GI);
+		//Station station5 = new Station(new Vector2f(13 * Map.GRID_SIZE * 2, 8 * Map.GRID_SIZE * 2), Filiere.ENERGIE);
 
-		Map.getInstance().addStation(station1);
+		game.map.addStation(station1);
+		game.map.addStation(station2);
+		game.map.addStation(station3);
+		
+		entities.add(station1);
+		entities.add(station2);
+		entities.add(station3);
+		
+		
+		//entities.add(game.map.createStation());
+		//entities.add(game.map.createStation());
+		//entities.add(game.map.createStation());
+
+		/*Map.getInstance().addStation(station1);
 		Map.getInstance().addStation(station2);
 		Map.getInstance().addStation(station3);
 		Map.getInstance().addStation(station4);
 		Map.getInstance().addStation(station5);
-
-		entities.add(station1);
-		entities.add(station2);
-		entities.add(station3);
+		 
+		
 		entities.add(station4);
 		entities.add(station5);
-
+*/
 		current_line = 0;
 	}
 
@@ -221,8 +234,9 @@ public class MainGameState extends BasicGameState {
 		
 		
 		Random rand = new Random();
-		counter += arg2*Map.getInstance().gameSpeed;
-
+		counter += arg2*game.map.gameSpeed;
+		counterStation += arg2*game.map.gameSpeed;
+		
 		bus_label.setText(game.getInventory().getRemainingBus() + "");
 		bridge_label.setText(game.getInventory().getRemainingBridges() + "");
 		score_label.setText(Score.getInstance().getScore() + "");
@@ -235,6 +249,12 @@ public class MainGameState extends BasicGameState {
 				index_station = rand.nextInt(game.map.getStationsLenght());
 			game.map.getStations().get(index_station).newPassenger();
 			counter = 0;
+		}
+		
+		if(counterStation > 15000){
+			entities.add(game.map.createStation());
+			counterStation = 0;
+
 		}
 
 		/*

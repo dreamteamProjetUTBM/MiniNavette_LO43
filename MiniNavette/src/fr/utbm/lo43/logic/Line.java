@@ -70,9 +70,11 @@ public abstract class Line extends Entity implements EntityUpdateable, EntityDra
 	 * @return
 	 */
 	public boolean isLoop(){
-		
-		return segments.get(0).getStartSegment().distance( segments.get(segments.size()-1).getEndSegment()) == 0 ;
-		
+		try {
+			return segments.get(0).getStartSegment().distance( segments.get(segments.size()-1).getEndSegment()) == 0 ;
+		}catch(IndexOutOfBoundsException ex){
+			return false;	
+		}
 	}
 	//only top and queue
 	public boolean existingSegment(Segment _seg){
