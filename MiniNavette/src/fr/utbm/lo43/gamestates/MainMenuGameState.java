@@ -38,7 +38,15 @@ public class MainMenuGameState extends BasicGameState
 			{	
 				@Override
 				public void mouseClicked() {
-					arg1.enterState(GameWindow.GS_GAME);
+					try 
+					{
+						arg1.getState(GameWindow.GS_GAME).init(arg0, arg1);
+						arg1.enterState(GameWindow.GS_GAME);
+					} 
+					catch (SlickException e) 
+					{
+						e.printStackTrace();
+					}
 				}
 			}
 		);

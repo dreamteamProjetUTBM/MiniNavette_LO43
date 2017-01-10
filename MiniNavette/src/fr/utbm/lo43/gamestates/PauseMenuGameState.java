@@ -44,15 +44,7 @@ public class PauseMenuGameState extends BasicGameState
 			@Override
 			public void mouseClicked() 
 			{
-				try 
-				{
-					arg1.getState(GameWindow.GS_GAME).init(arg0, arg1);
-					arg1.enterState(GameWindow.GS_MAIN_MENU);
-				} 
-				catch (SlickException e) 
-				{
-					e.printStackTrace();
-				}
+				arg1.enterState(GameWindow.GS_MAIN_MENU);
 			}
 		});
 		
