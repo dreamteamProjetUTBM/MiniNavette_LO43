@@ -18,6 +18,7 @@ import fr.utbm.lo43.dijkstra.DijkstraPathfinding;
 import fr.utbm.lo43.dijkstra.Dijkstrable;
 import fr.utbm.lo43.dijkstra.Path;
 import fr.utbm.lo43.logic.Filiere;
+import fr.utbm.lo43.logic.Game;
 import fr.utbm.lo43.logic.Line;
 import fr.utbm.lo43.logic.Map;
 
@@ -148,12 +149,16 @@ public class Station extends EntityClickable implements EntityDrawable, Dijkstra
 		{
 			if(waitedTime >= MAX_WAITING_TIME + BONUS_WAITING_TIME)
 			{
+				Game.setGameOver(true);
 				System.out.println("Perdu !! Les passagers ont attendu "+ waitedTime + "secondes");
 			}
 			else System.out.println("Attention, une station est en état critique : "+ ( MAX_WAITING_TIME + BONUS_WAITING_TIME- waitedTime)+ " secondes avant la défaite");
-		}else{
+		}
+		else
+		{
 			if(waitedTime >= MAX_WAITING_TIME)
 			{
+				Game.setGameOver(true);
 				System.out.println("Perdu !! Les passagers ont attendu "+ waitedTime + "secondes");
 			}
 			else System.out.println("Attention, une station est en état critique : "+ ( MAX_WAITING_TIME - waitedTime)+ " secondes avant la défaite");

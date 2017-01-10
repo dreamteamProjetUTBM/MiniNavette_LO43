@@ -4,6 +4,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
+import fr.utbm.lo43.gamestates.GameOverGameState;
 import fr.utbm.lo43.gamestates.MainGameState;
 import fr.utbm.lo43.gamestates.MainMenuGameState;
 import fr.utbm.lo43.gamestates.OptionMenuGameState;
@@ -13,9 +14,10 @@ public class GameWindow extends StateBasedGame
 {
 	// Les ids de tous les GameState du jeu
 	public static final int GS_MAIN_MENU 		= 0;
-	public static final int GS_GAME 				= 1;
+	public static final int GS_GAME 			= 1;
 	public static final int GS_PAUSE_MENU 		= 2;
 	public static final int GS_OPTION_MENU 		= 3;
+	public static final int GS_GAME_OVER 		= 4;
 
 	public GameWindow(String name) 
 	{
@@ -29,5 +31,6 @@ public class GameWindow extends StateBasedGame
 		addState(new MainGameState());
 		addState(new PauseMenuGameState());
 		addState(new OptionMenuGameState());
+		addState(new GameOverGameState());
 	}
 }

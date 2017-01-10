@@ -296,7 +296,6 @@ public class MainGameState extends BasicGameState {
 							}
 						}
 					}
-					
 				}
 			}
 		}
@@ -452,10 +451,13 @@ public class MainGameState extends BasicGameState {
 					}
 				}
 				editLine = false;
-
 			}
 		}
-
+		
+		if(Game.getGameOver())
+		{
+			arg1.enterState(GameWindow.GS_GAME_OVER);
+		}
 	}
 
 	@Override
