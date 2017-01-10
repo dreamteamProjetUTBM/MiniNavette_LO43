@@ -88,7 +88,9 @@ public class Station extends EntityClickable implements EntityDrawable, Dijkstra
 		offsetY = 0;
 		
 		offsetX = getPosition().x + offsetX * Map.GRID_SIZE/2;
-		offsetY = getPosition().y + waitingPassenger.size()/4 * Map.GRID_SIZE*1.5f ;
+		//offsetY = getPosition().y + waitingPassenger.size()/4 * Map.GRID_SIZE*1.5f ;
+		offsetY = getPosition().y + waitingPassenger.size()/4 * Map.GRID_SIZE/2 ;
+		
 		
 		Passenger p = new Passenger(new Vector2f(offsetX,offsetY), passenger_type);
 		waitingPassenger.add(p);

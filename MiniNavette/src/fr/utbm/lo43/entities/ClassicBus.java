@@ -156,6 +156,7 @@ public class ClassicBus extends Bus
 							return;
 						}
 						nextSegment();
+						station.notifyBus(this);
 					}
 				}
 			}
