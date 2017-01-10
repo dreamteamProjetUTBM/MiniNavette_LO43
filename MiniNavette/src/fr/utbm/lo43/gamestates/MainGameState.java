@@ -10,19 +10,16 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Line;
-import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 import fr.utbm.lo43.GameWindow;
-import fr.utbm.lo43.entities.Bus;
 import fr.utbm.lo43.entities.ClassicBus;
 import fr.utbm.lo43.entities.Entity;
 import fr.utbm.lo43.entities.EntityCollection;
 import fr.utbm.lo43.entities.EventEntityMouseClicked;
 import fr.utbm.lo43.entities.Label;
-import fr.utbm.lo43.entities.Passenger;
 import fr.utbm.lo43.entities.RailWay;
 import fr.utbm.lo43.entities.Segment;
 import fr.utbm.lo43.entities.Slider;
@@ -280,7 +277,7 @@ public class MainGameState extends BasicGameState {
 		}
 
 		if (input.isMousePressed(Input.MOUSE_LEFT_BUTTON) && bus_button.getToggled()) {
-			for (fr.utbm.lo43.logic.Line line : game.map.getInstance().getLines()) {
+			for (fr.utbm.lo43.logic.Line line : Map.getInstance().getLines()) {
 				for (Segment segment : line.getSegments()) {
 
 					for(int i = -10; i < 11; i++){
