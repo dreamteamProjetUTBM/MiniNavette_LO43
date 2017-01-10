@@ -64,10 +64,35 @@ public class ClassicBus extends Bus
 		theta = getAngle();
 		polygon = (Polygon) polygon.transform(Transform.createRotateTransform((float) Math.toRadians(-getAngle()),getPosition().x,getPosition().y));
 
+		if(currentSegment.getEndSegment().distance(getPosition()) > currentSegment.getStartSegment().distance(getPosition())){
+			if(currentSegment.getStartSegment().x > getPosition().x)
+				local_direction = 1;
+			else if (currentSegment.getStartSegment().y > getPosition().y)
+				local_direction = 1;
+			else
+				local_direction = -1;
+		}
+		else {
+			if(currentSegment.getEndSegment().x > getPosition().x)
+				local_direction = 1;
+			else if (currentSegment.getEndSegment().y > getPosition().y)
+				local_direction = 1;
+			else
+				local_direction = -1;
+		}
+		
 	}
 	
 	public synchronized boolean canBeRemove(){
 		return canBeRemove;
+	}
+	
+	public synchronized boolean isLock(){
+		return lock;
+	}
+	
+	public synchronized void setLock(boolean value){
+		lock = value;
 	}
 	
 	/*
