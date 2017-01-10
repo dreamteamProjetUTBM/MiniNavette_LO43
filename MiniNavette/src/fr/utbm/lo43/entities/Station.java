@@ -148,15 +148,15 @@ public class Station extends EntityClickable implements EntityDrawable, Dijkstra
 		{
 			if(waitedTime >= MAX_WAITING_TIME + BONUS_WAITING_TIME)
 			{
-				//System.out.println("Perdu !! Les passagers ont attendu "+ waitedTime + "secondes");
+				System.out.println("Perdu !! Les passagers ont attendu "+ waitedTime + "secondes");
 			}
-			//else System.out.println("Attention, une station est en état critique : "+ ( MAX_WAITING_TIME + BONUS_WAITING_TIME- waitedTime)+ " secondes avant la défaite");
+			else System.out.println("Attention, une station est en état critique : "+ ( MAX_WAITING_TIME + BONUS_WAITING_TIME- waitedTime)+ " secondes avant la défaite");
 		}else{
 			if(waitedTime >= MAX_WAITING_TIME)
 			{
-				//System.out.println("Perdu !! Les passagers ont attendu "+ waitedTime + "secondes");
+				System.out.println("Perdu !! Les passagers ont attendu "+ waitedTime + "secondes");
 			}
-			//else System.out.println("Attention, une station est en état critique : "+ ( MAX_WAITING_TIME - waitedTime)+ " secondes avant la défaite");
+			else System.out.println("Attention, une station est en état critique : "+ ( MAX_WAITING_TIME - waitedTime)+ " secondes avant la défaite");
 		}
 	}
 	

@@ -377,8 +377,9 @@ public class ClassicBus extends Bus
 		if(cpt >15 && !isGrabed)
 		{
 			cpt = 0;
-			move();
-			
+			for(int i = 0; i<Map.getInstance().gameSpeed;++i){
+				move();
+			}
 			if(getAngle() != theta) //Donc on a changé d'angle
 			{
 				polygon = (Polygon) polygon.transform(Transform.createRotateTransform((float) Math.toRadians(theta-getAngle()),getPosition().x,getPosition().y));	

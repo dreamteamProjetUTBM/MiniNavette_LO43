@@ -22,10 +22,13 @@ public class Map {
 	public RailWay railWay;
 	public DijkstraPathfinding<Station> pathfinding;
 
+	public int gameSpeed; //pour gerer la vitesse du jeuet permettre ainsi d'accelerer
 	
 	/** Constructeur privé */
 	private Map()
 	{
+		gameSpeed = 3;
+		
 		stations = new ArrayList<>();
 		grid = new ArrayList<>();
 		lines = new ArrayList<>();

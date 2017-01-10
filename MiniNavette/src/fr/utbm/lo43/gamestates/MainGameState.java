@@ -209,7 +209,7 @@ public class MainGameState extends BasicGameState {
 		
 		
 		Random rand = new Random();
-		counter += arg2;
+		counter += arg2*Map.getInstance().gameSpeed;
 
 		bus_label.setText(game.getInventory().getRemainingBus() + "");
 		bridge_label.setText(game.getInventory().getRemainingBridges() + "");
@@ -217,7 +217,7 @@ public class MainGameState extends BasicGameState {
 		
 		fr.utbm.lo43.logic.Line _line = Map.getInstance().getLine(current_line);
 
-		if (counter > 1000) {
+		if (counter > 5000) {
 			int index_station = rand.nextInt(game.map.getStationsLenght());
 			while (!game.map.getStations().get(index_station).canAddPassenger())
 				index_station = rand.nextInt(game.map.getStationsLenght());

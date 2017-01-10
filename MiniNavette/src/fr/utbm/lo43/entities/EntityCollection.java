@@ -6,6 +6,8 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.state.StateBasedGame;
 
+import fr.utbm.lo43.logic.Map;
+
 public class EntityCollection implements EntityUpdateable, EntityDrawable
 {
 	ArrayList<Entity> entities;
@@ -67,7 +69,7 @@ public class EntityCollection implements EntityUpdateable, EntityDrawable
 		{
 			if(entitie.isUpdateble())
 			{
-				((EntityUpdateable)entitie).update(gc, sbg, delta);;
+				((EntityUpdateable)entitie).update(gc, sbg, delta*Map.getInstance().gameSpeed);;
 			}
 		}
 	}
