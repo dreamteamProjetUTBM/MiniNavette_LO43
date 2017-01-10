@@ -52,6 +52,7 @@ public class MainGameState extends BasicGameState {
 	private Label score_label;
 	
 	private Slider gameSpeed_slider;
+	private Image gameSpeed_image;
 
 	int current_line;
 
@@ -163,8 +164,9 @@ public class MainGameState extends BasicGameState {
 			}
 		});
 		
-		gameSpeed_slider = new Slider(new Vector2f(Map.WIDTH - Map.GRID_SIZE * 13, Map.HEIGHT - Map.GRID_SIZE / 1.5f));
+		gameSpeed_slider = new Slider(new Vector2f(Map.WIDTH - Map.GRID_SIZE * 12.5f, Map.HEIGHT - Map.GRID_SIZE / 1.5f));
 		gameSpeed_slider.setColor(Color.black);
+		gameSpeed_image = new Image("asset/speed.png");
 		
 		entities.add(bus_button);
 		entities.add(bus_label);
@@ -208,6 +210,8 @@ public class MainGameState extends BasicGameState {
 		menu_inventory.draw(0, Map.HEIGHT - Map.GRID_SIZE * 1.5f);
 
 		entities.render(arg2);
+		
+		gameSpeed_image.draw(Map.WIDTH - Map.GRID_SIZE * 14.5f, Map.HEIGHT - Map.GRID_SIZE * 1.65f);
 	}
 
 	@Override
