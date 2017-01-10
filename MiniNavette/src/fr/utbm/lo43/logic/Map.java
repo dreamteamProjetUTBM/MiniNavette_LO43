@@ -1,8 +1,10 @@
 package fr.utbm.lo43.logic;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import org.newdawn.slick.geom.Line;
+import org.newdawn.slick.geom.Vector2f;
 
 import fr.utbm.lo43.dijkstra.DijkstraPathfinding;
 import fr.utbm.lo43.entities.Bus;
@@ -51,6 +53,42 @@ public class Map {
 		if(INSTANCE == null)
 			INSTANCE = new Map();
 		return INSTANCE;
+	}
+	
+	public Station createStation(){
+		Random rand = new Random();
+		boolean isRight = false;
+		Vector2f _newposition = new Vector2f();
+		
+		while(!isRight){
+			_newposition = new Vector2f(rand.nextInt(WIDTH/GRID_SIZE)*GRID_SIZE, 
+					rand.nextInt(HEIGHT/GRID_SIZE)*GRID_SIZE);
+			isRight = true;
+			for (Station station : stations) {
+				if(station.getPosition() == _newposition)
+					isRight = false;
+			}
+		}
+		
+		Station station = new Station(_newposition, getFiliere(rand.nextInt(5)));
+		stations.add(station);
+		
+		return station;
+	}
+	
+	private Filiere getFiliere(int index){
+		switch(index){
+			case 0: 
+				return Filiere.EDIM;
+			case 1:
+				return Filiere.ENERGIE;
+			case 2:
+				return Filiere.GI;
+			case 3: 
+				return Filiere.GMC;
+			default:
+				return Filiere.IMSI;
+		}
 	}
 	
 	public void calculateNextStopStations(){

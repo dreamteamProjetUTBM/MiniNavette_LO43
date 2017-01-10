@@ -137,7 +137,7 @@ public class ClassicBus extends Bus
 	public void move() 
 	{
 		
-		if(!currentSegment.line_bus.existingSegment(currentSegment))
+		if(!currentSegment.line_bus.existingSegment(currentSegment) && currentSegment.line_bus.getSegments().size() == 0 )
 			lock = true;
 		
 		for (Vector2f endpoint : currentSegment.getPositions()) {
@@ -149,7 +149,7 @@ public class ClassicBus extends Bus
 						/*
 						 * ROGER ICI
 						 */
-						station.notifyBus(this);
+						//station.notifyBus(this);
 
 						System.out.println("Bus a maintenant "+ passengers.size() + " passager(s).");
 					
@@ -159,11 +159,8 @@ public class ClassicBus extends Bus
 							
 							for(Passenger passenger : copy)
 							{
-						
 									passenger.leaveBus(station);
 									removePassenger(passenger);
-							
-								
 							}
 							
 							canBeRemove = true;
