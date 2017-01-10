@@ -24,12 +24,18 @@ public class ClassicBus extends Bus
 {	
 	
 	//Le bus navigue entre ces deux vecteurs
-	private Vector2f start,end;
+	private volatile Vector2f start,end;
 	//Direction du bus
 	int local_direction = -1;
 	
+	
+	
 	boolean lock = false;
+	
 	boolean canBeRemove = false;
+	
+	
+	
 	//Contient l'actuelle angle du bus
 	private float theta;
 	//Compteur pour le temps depuis le dernier appel de update
@@ -74,43 +80,42 @@ public class ClassicBus extends Bus
 	}
 	
 	public boolean canBeRemove(){
-		
-		
 		return canBeRemove;
 	}
 	
-	public float getAngle(){
+	public synchronized float getAngle(){
 		ArrayList<Vector2f> vects = currentSegment.isBetween(getPosition());
+		float theta_bis = 0;
 		Vector2f _start,_end;
-		
-		if(vects.get(0) == null || vects.get(1) == null)
-			return 0;
-		
-		if(vects.size() == 4 && direction){
-			_start = vects.get(2);
-			_end = vects.get(3);
+		if(vects.size()>0){
+			if(vects.get(0) == null || vects.get(1) == null)
+				return 0;
 			
-		}
-		else {
-			if(direction){
-				_start = vects.get(0);
-				_end = vects.get(1);
+			if(vects.size() == 4 && direction){
+				_start = vects.get(2);
+				_end = vects.get(3);
+				
 			}
 			else {
-				_start = vects.get(1);
-				_end = vects.get(0);
+				if(direction){
+					_start = vects.get(0);
+					_end = vects.get(1);
+				}
+				else {
+					_start = vects.get(1);
+					_end = vects.get(0);
+				}
 			}
+			
+			org.newdawn.slick.geom.Line line= new org.newdawn.slick.geom.Line(_start, _end);
+			theta_bis = (float) Math.atan2(line.getDX(), line.getDY());
+			theta_bis *= 180 / Math.PI;
 		}
-		
-		org.newdawn.slick.geom.Line line= new org.newdawn.slick.geom.Line(_start, _end);
-		float theta_bis = (float) Math.atan2(line.getDX(), line.getDY());
-		theta_bis *= 180 / Math.PI;
-		
 		return theta_bis;
 	}
 	
 	@Override
-	public void render(Graphics arg2) 
+	public synchronized void render(Graphics arg2) 
 	
 	{
 		arg2.setColor(color);
@@ -134,16 +139,19 @@ public class ClassicBus extends Bus
 	}
 
 	@Override
-	public void move() 
+	protected void move() 
 	{
 		
 		if(!currentSegment.line_bus.existingSegment(currentSegment) && currentSegment.line_bus.getSegments().size() == 0 )
 			lock = true;
 		
 		for (Vector2f endpoint : currentSegment.getPositions()) {
-			if(endpoint.distance(getPosition()) == 0){
+
+			if(endpoint.distance(getPosition()) == 0 && (endpoint.equals(currentSegment.getEndSegment()) || endpoint.equals(currentSegment.getStartSegment()))){
 				//Alors on est arrivé soit dans une station soit à la fin d'une partie du segment
+				
 				for (Station station : Map.getInstance().getStations()) {
+
 					if(station.isOnStation(endpoint)){
 						
 						/*
@@ -168,16 +176,17 @@ public class ClassicBus extends Bus
 						}
 						nextSegment();
 						station.notifyBus(this);
+						break;
 					}
 				}
 			}
 		}
 		
 		//On avance
-		
+
 		ArrayList<Vector2f> vects = currentSegment.isBetween(getPosition());
 		
-		
+
 		if(vects.size() > 0){
 			if(vects.size() == 4 && direction){
 				start = vects.get(2);
@@ -223,6 +232,8 @@ public class ClassicBus extends Bus
 		else if(start.x < end.x && start.y == end.y){
 			newpos = new Vector2f(getPosition().x-local_direction,getPosition().y);
 		}
+		
+
 		
 		if(currentSegment.isOnSegment(newpos)){
 			setPosition(newpos);	
@@ -338,7 +349,7 @@ public class ClassicBus extends Bus
 	}
 
 	@Override
-	public void update(GameContainer gc, StateBasedGame sbg,int delta) {
+	public  void  update(GameContainer gc, StateBasedGame sbg,int delta) {
 		
 		super.update(gc, sbg,delta);
 		
@@ -374,9 +385,9 @@ public class ClassicBus extends Bus
 		if(cpt >15 && !isGrabed)
 		{
 			cpt = 0;
-			for(int i = 0; i<Map.getInstance().gameSpeed;++i){
-				move();
-			}
+//			for(int i = 0; i<Map.getInstance().gameSpeed;++i){
+//				move();
+//			}
 			if(getAngle() != theta) //Donc on a changé d'angle
 			{
 				polygon = (Polygon) polygon.transform(Transform.createRotateTransform((float) Math.toRadians(theta-getAngle()),getPosition().x,getPosition().y));	
@@ -385,15 +396,19 @@ public class ClassicBus extends Bus
 			}
 			
 			passenger_images = new ArrayList<>();
-			for (Passenger passenger : passengers) {
-				try {
-					passenger_images.add(new Image("asset/"+passenger.filiere.toString().toLowerCase()+".png"));
-				} catch (SlickException e) {
-					// TODO Auto-generated catch block
-					System.out.println("Erreur");
-					e.printStackTrace();
-				}
-				
+			
+			
+			synchronized(passengers){
+				for (Passenger passenger : passengers) {
+					try {
+						passenger_images.add(new Image("asset/"+passenger.filiere.toString().toLowerCase()+".png"));
+					} catch (SlickException e) {
+						// TODO Auto-generated catch block
+						System.out.println("Erreur");
+						e.printStackTrace();
+					}
+					
+				}				
 			}
 			
 			polygon.setCenterX(getPosition().x + currentSegment.getOffset()*Segment.SEGMENT_THICKNESS/2);
@@ -403,7 +418,7 @@ public class ClassicBus extends Bus
 	}
 	
 	@Override
-	public boolean equals(Object obj) {
+	public synchronized boolean equals(Object obj) {
 		// TODO Auto-generated method stub
 		//return super.equals(obj);
 		
@@ -417,5 +432,33 @@ public class ClassicBus extends Bus
 		}
 		return false;
 	}
+	
+	
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		while(true){
+			
+			for(int i = 0; i<Map.getInstance().gameSpeed;++i){
+				move();
+	            
+			}
+			try {
+				Thread.sleep(15);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			if(this.canBeRemove) {
+				System.out.println("fin du thread bus");
+				break ;
+			}
+			
+		}
+		
+	}
+
+	
 	
 }

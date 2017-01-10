@@ -170,6 +170,4 @@ public abstract class Line extends Entity implements EntityUpdateable, EntityDra
 		}
 		return false;
 	}
-
-	
 }

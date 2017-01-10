@@ -2,14 +2,16 @@ package fr.utbm.lo43.logic;
 
 public class Inventory {
 
+	private int remaining_station;
 	private int remaining_bus;
 	private int remaining_bridges;
 	
 	/** Constructeur privé */
 	private Inventory()
 	{
-		remaining_bus = 3;
+		remaining_bus = 30;
 		remaining_bridges = 2; 
+		remaining_station = 10;
 	}
  
 	/** Instance unique pré-initialisée */
@@ -23,6 +25,14 @@ public class Inventory {
 			INSTANCE = new Inventory();
 		
 		return INSTANCE;
+	}
+	
+	public int getRemainingStation(){
+		return remaining_station;
+	}
+	
+	public void setRemainingStation(int value){
+		remaining_station += value;
 	}
 	
 	public int getRemainingBus(){

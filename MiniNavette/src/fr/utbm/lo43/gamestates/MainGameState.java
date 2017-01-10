@@ -2,6 +2,9 @@ package fr.utbm.lo43.gamestates;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -34,12 +37,14 @@ import fr.utbm.lo43.logic.Score;
 
 public class MainGameState extends BasicGameState {
 
+	private static final int MAX_BUS = 30;
 	Game game;
 	
 	int counter = 0;
 	int counterStation = 0;
 	
 	public EntityCollection entities;
+	ThreadPoolExecutor threadPool ;
 
 	Image menu_inventory;
 	ArrayList<ToggledButton> lines_button;
@@ -67,7 +72,15 @@ public class MainGameState extends BasicGameState {
 	public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException {
 		game = new Game();
 		entities = new EntityCollection();
-
+		
+		threadPool = new ThreadPoolExecutor(
+				MAX_BUS,
+                MAX_BUS,
+                50000L,
+                TimeUnit.MILLISECONDS,
+                new LinkedBlockingQueue<Runnable>(MAX_BUS));
+		threadPool.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
+		
 		editLine = false;
 
 		menu_inventory = new Image("asset/info_barre.png");
@@ -180,13 +193,18 @@ public class MainGameState extends BasicGameState {
 		//Station station4 = new Station(new Vector2f(3 * Map.GRID_SIZE * 2, 8 * Map.GRID_SIZE * 2), Filiere.GI);
 		//Station station5 = new Station(new Vector2f(13 * Map.GRID_SIZE * 2, 8 * Map.GRID_SIZE * 2), Filiere.ENERGIE);
 
+		
+		entities.add(game.map.createStation());
+		entities.add(game.map.createStation());
+		entities.add(game.map.createStation());
+/*
 		game.map.addStation(station1);
 		game.map.addStation(station2);
 		game.map.addStation(station3);
 		
 		entities.add(station1);
 		entities.add(station2);
-		entities.add(station3);
+		entities.add(station3);*/
 		
 		
 		//entities.add(game.map.createStation());
@@ -231,6 +249,8 @@ public class MainGameState extends BasicGameState {
 		
 		
 		Random rand = new Random();
+		
+		Map.getInstance().gameSpeed = (int) (gameSpeed_slider.getValue()/100*Map.GAMESPEED_MAX +1);
 		counter += arg2*game.map.gameSpeed;
 		counterStation += arg2*game.map.gameSpeed;
 		
@@ -239,7 +259,8 @@ public class MainGameState extends BasicGameState {
 		score_label.setText(Score.getInstance().getScore() + "");
 		
 		fr.utbm.lo43.logic.Line _line = Map.getInstance().getLine(current_line);
-
+		
+		
 		if (counter > 5000) {
 			int index_station = rand.nextInt(game.map.getStationsLenght());
 			while (!game.map.getStations().get(index_station).canAddPassenger())
@@ -249,7 +270,8 @@ public class MainGameState extends BasicGameState {
 		}
 		
 		if(counterStation > 15000){
-			entities.add(game.map.createStation());
+			if(game.map.CanCreateStation())
+				entities.add(game.map.createStation());
 			counterStation = 0;
 
 		}
@@ -287,11 +309,16 @@ public class MainGameState extends BasicGameState {
 							
 							if(segment.isOnSegment(new Vector2f(mouseX,mouseY)) && game.getInventory().getRemainingBus() > 0){
 								//Alors on ajoute un bus sur le segment
+								
 								bus_button.setToggled(false);
 								game.getInventory().setRemainingBus(-1);
+								
+								ClassicBus busThread = new ClassicBus(new Vector2f(mouseX,mouseY),
+										game.map.getLine(segment.getLineIndex()).getColor(), segment); 
+								
+								entities.add(busThread);
 
-								entities.add(new ClassicBus(new Vector2f(mouseX,mouseY),
-										game.map.getLine(segment.getLineIndex()).getColor(), segment));
+				                threadPool.submit(busThread);
 								return;
 							}
 						}

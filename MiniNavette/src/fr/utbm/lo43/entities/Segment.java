@@ -20,12 +20,13 @@ import fr.utbm.lo43.logic.Map;
 public class Segment extends EntityDragable implements EntityDrawable {
 
 	public static final float SEGMENT_THICKNESS = 5;
-	private Polygon polygon;
-	private ArrayList<Vector2f> bridges;
-	private Station stationDepart;
-	private Station stationArrival;
-	
-	private String iconPath;
+	private volatile Polygon polygon;
+	private volatile Polygon polygonRender;
+	private volatile ArrayList<Vector2f> bridges;
+	private volatile Station stationDepart;
+	private volatile Station stationArrival;
+
+	private volatile String iconPath;
 	// Line de Slick2D
 	Line line;
 	fr.utbm.lo43.logic.Line line_bus;
@@ -42,21 +43,22 @@ public class Segment extends EntityDragable implements EntityDrawable {
 		polygon.addPoint(angle.x, angle.y);
 		polygon.addPoint(_end.x, _end.y);
 		forbiddenBridges = false;
-		
+
 		lineIndex = index;
 		line_bus = Map.getInstance().getLine(lineIndex);
-		
+
 		bridges = intersectsRailway(Map.getInstance().railWay);
-		
-		
+
+
 		setStations();
+		setPolygonRender();
 		dragedEvent = new EventEntityMouseDraged() {
 
 			@Override
 			public void mouseReleased() {
 				// TODO Auto-generated method stub
 				boolean notOnStation = true;
-				
+
 				for (Station station : Map.getInstance().getStations()) {
 					if (station.position == getEndSegment()) {
 						notOnStation = false;
@@ -82,7 +84,7 @@ public class Segment extends EntityDragable implements EntityDrawable {
 		drawable = true;
 
 	}
-	
+
 
 	public int getOffset(){
 		int offset = 0;
@@ -97,7 +99,7 @@ public class Segment extends EntityDragable implements EntityDrawable {
 				}
 			}
 		}
-		
+
 		//permet de centrer les segments si il y a des offsets
 		if(offset%2 == 0){
 			offset = -offset;
@@ -105,9 +107,96 @@ public class Segment extends EntityDragable implements EntityDrawable {
 		offset = offset/2;
 		return offset;
 	}
-	
-	
-	
+
+	public void setPolygonRender(){
+		Line tempLine;
+
+		int dxStart = 0;
+		int dyStart = 0;
+		int dxEnd = 0;
+		int dyEnd = 0;
+
+		polygonRender = new Polygon();
+		polygonRender.setClosed(false);
+
+
+		try{
+		tempLine =  new Line(getPositions().get(0), getPositions().get(1));
+
+		dxStart = (int) tempLine.getDX();
+		dyStart = (int) tempLine.getDY();
+		}catch(IndexOutOfBoundsException e){
+			
+		}
+		try{
+
+			dxStart = Math.abs(dxStart)/dxStart;
+		}catch(ArithmeticException e)
+		{
+
+		}
+		try{
+			dyStart = Math.abs(dyStart)/dyStart;
+		}catch(ArithmeticException e){
+
+		}
+		try{
+			if(isFirstinLine()){
+				polygonRender.addPoint(polygon.getPoint(0)[0]+(-2)*dxStart*Map.GRID_SIZE, polygon.getPoint(0)[1]+(-2)*dyStart*Map.GRID_SIZE);
+			}
+		}catch(IndexOutOfBoundsException e){
+
+		}
+
+		for (int i = 0; i < polygon.getPointCount(); ++i) {
+			polygonRender.addPoint(polygon.getPoint(i)[0], polygon.getPoint(i)[1]);
+		} 
+
+		try{
+		tempLine =  new Line(getPositions().get(polygon.getPointCount()-1), getPositions().get(polygon.getPointCount()-2));
+		dxEnd = (int) tempLine.getDX();
+		dyEnd = (int) tempLine.getDY();
+		}catch(IndexOutOfBoundsException e){
+			
+		}
+		try{
+			dxEnd= Math.abs(dxEnd)/dxEnd;
+		}catch(ArithmeticException e)
+		{
+
+		}
+		try{
+			dyEnd = Math.abs(dyEnd)/dyEnd;
+		}catch(ArithmeticException e){
+
+		}
+
+		try {
+			if(isLastinLine()){
+				polygonRender.addPoint(polygon.getPoint(polygon.getPointCount()-1)[0]+ (-2)*dxEnd*Map.GRID_SIZE, polygon.getPoint(polygon.getPointCount()-1)[1]+(-2)*dyEnd*Map.GRID_SIZE);
+			}
+		}catch(IndexOutOfBoundsException e){
+
+		}
+
+		if(Math.abs(dxStart) == 1 && Math.abs(dyStart) == 0){
+			polygonRender.setLocation(polygon.getX(), polygon.getY() +SEGMENT_THICKNESS*this.getOffset());
+		}
+		if(Math.abs(dxStart) == 0 && Math.abs(dyStart) == 1){
+			polygonRender.setLocation(polygon.getX()+SEGMENT_THICKNESS*this.getOffset(), polygon.getY());
+		}
+		if(dxStart == dyStart){
+			polygonRender.setLocation(polygon.getX()+SEGMENT_THICKNESS*this.getOffset(), polygon.getY()-SEGMENT_THICKNESS*this.getOffset());
+		}
+		if(dxStart == -dyStart){
+			polygonRender.setLocation(polygon.getX()+SEGMENT_THICKNESS*this.getOffset(), polygon.getY()+SEGMENT_THICKNESS*this.getOffset());
+		}
+
+
+
+
+	}
+
 	public fr.utbm.lo43.logic.Line getLine_bus() {
 		return line_bus;
 	}
@@ -117,13 +206,13 @@ public class Segment extends EntityDragable implements EntityDrawable {
 		this.forbiddenBridges = forbiddenBridges;
 	}
 
-	public Station getStationDepart() {
+	public  Station getStationDepart() {
 		return stationDepart;
 	}
 
 
 
-	public Station getStationArrival() {
+	public  Station getStationArrival() {
 		return stationArrival;
 	}
 
@@ -135,7 +224,7 @@ public class Segment extends EntityDragable implements EntityDrawable {
 		iconPath = imgPath;
 	}
 
-	public Vector2f getPointPolygon(int index) {
+	public  Vector2f getPointPolygon(int index) {
 		return new Vector2f(polygon.getPoint(index)[0], polygon.getPoint(index)[1]);
 	}
 
@@ -144,15 +233,15 @@ public class Segment extends EntityDragable implements EntityDrawable {
 	 * 
 	 * @return
 	 */
-	public int getLineIndex() {
+	public  int getLineIndex() {
 		return lineIndex;
 	}
 
-	public Vector2f getStartSegment() {
+	public  Vector2f getStartSegment() {
 		return getPointPolygon(0);
 	}
 
-	public Vector2f getEndSegment() {
+	public  Vector2f getEndSegment() {
 		return getPointPolygon(polygon.getPointCount() - 1);
 	}
 
@@ -161,19 +250,19 @@ public class Segment extends EntityDragable implements EntityDrawable {
 	 * 
 	 * @return
 	 */
-	public void setStations() {
+	public  void setStations() {
 		for(Station station : Map.getInstance().getStations()){
 			if(station.isOnStation(getStartSegment())){
 				stationDepart = station;
 			}else if(station.isOnStation(getEndSegment())){
 				stationArrival = station;
 			}
-			
+
 		}
-		
+
 	}
 
-	public ArrayList<Vector2f> getPositions() {
+	public  ArrayList<Vector2f> getPositions() {
 		ArrayList<Vector2f> _positions = new ArrayList<>();
 
 		for (int i = 0; i < polygon.getPointCount(); ++i) {
@@ -189,21 +278,21 @@ public class Segment extends EntityDragable implements EntityDrawable {
 	 * 
 	 * @return
 	 */
-	public Segment reverse() {
+	public  Segment reverse() {
 		return new Segment(getEndSegment(), getStartSegment(), lineIndex);
 	}
 
-	public boolean isReverse(Segment _segment) {
+	public  boolean isReverse(Segment _segment) {
 		return hasSameVectors(_segment.reverse());
 
 	}
 
-	public Vector2f getMid() {
+	public  Vector2f getMid() {
 		Line tempLine = new Line(getStartSegment(), getEndSegment());
 		return new Vector2f(tempLine.getCenterX(), tempLine.getCenterY());
 	}
 
-	public Vector2f getAngle() {
+	public  Vector2f getAngle() {
 
 		return calculateAnglePosition(getStartSegment(), getEndSegment());
 
@@ -211,17 +300,9 @@ public class Segment extends EntityDragable implements EntityDrawable {
 
 
 	@Override
-	public void render(Graphics arg2) {
+	public  void render(Graphics arg2) {
 
 		arg2.setAntiAlias(true);
-		Line tempLine;
-	
-		int dxStart = 0;
-		int dyStart = 0;
-		int dxEnd = 0;
-		int dyEnd = 0;
-
-
 
 
 		// permet de centrer les segments si il y a des offsets
@@ -229,111 +310,38 @@ public class Segment extends EntityDragable implements EntityDrawable {
 		arg2.setLineWidth(SEGMENT_THICKNESS);
 		arg2.setColor(Map.getInstance().getLine(lineIndex).getColor());
 
-		Polygon _polygonrender = new Polygon();
-		_polygonrender.setClosed(false);
 
-
-
-		for (int i = 0; i < polygon.getPointCount(); ++i) {
-			// if(polygon.getPoint(i)[0] == polygon.getPoint(i+1)[0] ||
-			// polygon.getPoint(i)[1] == polygon.getPoint(i+1)[1]){
-			_polygonrender.addPoint(polygon.getPoint(i)[0], polygon.getPoint(i)[1]);
-			// }
-
-		} 
-
-		try{
-			tempLine =  new Line(getPositions().get(0), getPositions().get(1));
-
-
-			dxStart = (int) tempLine.getDX();
-			dyStart = (int) tempLine.getDY();
-
-			try{
-				dxStart = Math.abs(dxStart)/dxStart;
-			}catch(ArithmeticException e)
-			{
-
-			}
-			try{
-				dyStart = Math.abs(dyStart)/dyStart;
-			}catch(ArithmeticException e){
-
-			}
-
-			if(Math.abs(dxStart) == 1 && Math.abs(dyStart) == 0){
-				_polygonrender.setLocation(_polygonrender.getX(), _polygonrender.getY() +SEGMENT_THICKNESS*this.getOffset());
-			}
-			if(Math.abs(dxStart) == 0 && Math.abs(dyStart) == 1){
-				_polygonrender.setLocation(_polygonrender.getX()+SEGMENT_THICKNESS*this.getOffset(), _polygonrender.getY());
-			}
-			if(dxStart == dyStart){
-				_polygonrender.setLocation(_polygonrender.getX()+SEGMENT_THICKNESS*this.getOffset(), _polygonrender.getY()-SEGMENT_THICKNESS*this.getOffset());
-			}
-			if(dxStart == -dyStart){
-				_polygonrender.setLocation(_polygonrender.getX()+SEGMENT_THICKNESS*this.getOffset(), _polygonrender.getY()+SEGMENT_THICKNESS*this.getOffset());
-			}
-			
-		if(isFirstinLine()){
-			tempLine = new Line(new Vector2f(_polygonrender.getPoint(0)[0], _polygonrender.getPoint(0)[1]), new Vector2f(_polygonrender.getPoint(0)[0]+ (-2)*dxStart*Map.GRID_SIZE, _polygonrender.getPoint(0)[1]+(-2)*dyStart*Map.GRID_SIZE));
-			arg2.draw(tempLine);
-			arg2.fillOval(_polygonrender.getPoint(0)[0]+ (-2)*dxStart*Map.GRID_SIZE -SEGMENT_THICKNESS, _polygonrender.getPoint(0)[1]+(-2)*dyStart*Map.GRID_SIZE -SEGMENT_THICKNESS, SEGMENT_THICKNESS*2, SEGMENT_THICKNESS*2);
-		}
-
-		}catch(IndexOutOfBoundsException e){
-
-		}
-
-		
-		
-		try{
-			tempLine =  new Line(getPositions().get(_polygonrender.getPointCount()-1), getPositions().get(_polygonrender.getPointCount()-2));
-
-
-			dxEnd = (int) tempLine.getDX();
-			dyEnd = (int) tempLine.getDY();
-
-			try{
-				dxEnd= Math.abs(dxEnd)/dxEnd;
-			}catch(ArithmeticException e)
-			{
-
-			}
-			try{
-				dyEnd = Math.abs(dyEnd)/dyEnd;
-			}catch(ArithmeticException e){
-
-			}
-
-		if(isLastinLine()){
-			tempLine = new Line(new Vector2f(_polygonrender.getPoint(_polygonrender.getPointCount()-1)[0], _polygonrender.getPoint(_polygonrender.getPointCount()-1)[1]), new Vector2f(_polygonrender.getPoint(_polygonrender.getPointCount()-1)[0]+ (-2)*dxEnd*Map.GRID_SIZE, _polygonrender.getPoint(_polygonrender.getPointCount()-1)[1]+(-2)*dyEnd*Map.GRID_SIZE));
-			arg2.draw(tempLine);
-			arg2.fillOval(_polygonrender.getPoint(_polygonrender.getPointCount()-1)[0]+ (-2)*dxEnd*Map.GRID_SIZE -SEGMENT_THICKNESS, _polygonrender.getPoint(_polygonrender.getPointCount()-1)[1]+(-2)*dyEnd*Map.GRID_SIZE -SEGMENT_THICKNESS, SEGMENT_THICKNESS*2, SEGMENT_THICKNESS*2);
-		}
-		}catch(IndexOutOfBoundsException e){
-
-		}
-		
-		
-
+		setPolygonRender();
 		//_polygonrender.setLocation(_polygonrender.getX()+5*this.getOffset(), _polygonrender.getY() +5*this.getOffset());
-		arg2.draw(_polygonrender);
-		
+		arg2.draw(polygonRender);
 
-		
-		for(int i = 0; i<_polygonrender.getPointCount(); ++i){
-		
-			arg2.fillOval(_polygonrender.getPoint(i)[0]-SEGMENT_THICKNESS/2, _polygonrender.getPoint(i)[1] -SEGMENT_THICKNESS/2, SEGMENT_THICKNESS, SEGMENT_THICKNESS);
+		try{
+			if(isFirstinLine()){
+				arg2.fillOval(polygonRender.getPoint(0)[0] -SEGMENT_THICKNESS, polygonRender.getPoint(0)[1] -SEGMENT_THICKNESS, SEGMENT_THICKNESS*2, SEGMENT_THICKNESS*2);
+			}
+		}catch(IndexOutOfBoundsException e){
+
+		}
+		try{
+			if(isLastinLine()){
+				arg2.fillOval(polygonRender.getPoint(polygonRender.getPointCount()-1)[0] -SEGMENT_THICKNESS, polygonRender.getPoint(polygonRender.getPointCount()-1)[1]-SEGMENT_THICKNESS, SEGMENT_THICKNESS*2, SEGMENT_THICKNESS*2);
+			}
+		}catch(IndexOutOfBoundsException e){
+
 		}
 
-		
+		for(int i = 0; i<polygonRender.getPointCount(); ++i){
+
+			arg2.fillOval(polygonRender.getPoint(i)[0]-SEGMENT_THICKNESS/2, polygonRender.getPoint(i)[1] -SEGMENT_THICKNESS/2, SEGMENT_THICKNESS, SEGMENT_THICKNESS);
+		}
+
 		try {
 			Image imgBridges = new Image("asset/bridge.png");
 			Image imgForbidden = new Image("asset/forbidden.png"); 
 			for(Vector2f bridge : bridges){
 				imgBridges.drawFlash(bridge.x - Map.GRID_SIZE + SEGMENT_THICKNESS*this.getOffset(), bridge.y - Map.GRID_SIZE + SEGMENT_THICKNESS*this.getOffset(), Map.GRID_SIZE*2,
 						Map.GRID_SIZE*2, Map.getInstance().getLine(lineIndex).getColor());
-				
+
 				if(forbiddenBridges){
 					imgForbidden.drawFlash(bridge.x - Map.GRID_SIZE + SEGMENT_THICKNESS*this.getOffset(), bridge.y - Map.GRID_SIZE + SEGMENT_THICKNESS*this.getOffset(), Map.GRID_SIZE*2,
 							Map.GRID_SIZE*2, Color.red);
@@ -343,7 +351,7 @@ public class Segment extends EntityDragable implements EntityDrawable {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		
+
 		if (iconPath != null) {
 			Image icon;
 			try {
@@ -373,7 +381,6 @@ public class Segment extends EntityDragable implements EntityDrawable {
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) {
 		super.update(gc, sbg, delta);
 		Input input = gc.getInput();
-
 		if (getRect().contains(input.getMouseX(), input.getMouseY())
 				&& input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON)) {
 
@@ -402,7 +409,7 @@ public class Segment extends EntityDragable implements EntityDrawable {
 	 *            Segment to compare
 	 * @return true if the segment cross the line false if not
 	 */
-	public boolean isCrossing(Segment _segment) {
+	public  boolean isCrossing(Segment _segment) {
 
 		if (this == _segment) {
 			return false;
@@ -440,7 +447,7 @@ public class Segment extends EntityDragable implements EntityDrawable {
 		// System.out.println(_segment.line.getpo);
 	}
 
-	public boolean hasSameVectors(Segment _seg) {
+	public  boolean hasSameVectors(Segment _seg) {
 		if ((_seg.getStartSegment().distance(getStartSegment()) == 0
 				&& _seg.getEndSegment().distance(getEndSegment()) == 0))
 			return true;
@@ -452,9 +459,9 @@ public class Segment extends EntityDragable implements EntityDrawable {
 	 * @param r
 	 * @return
 	 */
-	public ArrayList<Vector2f> intersectsRailway(RailWay r){
+	public  ArrayList<Vector2f> intersectsRailway(RailWay r){
 		ArrayList<Vector2f> intersections = new ArrayList<>();
-		
+
 		Line tempLine1;
 		Line tempLine2;
 		Vector2f intersection;
@@ -462,7 +469,7 @@ public class Segment extends EntityDragable implements EntityDrawable {
 		for (int i = 0; i < polygon.getPointCount() - 1; ++i) {
 			tempLine1 = new Line(new Vector2f(polygon.getPoint(i)[0], polygon.getPoint(i)[1]),
 					new Vector2f(polygon.getPoint(i + 1)[0], polygon.getPoint(i + 1)[1]));
-			 
+
 			for (int j = 0; j < r.plot.getPointCount() - 1; ++j) {
 				tempLine2 = new Line(new Vector2f(r.plot.getPoint(j)[0], r.plot.getPoint(j)[1]),
 						new Vector2f(r.plot.getPoint(j + 1)[0], r.plot.getPoint(j + 1)[1]));
@@ -471,11 +478,11 @@ public class Segment extends EntityDragable implements EntityDrawable {
 				if(intersection != null){
 					intersections.add(intersection);
 				}
-				
+
 			}
 		}
 		return intersections;
-		
+
 	}
 	@Override
 	public boolean equals(Object obj) {
@@ -498,7 +505,7 @@ public class Segment extends EntityDragable implements EntityDrawable {
 
 		return false;
 	}
-	
+
 	public Segment getNextSegment()
 	{	
 		if(line_bus.getSegments().size()-1 >= line_bus.getSegments().indexOf(this)+1){
@@ -509,7 +516,7 @@ public class Segment extends EntityDragable implements EntityDrawable {
 		return null;
 		//return (line_bus.getSegments().indexOf(this)+1) <= ( line_bus.getSegments().size() ) ? line_bus.getSegments().get(line_bus.getSegments().indexOf(this)+1) : null ;
 	}
-	
+
 	public Segment getPreviousSegment()
 	{
 		if(line_bus.getSegments().indexOf(this)-1 >= 0){
@@ -518,7 +525,7 @@ public class Segment extends EntityDragable implements EntityDrawable {
 			return line_bus.getSegment(line_bus.getSegments().size()-1);
 		}
 		return null;
-		
+
 		//return (line_bus.getSegments().indexOf(this)-1) > 0 ? line_bus.getSegments().get(line_bus.getSegments().indexOf(this)+1) : null ;
 	}
 
@@ -614,14 +621,14 @@ public class Segment extends EntityDragable implements EntityDrawable {
 		}
 		return anglePosition;
 	}
-	
+
 	public Vector2f getPosition(int index){
 		return getPositions().get(index);
 	}
-	
+
 	public ArrayList<Vector2f> isBetween(Vector2f position){
 		ArrayList<Vector2f> vects = new ArrayList<>();
-				
+
 		for(int i = 0 ; i < getPositions().size()-1; i++){
 			Line line = new Line(new Vector2f(getPosition(i).x, getPosition(i).y),new Vector2f(getPosition(i+1).x, getPosition(i+1).y));
 			if(line.on(position))
@@ -630,8 +637,8 @@ public class Segment extends EntityDragable implements EntityDrawable {
 				vects.add(new Vector2f(getPosition(i+1).x, getPosition(i+1).y));				
 			}
 		}
-		
+
 		return vects;
 	}
-	
+
 }

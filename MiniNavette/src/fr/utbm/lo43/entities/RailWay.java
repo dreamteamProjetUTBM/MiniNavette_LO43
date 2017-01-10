@@ -14,7 +14,7 @@ import fr.utbm.lo43.logic.Map;
 /**
  * Classe RailWay
  * 
- * A la manière des rivières dans mini metro, les voix ferrées représentent des obstacles
+ * A la maniï¿½re des riviï¿½res dans mini metro, les voix ferrï¿½es reprï¿½sentent des obstacles
  * que les lignes ne peuvent traverser qu'avec des ponts
  * @author Thomas Gredin
  *
@@ -22,17 +22,17 @@ import fr.utbm.lo43.logic.Map;
 public class RailWay extends Entity implements EntityDrawable
 {
 	/**
-	 * Tracé de la voie ferrée
+	 * Tracï¿½ de la voie ferrï¿½e
 	 */
 	protected Polygon plot;
 	
 	/**
-	 * Largeur du tracé
+	 * Largeur du tracï¿½
 	 */
 	private static final float RAILWAY_THICKNESS = 5;
 	
 	/**
-	 * La couleur du tracé
+	 * La couleur du tracï¿½
 	 */
 	private Color color;
 	
@@ -49,7 +49,7 @@ public class RailWay extends Entity implements EntityDrawable
 		int startX = 0;
 		int startY = 0;
 		
-		/* Déterminer si on part d'un plan horizontal ou vertical */
+		/* Dï¿½terminer si on part d'un plan horizontal ou vertical */
 		Random random = new Random();
 		if(random.nextInt(2) == 0)
 		{
@@ -97,15 +97,19 @@ public class RailWay extends Entity implements EntityDrawable
 	
 	/**
 	 * Permet de savoir si une autre instance de la classe shape est en collision
-	 * avec la voie ferrée
-	 * @param _shape la forme à vérifier
-	 * @return vrai si il y à collision et faux si ce n'est pas le cas
+	 * avec la voie ferrï¿½e
+	 * @param _shape la forme ï¿½ vï¿½rifier
+	 * @return vrai si il y ï¿½ collision et faux si ce n'est pas le cas
 	 */
 	public boolean intersects(Shape _shape)
 	{
 		return plot.intersects(_shape);
 	}
 
+	
+	public boolean isOnRailWay(Vector2f _vector){
+		return plot.contains(_vector.x, _vector.y);
+	}
 
 	
 }

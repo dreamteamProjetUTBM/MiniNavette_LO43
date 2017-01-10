@@ -11,7 +11,7 @@ import org.newdawn.slick.geom.Vector2f;
 
 import fr.utbm.lo43.logic.Map;
 
-public abstract class Bus extends EntityDragable implements EntityDrawable, EntityUpdateable
+public abstract class Bus extends EntityDragable implements EntityDrawable, EntityUpdateable, Runnable
 {
 	protected Polygon polygon;
 
@@ -19,10 +19,10 @@ public abstract class Bus extends EntityDragable implements EntityDrawable, Enti
 	protected boolean direction;
 //	protected Station[] listStation;
 	//protected float segmentProgress;
-	List<Passenger> passengers ; 
-	Segment currentSegment ;
-	protected Color color;
-	ArrayList<Image> passenger_images;
+	protected volatile List<Passenger> passengers ; 
+	protected volatile Segment currentSegment ;
+	protected volatile Color color;
+	protected volatile ArrayList<Image> passenger_images;
 	
 	public Bus(Vector2f _position, Color _color) 
 	{
@@ -40,7 +40,7 @@ public abstract class Bus extends EntityDragable implements EntityDrawable, Enti
 		polygon.addPoint(_position.x-Map.GRID_SIZE/2, _position.y-Map.GRID_SIZE*0.75f);
 	}
 	
-	public abstract void move();
+	protected abstract void move();
 	
 	
 	
@@ -56,9 +56,17 @@ public abstract class Bus extends EntityDragable implements EntityDrawable, Enti
 	{
 
 		System.out.println("Bus.load");
+		
+		try {
+			Thread.sleep(500/Map.getInstance().gameSpeed);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		ArrayList<Station> nextStops = Map.getInstance().getNextStops(this, station);
 		
-		ArrayList<Passenger> copy = new ArrayList<Passenger>(station.waitingPassenger);
+		ArrayList<Passenger> copy = new ArrayList<Passenger>(station.getWaitingPassenger());
 		
 		for(Passenger passenger : copy)
 		{
@@ -68,7 +76,14 @@ public abstract class Bus extends EntityDragable implements EntityDrawable, Enti
 				return;
 			}
 			passenger.busArrived(this,station,nextStops);
+			try {
+				Thread.sleep(500/Map.getInstance().gameSpeed);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
+		System.out.println("end Bus.load");
 
 	}
 	
@@ -77,15 +92,28 @@ public abstract class Bus extends EntityDragable implements EntityDrawable, Enti
 	public void unload(Station station)
 	{
 		System.out.println("Bus.unload");
-
-		ArrayList<Passenger> copy = new ArrayList<Passenger>(passengers);
 		
+		try {
+			Thread.sleep(500/Map.getInstance().gameSpeed);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+			
+			ArrayList<Passenger> copy = new ArrayList<Passenger>(passengers);
+	
 		for(Passenger passenger : copy)
 		{
 			if(passenger.nextStop==station)
 			{
 				passenger.leaveBus(station);
 				removePassenger(passenger);
+				try {
+					Thread.sleep(500/Map.getInstance().gameSpeed);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		}
 		
@@ -94,12 +122,18 @@ public abstract class Bus extends EntityDragable implements EntityDrawable, Enti
 	
 	public boolean takeTheBus(Passenger passenger)
 	{
-		if(passengers.size() <= capacity)
-		{
-			passengers.add(passenger);
-			return true;
+		synchronized(passengers){
+			if(passengers.size() <= capacity)
+			{
+				synchronized(passengers)
+				{		
+					passengers.add(passenger);
+				}
+				return true;
+			}
+			return false;
+			
 		}
-		return false;
 	}
 	
 
@@ -110,14 +144,13 @@ public abstract class Bus extends EntityDragable implements EntityDrawable, Enti
 		else currentSegment = direction ? currentSegment.getNextSegment() : currentSegment.getPreviousSegment();
 	}
 	
-	private void updateNextStation()
-	{
-		
-	}
 	
 	protected void removePassenger(Passenger passenger)
 	{
-		passengers.remove(passenger);	
+		synchronized(passengers)
+		{		
+			passengers.remove(passenger);	
+		}
 	}
 	
 	private void changeDirection()
@@ -129,4 +162,14 @@ public abstract class Bus extends EntityDragable implements EntityDrawable, Enti
 	{
 		return  direction ? currentSegment.getNextSegment()==null : currentSegment.getPreviousSegment()==null;
 	}
+	
+	public synchronized boolean isEmpty()
+	{
+		synchronized(passengers){
+			return this.passengers.size() <=0 ;
+		}
+	}
+	
+	
+	
 }
