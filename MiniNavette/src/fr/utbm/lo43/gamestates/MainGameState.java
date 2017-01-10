@@ -22,6 +22,7 @@ import fr.utbm.lo43.entities.Entity;
 import fr.utbm.lo43.entities.EntityCollection;
 import fr.utbm.lo43.entities.EventEntityMouseClicked;
 import fr.utbm.lo43.entities.Label;
+import fr.utbm.lo43.entities.Passenger;
 import fr.utbm.lo43.entities.RailWay;
 import fr.utbm.lo43.entities.Segment;
 import fr.utbm.lo43.entities.Station;
@@ -231,6 +232,7 @@ public class MainGameState extends BasicGameState {
 			if(_entity.getClass() == ClassicBus.class){
 				ClassicBus _tmp = (ClassicBus) _entity;
 				if(_tmp.canBeRemove()){
+					
 					if(entities.deleteObject(_tmp))
 						game.getInventory().setRemainingBus(1);
 				}

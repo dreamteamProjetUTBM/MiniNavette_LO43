@@ -84,7 +84,7 @@ public abstract class Bus extends EntityDragable implements EntityDrawable, Enti
 		{
 			if(passenger.nextStop==station)
 			{
-				passenger.leaveBus(station);;
+				passenger.leaveBus(station);
 				removePassenger(passenger);
 			}
 		}
@@ -115,7 +115,7 @@ public abstract class Bus extends EntityDragable implements EntityDrawable, Enti
 		
 	}
 	
-	private void removePassenger(Passenger passenger)
+	protected void removePassenger(Passenger passenger)
 	{
 		passengers.remove(passenger);	
 	}

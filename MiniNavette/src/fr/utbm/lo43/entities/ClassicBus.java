@@ -74,6 +74,8 @@ public class ClassicBus extends Bus
 	}
 	
 	public boolean canBeRemove(){
+		
+		
 		return canBeRemove;
 	}
 	
@@ -152,6 +154,18 @@ public class ClassicBus extends Bus
 						System.out.println("Bus a maintenant "+ passengers.size() + " passager(s).");
 					
 						if(lock){
+							
+							ArrayList<Passenger> copy = new ArrayList<Passenger>(passengers);
+							
+							for(Passenger passenger : copy)
+							{
+						
+									passenger.leaveBus(station);
+									removePassenger(passenger);
+							
+								
+							}
+							
 							canBeRemove = true;
 							return;
 						}
