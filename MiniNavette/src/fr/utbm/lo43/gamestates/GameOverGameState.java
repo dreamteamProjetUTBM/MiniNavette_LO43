@@ -1,5 +1,6 @@
 package fr.utbm.lo43.gamestates;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -11,7 +12,9 @@ import org.newdawn.slick.state.StateBasedGame;
 import fr.utbm.lo43.GameWindow;
 import fr.utbm.lo43.entities.Button;
 import fr.utbm.lo43.entities.EventEntityMouseClicked;
+import fr.utbm.lo43.entities.Label;
 import fr.utbm.lo43.logic.Map;
+import fr.utbm.lo43.logic.Score;
 
 public class GameOverGameState extends BasicGameState 
 {
@@ -19,6 +22,8 @@ public class GameOverGameState extends BasicGameState
 	
 	private Button btn_menu;
 	private Button btn_restart;
+	
+	private Label score_label;
 	
 	@Override
 	public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException 
@@ -62,6 +67,9 @@ public class GameOverGameState extends BasicGameState
 				}
 			}
 		});
+		
+		score_label = new Label("" + Score.getInstance().getScore(), new Vector2f(75, Map.HEIGHT - Map.GRID_SIZE / 1.1f));
+		score_label.setColor(Color.black);
 	}
 
 	@Override
@@ -71,6 +79,8 @@ public class GameOverGameState extends BasicGameState
 		
 		btn_menu.render(arg2);
 		btn_restart.render(arg2);
+		
+		score_label.render(arg2);
 	}
 
 	@Override
