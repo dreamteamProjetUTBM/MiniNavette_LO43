@@ -231,6 +231,8 @@ public class MainGameState extends BasicGameState {
 		
 		
 		Random rand = new Random();
+		
+		Map.getInstance().gameSpeed = (int) (gameSpeed_slider.getValue()/100*Map.GAMESPEED_MAX +1);
 		counter += arg2*game.map.gameSpeed;
 		counterStation += arg2*game.map.gameSpeed;
 		
