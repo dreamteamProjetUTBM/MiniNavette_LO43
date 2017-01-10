@@ -25,6 +25,7 @@ import fr.utbm.lo43.entities.Label;
 import fr.utbm.lo43.entities.Passenger;
 import fr.utbm.lo43.entities.RailWay;
 import fr.utbm.lo43.entities.Segment;
+import fr.utbm.lo43.entities.Slider;
 import fr.utbm.lo43.entities.Station;
 import fr.utbm.lo43.entities.ToggledButton;
 import fr.utbm.lo43.logic.ClassicLine;
@@ -49,6 +50,8 @@ public class MainGameState extends BasicGameState {
 	private Label bus_label;
 	private Label bridge_label;
 	private Label score_label;
+	
+	private Slider gameSpeed_slider;
 
 	int current_line;
 
@@ -159,6 +162,9 @@ public class MainGameState extends BasicGameState {
 				bus_button.setToggled(!bus_button.getToggled());
 			}
 		});
+		
+		gameSpeed_slider = new Slider(new Vector2f());
+		
 		entities.add(bus_button);
 		entities.add(bus_label);
 		entities.add(bridge_label);

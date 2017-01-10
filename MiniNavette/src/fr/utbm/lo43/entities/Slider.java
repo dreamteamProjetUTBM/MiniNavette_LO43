@@ -41,7 +41,7 @@ public class Slider extends EntityClickable implements EntityDrawable
 		);
 		
 		isSliding = false;
-		color = Color.blue;
+		color = Color.black;
 	}
 
 	@Override
@@ -103,5 +103,14 @@ public class Slider extends EntityClickable implements EntityDrawable
 		percentage /= (slider.getMaxX() - position.x);
 		
 		return percentage;
+	}
+	
+	/**
+	 * Permet de modifier la couleur de rendu du slider
+	 * @param _color nouvelle couleur
+	 */
+	public void setColor(Color _color)
+	{
+		color = _color;
 	}
 }
