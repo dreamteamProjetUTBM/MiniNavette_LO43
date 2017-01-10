@@ -20,13 +20,13 @@ import fr.utbm.lo43.logic.Map;
 public class Segment extends EntityDragable implements EntityDrawable {
 
 	public static final float SEGMENT_THICKNESS = 5;
-	private Polygon polygon;
-	private Polygon polygonRender;
-	private ArrayList<Vector2f> bridges;
-	private Station stationDepart;
-	private Station stationArrival;
+	private volatile Polygon polygon;
+	private volatile Polygon polygonRender;
+	private volatile ArrayList<Vector2f> bridges;
+	private volatile Station stationDepart;
+	private volatile Station stationArrival;
 
-	private String iconPath;
+	private volatile String iconPath;
 	// Line de Slick2D
 	Line line;
 	fr.utbm.lo43.logic.Line line_bus;
@@ -86,7 +86,7 @@ public class Segment extends EntityDragable implements EntityDrawable {
 	}
 
 
-	public int getOffset(){
+	public synchronized int getOffset(){
 		int offset = 0;
 		for (int i = lineIndex; i < Map.getInstance().getLines().size(); i++) {
 			fr.utbm.lo43.logic.Line _line = Map.getInstance().getLine(i);
@@ -108,7 +108,7 @@ public class Segment extends EntityDragable implements EntityDrawable {
 		return offset;
 	}
 
-	public void setPolygonRender(){
+	public synchronized void setPolygonRender(){
 		Line tempLine;
 
 		int dxStart = 0;
@@ -202,17 +202,17 @@ public class Segment extends EntityDragable implements EntityDrawable {
 		this.forbiddenBridges = forbiddenBridges;
 	}
 
-	public Station getStationDepart() {
+	public synchronized Station getStationDepart() {
 		return stationDepart;
 	}
 
 
 
-	public Station getStationArrival() {
+	public synchronized Station getStationArrival() {
 		return stationArrival;
 	}
 
-	public ArrayList<Vector2f> getBridges() {
+	public synchronized ArrayList<Vector2f> getBridges() {
 		return bridges;
 	}
 
@@ -220,7 +220,7 @@ public class Segment extends EntityDragable implements EntityDrawable {
 		iconPath = imgPath;
 	}
 
-	public Vector2f getPointPolygon(int index) {
+	public synchronized Vector2f getPointPolygon(int index) {
 		return new Vector2f(polygon.getPoint(index)[0], polygon.getPoint(index)[1]);
 	}
 
@@ -229,15 +229,15 @@ public class Segment extends EntityDragable implements EntityDrawable {
 	 * 
 	 * @return
 	 */
-	public int getLineIndex() {
+	public synchronized int getLineIndex() {
 		return lineIndex;
 	}
 
-	public Vector2f getStartSegment() {
+	public synchronized Vector2f getStartSegment() {
 		return getPointPolygon(0);
 	}
 
-	public Vector2f getEndSegment() {
+	public synchronized Vector2f getEndSegment() {
 		return getPointPolygon(polygon.getPointCount() - 1);
 	}
 
@@ -246,7 +246,7 @@ public class Segment extends EntityDragable implements EntityDrawable {
 	 * 
 	 * @return
 	 */
-	public void setStations() {
+	public synchronized void setStations() {
 		for(Station station : Map.getInstance().getStations()){
 			if(station.isOnStation(getStartSegment())){
 				stationDepart = station;
@@ -258,7 +258,7 @@ public class Segment extends EntityDragable implements EntityDrawable {
 
 	}
 
-	public ArrayList<Vector2f> getPositions() {
+	public synchronized ArrayList<Vector2f> getPositions() {
 		ArrayList<Vector2f> _positions = new ArrayList<>();
 
 		for (int i = 0; i < polygon.getPointCount(); ++i) {
@@ -274,21 +274,21 @@ public class Segment extends EntityDragable implements EntityDrawable {
 	 * 
 	 * @return
 	 */
-	public Segment reverse() {
+	public synchronized Segment reverse() {
 		return new Segment(getEndSegment(), getStartSegment(), lineIndex);
 	}
 
-	public boolean isReverse(Segment _segment) {
+	public synchronized boolean isReverse(Segment _segment) {
 		return hasSameVectors(_segment.reverse());
 
 	}
 
-	public Vector2f getMid() {
+	public synchronized Vector2f getMid() {
 		Line tempLine = new Line(getStartSegment(), getEndSegment());
 		return new Vector2f(tempLine.getCenterX(), tempLine.getCenterY());
 	}
 
-	public Vector2f getAngle() {
+	public synchronized Vector2f getAngle() {
 
 		return calculateAnglePosition(getStartSegment(), getEndSegment());
 
@@ -296,7 +296,7 @@ public class Segment extends EntityDragable implements EntityDrawable {
 
 
 	@Override
-	public void render(Graphics arg2) {
+	public synchronized void render(Graphics arg2) {
 
 		arg2.setAntiAlias(true);
 
@@ -364,17 +364,17 @@ public class Segment extends EntityDragable implements EntityDrawable {
 
 	}
 
-	public boolean isFirstinLine() {
+	public synchronized boolean isFirstinLine() {
 		return Map.getInstance().getLines().get(lineIndex).getSegments().get(0) == this;
 	}
 
-	public boolean isLastinLine() {
+	public synchronized boolean isLastinLine() {
 		return Map.getInstance().getLines().get(lineIndex).getSegments()
 				.get(Map.getInstance().getLines().get(lineIndex).getSegments().size() - 1) == this;
 	}
 
 	@Override
-	public void update(GameContainer gc, StateBasedGame sbg, int delta) {
+	public synchronized void update(GameContainer gc, StateBasedGame sbg, int delta) {
 		super.update(gc, sbg, delta);
 		Input input = gc.getInput();
 		if (getRect().contains(input.getMouseX(), input.getMouseY())
@@ -405,7 +405,7 @@ public class Segment extends EntityDragable implements EntityDrawable {
 	 *            Segment to compare
 	 * @return true if the segment cross the line false if not
 	 */
-	public boolean isCrossing(Segment _segment) {
+	public synchronized boolean isCrossing(Segment _segment) {
 
 		if (this == _segment) {
 			return false;
@@ -443,7 +443,7 @@ public class Segment extends EntityDragable implements EntityDrawable {
 		// System.out.println(_segment.line.getpo);
 	}
 
-	public boolean hasSameVectors(Segment _seg) {
+	public synchronized boolean hasSameVectors(Segment _seg) {
 		if ((_seg.getStartSegment().distance(getStartSegment()) == 0
 				&& _seg.getEndSegment().distance(getEndSegment()) == 0))
 			return true;
@@ -455,7 +455,7 @@ public class Segment extends EntityDragable implements EntityDrawable {
 	 * @param r
 	 * @return
 	 */
-	public ArrayList<Vector2f> intersectsRailway(RailWay r){
+	public synchronized ArrayList<Vector2f> intersectsRailway(RailWay r){
 		ArrayList<Vector2f> intersections = new ArrayList<>();
 
 		Line tempLine1;

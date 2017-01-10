@@ -24,7 +24,7 @@ public class ClassicBus extends Bus
 {	
 	
 	//Le bus navigue entre ces deux vecteurs
-	private Vector2f start,end;
+	private volatile Vector2f start,end;
 	//Direction du bus
 	int local_direction = -1;
 	
@@ -342,7 +342,7 @@ public class ClassicBus extends Bus
 	}
 
 	@Override
-	public void  update(GameContainer gc, StateBasedGame sbg,int delta) {
+	public synchronized void  update(GameContainer gc, StateBasedGame sbg,int delta) {
 		
 		super.update(gc, sbg,delta);
 		
@@ -407,7 +407,7 @@ public class ClassicBus extends Bus
 	}
 	
 	@Override
-	public boolean equals(Object obj) {
+	public synchronized boolean equals(Object obj) {
 		// TODO Auto-generated method stub
 		//return super.equals(obj);
 		
