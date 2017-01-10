@@ -65,7 +65,7 @@ public class ClassicBus extends Bus
 		polygon = (Polygon) polygon.transform(Transform.createRotateTransform((float) Math.toRadians(-getAngle()),getPosition().x,getPosition().y));
 
 		
-		//Determine le sens pour aller à la station la plus proche
+		/*//Determine le sens pour aller à la station la plus proche
 		if(currentSegment.getEndSegment().distance(getPosition()) > currentSegment.getStartSegment().distance(getPosition())){
 			if(currentSegment.getStartSegment().x > getPosition().x)
 				local_direction = 1;
@@ -81,7 +81,7 @@ public class ClassicBus extends Bus
 				local_direction = 1;
 			else
 				local_direction = -1;
-		}
+		}*/
 		
 	}
 	
