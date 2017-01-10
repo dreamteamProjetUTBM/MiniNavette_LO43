@@ -154,15 +154,12 @@ public class ClassicBus extends Bus
 
 					if(station.isOnStation(endpoint)){
 						
-						/*
-						 * ROGER ICI
-						 */
-						//station.notifyBus(this);
 
 						System.out.println("Bus a maintenant "+ passengers.size() + " passager(s).");
 					
 						if(lock){
-							
+
+							System.out.println("LOCK.");
 							ArrayList<Passenger> copy = new ArrayList<Passenger>(passengers);
 							
 							for(Passenger passenger : copy)

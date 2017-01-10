@@ -33,7 +33,7 @@ public class Station extends EntityClickable implements EntityDrawable, Dijkstra
 	public static final int CRITICAL_PASSENGER = 6;	
 	private int waitedTime ;
 
-	private static final int MAX_WAITING_TIME = 30;
+	private static final int MAX_WAITING_TIME = 1130;
 	private static final int BONUS_WAITING_TIME = 15;
 	
 	private volatile Image preview;
@@ -294,7 +294,7 @@ public class Station extends EntityClickable implements EntityDrawable, Dijkstra
 		// TODO Auto-generated method stub
 		super.update(gc, sbg,delta);
 		
-		cpt+=delta ;
+		cpt+=delta/Map.getInstance().gameSpeed ;
 		if(cpt>1000){
 			if(isCriticalPassenger()){
 				waitedTime ++; 
