@@ -64,6 +64,8 @@ public class ClassicBus extends Bus
 		theta = getAngle();
 		polygon = (Polygon) polygon.transform(Transform.createRotateTransform((float) Math.toRadians(-getAngle()),getPosition().x,getPosition().y));
 
+		
+		//Determine le sens pour aller à la station la plus proche
 		if(currentSegment.getEndSegment().distance(getPosition()) > currentSegment.getStartSegment().distance(getPosition())){
 			if(currentSegment.getStartSegment().x > getPosition().x)
 				local_direction = 1;
@@ -85,6 +87,10 @@ public class ClassicBus extends Bus
 	
 	public synchronized boolean canBeRemove(){
 		return canBeRemove;
+	}
+	
+	public synchronized void setCanBeRemove(boolean value){
+		canBeRemove = value;
 	}
 	
 	public synchronized boolean isLock(){
@@ -264,6 +270,14 @@ public class ClassicBus extends Bus
 	public  void  update(GameContainer gc, StateBasedGame sbg,int delta) {
 		
 		super.update(gc, sbg,delta);
+		
+		Input input = gc.getInput();
+
+		if(input.isMousePressed(input.MOUSE_RIGHT_BUTTON)){
+			if(isLock())
+				setCanBeRemove(true);
+			setLock(true);
+		}
 		
 		cpt += delta;
 		if(cpt >15 && !isGrabed)
