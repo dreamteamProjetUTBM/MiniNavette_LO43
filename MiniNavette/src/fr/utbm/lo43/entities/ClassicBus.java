@@ -146,7 +146,7 @@ public class ClassicBus extends Bus
 			lock = true;
 		
 		for (Vector2f endpoint : currentSegment.getPositions()) {
-			if(endpoint.distance(getPosition()) == 0){
+			if(endpoint.distance(getPosition()) == 0 && (endpoint.equals(currentSegment.getEndSegment()) || endpoint.equals(currentSegment.getStartSegment()))){
 				//Alors on est arrivé soit dans une station soit à la fin d'une partie du segment
 				for (Station station : Map.getInstance().getStations()) {
 					if(station.isOnStation(endpoint)){
