@@ -151,15 +151,15 @@ public class Station extends EntityClickable implements EntityDrawable, Dijkstra
 		{
 			if(waitedTime >= MAX_WAITING_TIME + BONUS_WAITING_TIME)
 			{
-				System.out.println("Perdu !! Les passagers ont attendu "+ waitedTime + "secondes");
+				//System.out.println("Perdu !! Les passagers ont attendu "+ waitedTime + "secondes");
 			}
-			else System.out.println("Attention, une station est en état critique : "+ ( MAX_WAITING_TIME + BONUS_WAITING_TIME- waitedTime)+ " secondes avant la défaite");
+			//else System.out.println("Attention, une station est en état critique : "+ ( MAX_WAITING_TIME + BONUS_WAITING_TIME- waitedTime)+ " secondes avant la défaite");
 		}else{
 			if(waitedTime >= MAX_WAITING_TIME)
 			{
-				System.out.println("Perdu !! Les passagers ont attendu "+ waitedTime + "secondes");
+				//System.out.println("Perdu !! Les passagers ont attendu "+ waitedTime + "secondes");
 			}
-			else System.out.println("Attention, une station est en état critique : "+ ( MAX_WAITING_TIME - waitedTime)+ " secondes avant la défaite");
+			//else System.out.println("Attention, une station est en état critique : "+ ( MAX_WAITING_TIME - waitedTime)+ " secondes avant la défaite");
 		}
 	}
 	
@@ -192,7 +192,20 @@ public class Station extends EntityClickable implements EntityDrawable, Dijkstra
 	
 	public void enterStation(Passenger passenger)
 	{
-		waitingPassenger.add(passenger);
+		if(waitingPassenger.add(passenger))
+		{
+			for(Passenger p : waitingPassenger)
+			{
+				float offsetX = waitingPassenger.indexOf(p)%4;
+				p.setPosition(
+						new Vector2f(
+								getPosition().x + offsetX * Map.GRID_SIZE/2,
+								//getPosition().y + waitingPassenger.size()/4 * Map.GRID_SIZE*1.5f
+								getPosition().y + waitingPassenger.indexOf(p)/4 * Map.GRID_SIZE/2
+						)
+				);
+			}
+		}
 	}
 	
 	public void leaveStation(Passenger passenger)
@@ -202,11 +215,12 @@ public class Station extends EntityClickable implements EntityDrawable, Dijkstra
 		{
 			for(Passenger p : waitingPassenger)
 			{
-				float offsetX = waitingPassenger.size()%4;
+				float offsetX = waitingPassenger.indexOf(p)%4;
 				p.setPosition(
 						new Vector2f(
 								getPosition().x + offsetX * Map.GRID_SIZE/2,
-								getPosition().y + waitingPassenger.size()/4 * Map.GRID_SIZE*1.5f
+								//getPosition().y + waitingPassenger.size()/4 * Map.GRID_SIZE*1.5f
+								getPosition().y + waitingPassenger.indexOf(p)/4 * Map.GRID_SIZE/2
 						)
 				);
 			}

@@ -62,7 +62,7 @@ public abstract class Bus extends EntityDragable implements EntityDrawable, Enti
 		
 		for(Passenger passenger : copy)
 		{
-			System.out.println("passenger � charger !!!!!!!!!!!!! ==> " + copy.size());
+			//System.out.println("passenger � charger !!!!!!!!!!!!! ==> " + copy.size());
 			if(passengers.size() >= capacity)
 			{
 				return;
