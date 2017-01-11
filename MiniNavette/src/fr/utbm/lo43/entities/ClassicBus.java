@@ -116,7 +116,13 @@ public class ClassicBus extends Bus
 	public synchronized void render(Graphics arg2) 
 	
 	{
-		arg2.setColor(color);
+		Color colorTemp = new Color(color);
+		if(lock){
+			colorTemp.a = 0.75f;
+		}
+		arg2.setColor(colorTemp);
+		
+
 		arg2.fill(polygon);
 		arg2.draw(polygon);
 		
@@ -153,8 +159,6 @@ public class ClassicBus extends Bus
 
 					
 						if(lock){
-
-							System.out.println("LOCK.");
 							
 							ArrayList<Passenger> copy = new ArrayList<Passenger>(passengers);
 							
