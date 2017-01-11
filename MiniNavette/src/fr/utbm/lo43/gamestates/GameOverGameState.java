@@ -86,6 +86,8 @@ public class GameOverGameState extends BasicGameState
 	@Override
 	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException 
 	{
+		score_label.setText("" + Score.getInstance().getScore());
+		
 		btn_menu.update(arg0, arg1, arg2);
 		btn_restart.update(arg0, arg1, arg2);
 	}
