@@ -31,17 +31,23 @@ public class Station extends EntityClickable implements EntityDrawable, Dijkstra
 	protected volatile Filiere filiere;
 	public static final int MAXIMUM_PASSENGER = 8;
 	public static final int CRITICAL_PASSENGER = 6;	
-	private int waitedTime ;
+	private float waitedTime ;
 
+<<<<<<< HEAD
 	private static final int MAX_WAITING_TIME = 1130;
 	private static final int BONUS_WAITING_TIME = 15;
+=======
+	private static final float MAX_WAITING_TIME = 30;
+	private static final float BONUS_WAITING_TIME = 15;
+>>>>>>> 55941917aebbad05f0c95a51ca4dd5432cb412d9
 	
 	private volatile Image preview;
 		
 	private  boolean alcoolized;
 	
+	private CamembertCounter camembert;
 	//Compteur pour le temps depuis le dernier appel de update
-	private int cpt = 0;
+	private float cpt = 0;
 	
 	private volatile List<Passenger> waitingPassenger;
 	
@@ -68,6 +74,7 @@ public class Station extends EntityClickable implements EntityDrawable, Dijkstra
 		size.x = Map.GRID_SIZE*2;
 		size.y = Map.GRID_SIZE*2;
 		
+		camembert = new CamembertCounter(new Vector2f(getPosition().x ,getPosition().y), Map.getInstance().GRID_SIZE*2);
 		drawable = true;
 	}
 	
@@ -115,7 +122,7 @@ public class Station extends EntityClickable implements EntityDrawable, Dijkstra
 	/**
 	 * Permet de remplir la HashMap nextStop
 	 */
-	public synchronized void setNextStop(DijkstraPathfinding<Station> pathfinding){
+	public void setNextStop(DijkstraPathfinding<Station> pathfinding){
 		nextStop = new HashMap<>();
 		Path<Station> shortestPath;
 		Station tempStation;
@@ -131,8 +138,8 @@ public class Station extends EntityClickable implements EntityDrawable, Dijkstra
 
 					if((shortestPath.getWeight()<minDistance || minDistance == -1) && shortestPath.getWeight()!=-1){
 						minDistance = shortestPath.getWeight();
+						//tempStation = s.getNextConnection(shortestPath);
 						tempStation = shortestPath.get(0);
-					
 					}
 					
 					
@@ -142,6 +149,43 @@ public class Station extends EntityClickable implements EntityDrawable, Dijkstra
 			
 		}
 		
+	}
+	
+	/**
+	 * Retourne la premiere correspondance dans un path de stations
+	 * @param shortestPath
+	 * @return
+	 */
+	public Station getNextConnection(Path<Station> shortestPath){
+		
+		if(shortestPath.getElements().get(0)==null){
+			return null;
+		}
+		
+		ArrayList<Line> lineInCommon = new ArrayList<>(this.getLines());
+		lineInCommon.retainAll(shortestPath.getElements().get(0).getLines());
+		for(int i = 1; i<shortestPath.getElements().size();++i){
+			lineInCommon.retainAll(shortestPath.getElements().get(i).getLines());
+			if(lineInCommon.size() == 0){
+				return shortestPath.getElements().get(i-1);
+			}
+		}
+
+		return shortestPath.getElements().get(shortestPath.getElements().size()-1);
+		
+	}
+	
+	
+	
+	public ArrayList<Line> getLines(){
+		ArrayList<Line> lines = new ArrayList<>();
+		for(Line l : Map.getInstance().getLines()){
+			if(l.getStations().contains(this)){
+				lines.add(l);
+			}
+		}
+		
+		return lines;
 	}
 	
 	public synchronized boolean canAddPassenger(){
@@ -164,22 +208,27 @@ public class Station extends EntityClickable implements EntityDrawable, Dijkstra
 
 		if(this.alcoolized)
 		{
+			
 			if(waitedTime >= MAX_WAITING_TIME + BONUS_WAITING_TIME)
 			{
 				Game.setGameOver(true);
 				System.out.println("Perdu !! Les passagers ont attendu "+ waitedTime + "secondes");
 			}
 			else System.out.println("Attention, une station est en état critique : "+ ( MAX_WAITING_TIME + BONUS_WAITING_TIME- waitedTime)+ " secondes avant la défaite");
+			camembert.setPercentage(waitedTime*100/MAX_WAITING_TIME + BONUS_WAITING_TIME);
 		}
 		else
 		{
+			
 			if(waitedTime >= MAX_WAITING_TIME)
 			{
 				Game.setGameOver(true);
 				System.out.println("Perdu !! Les passagers ont attendu "+ waitedTime + "secondes");
 			}
 			else System.out.println("Attention, une station est en état critique : "+ ( MAX_WAITING_TIME - waitedTime)+ " secondes avant la défaite");
+			
 		}
+		
 	}
 	
 	public synchronized void alcoolise()
@@ -275,32 +324,57 @@ public class Station extends EntityClickable implements EntityDrawable, Dijkstra
 	@Override
 	public void render(Graphics arg2) {
 		// TODO Auto-generated method stub
+	
 		arg2.setColor(Color.darkGray);
 		arg2.setLineWidth(1);
 		Rectangle rec = new Rectangle(getRect().getX(), getRect().getY(), getRect().getWidth(), getRect().getHeight());
 		arg2.setColor(new Color(238,238,238));
 		arg2.fill(rec);
 		arg2.draw(rec);
+		
+		float offset = 0;
+		arg2.setLineWidth(4);
+		for(Line l : Map.getInstance().getLines()){
+			if(l.getStations().contains(this)){
+				arg2.setColor(l.getColor());
+				arg2.drawRect(getRect().getX()-offset*arg2.getLineWidth()/2, getRect().getY()-offset*arg2.getLineWidth()/2, getRect().getWidth()+offset*arg2.getLineWidth(), getRect().getHeight()+offset*arg2.getLineWidth());
+				offset = offset + 2;
+			}
+		}
+		arg2.setLineWidth(1);
+		arg2.setColor(Color.darkGray);
 		preview.draw(getPosition().x+Map.GRID_SIZE/2,getPosition().y+Map.GRID_SIZE/2,Map.GRID_SIZE,Map.GRID_SIZE);
 		synchronized(waitingPassenger){
 			for (Passenger passenger : waitingPassenger) {
 				passenger.render(arg2);
 			}
 		}
+		camembert.render(arg2);
 	}
 	
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) {
 		// TODO Auto-generated method stub
 		super.update(gc, sbg,delta);
+<<<<<<< HEAD
 		
 		cpt+=delta/Map.getInstance().gameSpeed ;
+=======
+		float cptCamembert;
+		cpt+=delta ;
+		if(waitedTime == 0){
+			cptCamembert = 0;
+		}else{
+			cptCamembert = cpt;
+		}
+		camembert.setPercentage((waitedTime+cptCamembert/1000)*100/MAX_WAITING_TIME);
+>>>>>>> 55941917aebbad05f0c95a51ca4dd5432cb412d9
 		if(cpt>1000){
 			if(isCriticalPassenger()){
 				waitedTime ++; 
 				checkWaitingTime();
 			}else{
-				if(waitedTime >= 0 ) waitedTime --;
+				if(waitedTime > 0 ) waitedTime --;
 			}
 			cpt = 0;
 		}
