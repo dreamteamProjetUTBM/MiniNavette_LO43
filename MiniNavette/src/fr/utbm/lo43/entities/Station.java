@@ -31,17 +31,18 @@ public class Station extends EntityClickable implements EntityDrawable, Dijkstra
 	protected volatile Filiere filiere;
 	public static final int MAXIMUM_PASSENGER = 8;
 	public static final int CRITICAL_PASSENGER = 6;	
-	private int waitedTime ;
+	private float waitedTime ;
 
-	private static final int MAX_WAITING_TIME = 30;
-	private static final int BONUS_WAITING_TIME = 15;
+	private static final float MAX_WAITING_TIME = 30;
+	private static final float BONUS_WAITING_TIME = 15;
 	
 	private volatile Image preview;
 		
 	private  boolean alcoolized;
 	
+	private CamembertCounter camembert;
 	//Compteur pour le temps depuis le dernier appel de update
-	private int cpt = 0;
+	private float cpt = 0;
 	
 	private volatile List<Passenger> waitingPassenger;
 	
@@ -68,6 +69,7 @@ public class Station extends EntityClickable implements EntityDrawable, Dijkstra
 		size.x = Map.GRID_SIZE*2;
 		size.y = Map.GRID_SIZE*2;
 		
+		camembert = new CamembertCounter(new Vector2f(getPosition().x ,getPosition().y), Map.getInstance().GRID_SIZE*2);
 		drawable = true;
 	}
 	
@@ -201,22 +203,27 @@ public class Station extends EntityClickable implements EntityDrawable, Dijkstra
 
 		if(this.alcoolized)
 		{
+			
 			if(waitedTime >= MAX_WAITING_TIME + BONUS_WAITING_TIME)
 			{
 				Game.setGameOver(true);
 				System.out.println("Perdu !! Les passagers ont attendu "+ waitedTime + "secondes");
 			}
 			else System.out.println("Attention, une station est en état critique : "+ ( MAX_WAITING_TIME + BONUS_WAITING_TIME- waitedTime)+ " secondes avant la défaite");
+			camembert.setPercentage(waitedTime*100/MAX_WAITING_TIME + BONUS_WAITING_TIME);
 		}
 		else
 		{
+			
 			if(waitedTime >= MAX_WAITING_TIME)
 			{
 				Game.setGameOver(true);
 				System.out.println("Perdu !! Les passagers ont attendu "+ waitedTime + "secondes");
 			}
 			else System.out.println("Attention, une station est en état critique : "+ ( MAX_WAITING_TIME - waitedTime)+ " secondes avant la défaite");
+			
 		}
+		
 	}
 	
 	public synchronized void alcoolise()
@@ -312,6 +319,7 @@ public class Station extends EntityClickable implements EntityDrawable, Dijkstra
 	@Override
 	public void render(Graphics arg2) {
 		// TODO Auto-generated method stub
+	
 		arg2.setColor(Color.darkGray);
 		arg2.setLineWidth(1);
 		Rectangle rec = new Rectangle(getRect().getX(), getRect().getY(), getRect().getWidth(), getRect().getHeight());
@@ -336,20 +344,27 @@ public class Station extends EntityClickable implements EntityDrawable, Dijkstra
 				passenger.render(arg2);
 			}
 		}
+		camembert.render(arg2);
 	}
 	
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) {
 		// TODO Auto-generated method stub
 		super.update(gc, sbg,delta);
-		
+		float cptCamembert;
 		cpt+=delta ;
+		if(waitedTime == 0){
+			cptCamembert = 0;
+		}else{
+			cptCamembert = cpt;
+		}
+		camembert.setPercentage((waitedTime+cptCamembert/1000)*100/MAX_WAITING_TIME);
 		if(cpt>1000){
 			if(isCriticalPassenger()){
 				waitedTime ++; 
 				checkWaitingTime();
 			}else{
-				if(waitedTime >= 0 ) waitedTime --;
+				if(waitedTime > 0 ) waitedTime --;
 			}
 			cpt = 0;
 		}
