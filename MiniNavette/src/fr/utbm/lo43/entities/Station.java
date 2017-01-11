@@ -234,7 +234,7 @@ public class Station extends EntityClickable implements EntityDrawable, Dijkstra
 	public void notifyBus(Bus bus)
 	{
 
-		System.out.println("Station.notifyBus");
+
 		
 			
 		
@@ -246,7 +246,7 @@ public class Station extends EntityClickable implements EntityDrawable, Dijkstra
 					//on met à jour l'arrêt suivant de chaque passager qui attend à la station avant qu'ils vérifient si le bus y va
 					passenger.nextStop = this.nextStop.get(passenger.filiere);
 	
-					System.out.println("Passenger a un nouveau stop : " + this.nextStop.get(passenger.filiere));
+
 				}
 			if(waitingPassenger.size() > 0) bus.load(this);
 		
