@@ -168,10 +168,7 @@ public class ClassicBus extends Bus
 				//Alors on est arrivé soit dans une station soit à la fin d'une partie du segment
 				for (Station station : Map.getInstance().getStations()) {
 					if(station.isOnStation(endpoint)){
-<<<<<<< HEAD
-=======
-						
->>>>>>> origin/master
+
 						if(lock){
 							
 							ArrayList<Passenger> copy = new ArrayList<Passenger>(passengers);
