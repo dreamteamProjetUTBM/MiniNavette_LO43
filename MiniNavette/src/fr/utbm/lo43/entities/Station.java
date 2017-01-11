@@ -351,6 +351,8 @@ public class Station extends EntityClickable implements EntityDrawable, Dijkstra
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) {
 		// TODO Auto-generated method stub
 		super.update(gc, sbg,delta);
+		
+		cpt+=delta/Map.getInstance().gameSpeed ;
 		float cptCamembert;
 		cpt+=delta ;
 		if(waitedTime == 0){

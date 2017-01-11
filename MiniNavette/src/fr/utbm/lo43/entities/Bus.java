@@ -60,7 +60,7 @@ public abstract class Bus extends EntityDragable implements EntityDrawable, Enti
 		try {
 			Thread.sleep(500/Map.getInstance().gameSpeed);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
+			Thread.currentThread().stop();
 			e.printStackTrace();
 		}
 		
@@ -79,7 +79,7 @@ public abstract class Bus extends EntityDragable implements EntityDrawable, Enti
 			try {
 				Thread.sleep(500/Map.getInstance().gameSpeed);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
+				Thread.currentThread().stop();
 				e.printStackTrace();
 			}
 		}
@@ -96,7 +96,7 @@ public abstract class Bus extends EntityDragable implements EntityDrawable, Enti
 		try {
 			Thread.sleep(500/Map.getInstance().gameSpeed);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
+			Thread.currentThread().stop();
 			e.printStackTrace();
 		}
 			
@@ -111,7 +111,7 @@ public abstract class Bus extends EntityDragable implements EntityDrawable, Enti
 				try {
 					Thread.sleep(500/Map.getInstance().gameSpeed);
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
+					Thread.currentThread().stop();
 					e.printStackTrace();
 				}
 			}

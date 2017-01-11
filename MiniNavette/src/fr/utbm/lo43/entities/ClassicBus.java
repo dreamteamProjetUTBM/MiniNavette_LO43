@@ -179,15 +179,11 @@ public class ClassicBus extends Bus
 				for (Station station : Map.getInstance().getStations()) {
 					if(station.isOnStation(endpoint)){
 						
-						/*
-						 * ROGER ICI
-						 */
-						//station.notifyBus(this);
 
-						System.out.println("Bus a maintenant "+ passengers.size() + " passager(s).");
 					
 						if(lock){
-							
+
+							System.out.println("LOCK.");
 							ArrayList<Passenger> copy = new ArrayList<Passenger>(passengers);
 							
 							for(Passenger passenger : copy)
@@ -201,6 +197,8 @@ public class ClassicBus extends Bus
 						}
 						nextSegment();
 						station.notifyBus(this);
+						System.out.println("Bus a maintenant "+ passengers.size() + " passager(s).");
+						break ;
 					}
 				}
 			}
@@ -350,7 +348,7 @@ public class ClassicBus extends Bus
 			try {
 				Thread.sleep(15);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
+				Thread.currentThread().stop();
 				e.printStackTrace();
 			}
 
