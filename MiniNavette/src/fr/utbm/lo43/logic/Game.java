@@ -17,6 +17,7 @@ public class Game {
 		map = Map.getInstance();
 		inventory = Inventory.getInstance();
 		score = Score.getInstance();
+	
 		gameOver = false;
 	}
 	
