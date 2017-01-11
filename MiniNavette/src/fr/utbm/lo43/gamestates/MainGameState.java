@@ -185,45 +185,14 @@ public class MainGameState extends BasicGameState {
 		entities.add(bridge_label);
 		entities.add(score_label);
 		entities.add(gameSpeed_slider);
-		
-
-		
-		Station station1 = new Station(new Vector2f(10 * Map.GRID_SIZE * 2, 3 * Map.GRID_SIZE * 2), Filiere.GI);
-		Station station2 = new Station(new Vector2f(5 * Map.GRID_SIZE * 2, 5 * Map.GRID_SIZE * 2), Filiere.EDIM);
-		Station station3 = new Station(new Vector2f(7 * Map.GRID_SIZE * 2, 7 * Map.GRID_SIZE * 2), Filiere.IMSI);
-		//Station station4 = new Station(new Vector2f(3 * Map.GRID_SIZE * 2, 8 * Map.GRID_SIZE * 2), Filiere.GI);
-		//Station station5 = new Station(new Vector2f(13 * Map.GRID_SIZE * 2, 8 * Map.GRID_SIZE * 2), Filiere.ENERGIE);
-
+	
 		Map.getInstance().getStations().clear();
 
 		
-		entities.add(game.map.createStation());
-		entities.add(game.map.createStation());
-		entities.add(game.map.createStation());
-/*
-		game.map.addStation(station1);
-		game.map.addStation(station2);
-		game.map.addStation(station3);
+		entities.add(game.map.createStation(Filiere.GI));
+		entities.add(game.map.createStation(Filiere.ENERGIE));
+		entities.add(game.map.createStation(Filiere.EDIM));
 		
-		entities.add(station1);
-		entities.add(station2);
-		entities.add(station3);*/
-		
-		
-		//entities.add(game.map.createStation());
-		//entities.add(game.map.createStation());
-		//entities.add(game.map.createStation());
-
-		/*Map.getInstance().addStation(station1);
-		Map.getInstance().addStation(station2);
-		Map.getInstance().addStation(station3);
-		Map.getInstance().addStation(station4);
-		Map.getInstance().addStation(station5);
-		 
-		
-		entities.add(station4);
-		entities.add(station5);
-*/
 		current_line = 0;
 	}
 
@@ -282,8 +251,6 @@ public class MainGameState extends BasicGameState {
 		/*
 		 * Supprime les bus bloqués
 		 */
-
-
 		ArrayList<Entity> copyEntities = new ArrayList<Entity>(entities.getEntities());
 					
 		for (Entity _entity : copyEntities) {
@@ -295,8 +262,6 @@ public class MainGameState extends BasicGameState {
 					System.out.println("Some bus to be removed");
 					if(entities.deleteObject(_tmp))
 						game.getInventory().setRemainingBus(1);
-						
-					
 				}
 
 

@@ -60,6 +60,29 @@ public class Map {
 	
 	public Station createStation(){
 		Random rand = new Random();
+		Vector2f _position = calculateStationPosition();
+		Station station = new Station(_position, getFiliere(rand.nextInt(5)));
+
+		synchronized(stations){
+			stations.add(station);
+		}
+
+		return station;
+	}
+	
+	public Station createStation(Filiere filiere){
+		Vector2f _position = calculateStationPosition();
+		Station station = new Station(_position, filiere);
+
+		synchronized(stations){
+			stations.add(station);
+		}
+
+		return station;
+	}
+	
+	private Vector2f calculateStationPosition(){
+		Random rand = new Random();
 		boolean isRight = false;
 		Vector2f _newposition = new Vector2f();
 		
@@ -96,15 +119,9 @@ public class Map {
 		}
 				
 		_newposition = new Vector2f(_newposition.x-GRID_SIZE,_newposition.y-GRID_SIZE);
-		Station station = new Station(_newposition, getFiliere(rand.nextInt(5)));
-
-		synchronized(stations){
-			stations.add(station);
-		}
-
-		return station;
+		
+		return _newposition;
 	}
-	
 	
 	public boolean CanCreateStation(){
 		if(Map.getInstance().getStations().size()-1 == Map.MAX_STATION)

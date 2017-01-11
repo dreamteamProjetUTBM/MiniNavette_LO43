@@ -35,6 +35,19 @@ public class ClassicBus extends Bus
 	
 	
 	/*
+<<<<<<< Updated upstream
+=======
+	 * Si le bus est bloqué, il sera à True, sinon il sera à False
+	 */
+	boolean lock = false;
+	
+	/*
+	 * Si le bus doit être supprimé, il sera à True
+	 */
+	volatile boolean canBeRemove = false;
+	
+	/*
+>>>>>>> Stashed changes
 	 * Contient l'angle de rotation du bus
 	 */
 	private float theta;
@@ -155,9 +168,6 @@ public class ClassicBus extends Bus
 				//Alors on est arrivé soit dans une station soit à la fin d'une partie du segment
 				for (Station station : Map.getInstance().getStations()) {
 					if(station.isOnStation(endpoint)){
-						
-
-					
 						if(lock){
 							
 							ArrayList<Passenger> copy = new ArrayList<Passenger>(passengers);
@@ -332,6 +342,12 @@ public class ClassicBus extends Bus
 			if(canBeKilled) {
 //				this.canBeRemove = true;
 				System.out.println("fin du thread bus");
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				break ;
 			}
 			
