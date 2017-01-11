@@ -279,7 +279,9 @@ public class MainGameState extends BasicGameState {
 		/*
 		 * Supprime les bus bloqués
 		 */
-		for (Entity _entity : entities.getEntities()) {
+		
+		ArrayList<Entity> copyEntities = new ArrayList<>(entities.getEntities());
+		for (Entity _entity : copyEntities) {
 			if(_entity.getClass() == ClassicBus.class){
 				ClassicBus _tmp = (ClassicBus) _entity;
 				if(_tmp.canBeRemove()){
@@ -287,7 +289,7 @@ public class MainGameState extends BasicGameState {
 					if(entities.deleteObject(_tmp))
 						game.getInventory().setRemainingBus(1);
 				}
-				break;
+				
 			}
 		}
 		
