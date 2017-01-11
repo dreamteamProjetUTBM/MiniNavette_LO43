@@ -172,4 +172,12 @@ public abstract class Line extends Entity implements EntityUpdateable, EntityDra
 		}
 		return false;
 	}
+	
+	public Segment getSegmentByStation(Station _station){
+		for (Segment segment : segments) {
+			if(segment.isOnSegment(_station.getPosition()))
+				return segment;
+		}
+		return null;
+	}
 }
