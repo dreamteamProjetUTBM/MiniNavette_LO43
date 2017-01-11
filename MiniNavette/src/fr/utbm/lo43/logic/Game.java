@@ -11,8 +11,12 @@ public class Game {
 	private static boolean gameOver;
 	
 	public Game(){
+		Map.reInit();
+		Inventory.reInit();
+		Score.reInit();
 		map = Map.getInstance();
 		inventory = Inventory.getInstance();
+		score = Score.getInstance();
 		gameOver = false;
 	}
 	
@@ -29,4 +33,5 @@ public class Game {
 	{
 		return gameOver;
 	}
+	
 }

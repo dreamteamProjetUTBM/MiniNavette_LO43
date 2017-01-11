@@ -28,7 +28,10 @@ public class Inventory {
 	}
 	
 
-
+	public static void reInit(){
+		INSTANCE = null;
+	}
+	
 	public int getRemainingBus(){
 		return remaining_bus;
 	}

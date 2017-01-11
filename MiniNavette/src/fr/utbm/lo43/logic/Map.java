@@ -165,6 +165,10 @@ public class Map {
 		}
 	}
 	
+	public static void reInit(){
+		INSTANCE = null;
+	}
+	
 	public ArrayList<Station> getNextStops(Bus bus, Station _station){
 		//renvoyer les stations suivantes du bus de sa ligne
 		ArrayList<Station> nextStops = new ArrayList<>(bus.getCurrentSegment().getLine_bus().getStations());

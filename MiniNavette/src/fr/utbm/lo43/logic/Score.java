@@ -20,6 +20,10 @@ public class Score {
 		return INSTANCE;
 	}
 
+	public static void reInit(){
+		INSTANCE = null;
+	}
+	
 	public void incrementScore()
 	{
 		passengersArrived ++ ;
