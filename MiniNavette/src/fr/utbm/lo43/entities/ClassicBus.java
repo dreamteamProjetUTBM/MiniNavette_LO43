@@ -156,8 +156,6 @@ public class ClassicBus extends Bus
 				for (Station station : Map.getInstance().getStations()) {
 					if(station.isOnStation(endpoint)){
 						
-
-					
 						if(lock){
 							
 							ArrayList<Passenger> copy = new ArrayList<Passenger>(passengers);
@@ -255,6 +253,7 @@ public class ClassicBus extends Bus
 		Input input = gc.getInput();
 
 		if(input.isMousePressed(input.MOUSE_RIGHT_BUTTON) && polygon.contains(input.getMouseX(), input.getMouseY())){
+			
 			if(isLock())
 				setCanBeRemove(true);
 			setLock(true);

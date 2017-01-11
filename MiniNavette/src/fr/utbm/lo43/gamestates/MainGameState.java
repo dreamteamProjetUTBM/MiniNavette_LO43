@@ -194,7 +194,6 @@ public class MainGameState extends BasicGameState {
 		//Station station4 = new Station(new Vector2f(3 * Map.GRID_SIZE * 2, 8 * Map.GRID_SIZE * 2), Filiere.GI);
 		//Station station5 = new Station(new Vector2f(13 * Map.GRID_SIZE * 2, 8 * Map.GRID_SIZE * 2), Filiere.ENERGIE);
 
-		Map.getInstance().getStations().clear();
 
 		
 		entities.add(game.map.createStation());
@@ -298,8 +297,6 @@ public class MainGameState extends BasicGameState {
 						
 					
 				}
-
-
 			}
 		}
 		
