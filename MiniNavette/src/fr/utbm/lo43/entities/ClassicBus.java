@@ -169,9 +169,11 @@ public class ClassicBus extends Bus
 				for (Station station : Map.getInstance().getStations()) {
 					if(station.isOnStation(endpoint)){
 							
-						//if(station.getLines().contains(currentSegment.line_bus))
-							//if(!currentSegment.line_bus.existingSegment(currentSegment))
-								//currentSegment = currentSegment.line_bus.getSegmentByStation(station);
+					/*	if(station.getLines().contains(currentSegment.line_bus))
+							if(!currentSegment.line_bus.existingSegment(currentSegment))
+								if(currentSegment.line_bus.getSegmentByStation(station)!=null){
+								currentSegment = currentSegment.line_bus.getSegmentByStation(station);
+								}*/
 						
 						if(lock){
 							
