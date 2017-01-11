@@ -282,18 +282,12 @@ public class MainGameState extends BasicGameState {
 		/*
 		 * Supprime les bus bloqués
 		 */
-		
-<<<<<<< HEAD
 
-		ArrayList<Entity> copy = new ArrayList<Entity>(entities.getEntities());
-		
-		for (Entity _entity : copy) {
-			
-			
-=======
-		ArrayList<Entity> copyEntities = new ArrayList<>(entities.getEntities());
+
+		ArrayList<Entity> copyEntities = new ArrayList<Entity>(entities.getEntities());
+					
 		for (Entity _entity : copyEntities) {
->>>>>>> 3c66865d51c5a52c29f207038af5490a23404589
+
 			if(_entity.getClass() == ClassicBus.class){
 				ClassicBus _tmp = (ClassicBus) _entity;
 				if(_tmp.canBeRemoved()){
@@ -304,10 +298,8 @@ public class MainGameState extends BasicGameState {
 						
 					
 				}
-<<<<<<< HEAD
-=======
-				
->>>>>>> 3c66865d51c5a52c29f207038af5490a23404589
+
+
 			}
 		}
 		
