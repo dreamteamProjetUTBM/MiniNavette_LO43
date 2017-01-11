@@ -115,7 +115,7 @@ public class Station extends EntityClickable implements EntityDrawable, Dijkstra
 	/**
 	 * Permet de remplir la HashMap nextStop
 	 */
-	public synchronized void setNextStop(DijkstraPathfinding<Station> pathfinding){
+	public void setNextStop(DijkstraPathfinding<Station> pathfinding){
 		nextStop = new HashMap<>();
 		Path<Station> shortestPath;
 		Station tempStation;
@@ -131,8 +131,8 @@ public class Station extends EntityClickable implements EntityDrawable, Dijkstra
 
 					if((shortestPath.getWeight()<minDistance || minDistance == -1) && shortestPath.getWeight()!=-1){
 						minDistance = shortestPath.getWeight();
-						tempStation = s.getNextConnection(shortestPath);
-						//tempStation = shortestPath.get(0);
+						//tempStation = s.getNextConnection(shortestPath);
+						tempStation = shortestPath.get(0);
 					}
 					
 					
@@ -149,7 +149,7 @@ public class Station extends EntityClickable implements EntityDrawable, Dijkstra
 	 * @param shortestPath
 	 * @return
 	 */
-	public synchronized Station getNextConnection(Path<Station> shortestPath){
+	public Station getNextConnection(Path<Station> shortestPath){
 		
 		if(shortestPath.getElements().get(0)==null){
 			return null;
@@ -318,6 +318,18 @@ public class Station extends EntityClickable implements EntityDrawable, Dijkstra
 		arg2.setColor(new Color(238,238,238));
 		arg2.fill(rec);
 		arg2.draw(rec);
+		
+		float offset = 0;
+		arg2.setLineWidth(4);
+		for(Line l : Map.getInstance().getLines()){
+			if(l.getStations().contains(this)){
+				arg2.setColor(l.getColor());
+				arg2.drawRect(getRect().getX()-offset*arg2.getLineWidth()/2, getRect().getY()-offset*arg2.getLineWidth()/2, getRect().getWidth()+offset*arg2.getLineWidth(), getRect().getHeight()+offset*arg2.getLineWidth());
+				offset = offset + 2;
+			}
+		}
+		arg2.setLineWidth(1);
+		arg2.setColor(Color.darkGray);
 		preview.draw(getPosition().x+Map.GRID_SIZE/2,getPosition().y+Map.GRID_SIZE/2,Map.GRID_SIZE,Map.GRID_SIZE);
 		synchronized(waitingPassenger){
 			for (Passenger passenger : waitingPassenger) {
