@@ -158,7 +158,6 @@ public class ClassicBus extends Bus
 	@Override
 	protected void move() 
 	{
-		
 		if(!currentSegment.line_bus.existingSegment(currentSegment) && currentSegment.line_bus.getSegments().size() == 0 )
 			lock = true;
 		
@@ -335,6 +334,9 @@ public class ClassicBus extends Bus
 		return false;
 	}
 	
+	public void setCanBeKilled(boolean value){
+		canBeKilled = value;
+	}
 	
 	@Override
 	public void run() {

@@ -61,6 +61,7 @@ public abstract class Bus extends EntityDragable implements EntityDrawable, Enti
 		return canBeRemove;
 	}
 	
+
 	protected void setCanBeRemove(boolean value){
 		canBeRemove = value;
 	}

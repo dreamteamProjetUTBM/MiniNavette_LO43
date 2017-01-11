@@ -259,8 +259,10 @@ public class MainGameState extends BasicGameState {
 				if(_tmp.canBeRemoved()){
 
 					System.out.println("Some bus to be removed");
-					if(entities.deleteObject(_tmp))
+					if(entities.deleteObject(_tmp)){
 						game.getInventory().setRemainingBus(1);
+						_tmp.setCanBeKilled(true);
+					}
 				}
 			}
 		}
