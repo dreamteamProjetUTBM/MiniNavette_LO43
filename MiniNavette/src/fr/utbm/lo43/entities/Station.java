@@ -133,7 +133,7 @@ public class Station extends EntityClickable implements EntityDrawable, Dijkstra
 
 					if((shortestPath.getWeight()<minDistance || minDistance == -1) && shortestPath.getWeight()!=-1){
 						minDistance = shortestPath.getWeight();
-						tempStation = s.getNextConnection(shortestPath);
+						tempStation = getNextConnection(shortestPath);
 						//tempStation = shortestPath.get(0);
 					}
 					
