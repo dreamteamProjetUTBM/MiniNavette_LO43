@@ -35,19 +35,11 @@ public class ClassicBus extends Bus
 	
 	
 	/*
-	 * Si le bus est bloqué, il sera à True, sinon il sera à False
-	 */
-	boolean lock = false;
-	
-	/*
-	 * Si le bus doit être supprimé, il sera à True
-	 */
-	boolean canBeRemove = false;
-	
-	/*
 	 * Contient l'angle de rotation du bus
 	 */
 	private float theta;
+	
+	private boolean canBeKilled ;
 	
 	/*
 	 * Compteur de temps du bus
@@ -60,6 +52,7 @@ public class ClassicBus extends Bus
 		direction = true;
 		capacity = 6;
 		currentSegment = current;
+		canBeKilled = false ;
 		
 		theta = getAngle();
 		polygon = (Polygon) polygon.transform(Transform.createRotateTransform((float) Math.toRadians(-getAngle()),getPosition().x,getPosition().y));
@@ -84,23 +77,7 @@ public class ClassicBus extends Bus
 		}*/
 		
 	}
-	
-	public synchronized boolean canBeRemove(){
-		return canBeRemove;
-	}
-	
-	public synchronized void setCanBeRemove(boolean value){
-		canBeRemove = value;
-	}
-	
-	public synchronized boolean isLock(){
-		return lock;
-	}
-	
-	public synchronized void setLock(boolean value){
-		lock = value;
-	}
-	
+
 	/*
 	 * Permet de calculer l'angle de rotation du bus selon le segment ou il se trouve
 	 */
@@ -182,8 +159,7 @@ public class ClassicBus extends Bus
 
 					
 						if(lock){
-
-							System.out.println("LOCK.");
+							
 							ArrayList<Passenger> copy = new ArrayList<Passenger>(passengers);
 							
 							for(Passenger passenger : copy)
@@ -191,8 +167,9 @@ public class ClassicBus extends Bus
 									passenger.leaveBus(station);
 									removePassenger(passenger);
 							}
-							
+
 							canBeRemove = true;
+							canBeKilled = true;
 							return;
 						}
 						nextSegment();
@@ -352,7 +329,8 @@ public class ClassicBus extends Bus
 				e.printStackTrace();
 			}
 
-			if(this.canBeRemove) {
+			if(canBeKilled) {
+//				this.canBeRemove = true;
 				System.out.println("fin du thread bus");
 				break ;
 			}
