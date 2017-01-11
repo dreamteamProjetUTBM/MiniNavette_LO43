@@ -95,8 +95,10 @@ public class Map {
 				
 		_newposition = new Vector2f(_newposition.x-GRID_SIZE,_newposition.y-GRID_SIZE);
 		Station station = new Station(_newposition, getFiliere(rand.nextInt(5)));
-		stations.add(station);
-		
+
+		synchronized(stations){
+			stations.add(station);
+		}
 		Inventory.getInstance().setRemainingStation(-1);
 		return station;
 	}
@@ -137,10 +139,9 @@ public class Map {
 		return stations.size();
 	}
 	
-	public synchronized ArrayList<Station> getStations(){
+	public ArrayList<Station> getStations(){
 		synchronized(stations){
 			return stations;
-			
 		}
 	}
 	
@@ -157,7 +158,9 @@ public class Map {
 	}
 	
 	public void addStation(Station _station){
-		stations.add(_station);
+		synchronized(stations){
+			stations.add(_station);
+		}
 	}
 	
 	public ArrayList<Station> getNextStops(Bus bus, Station _station){
@@ -185,10 +188,5 @@ public class Map {
 		}
 
 		return nextStops;
-	}
-	
-	public Station getNextStop(Passenger passenger){
-		//retourner la station dont il a besoin 
-		return stations.get(1);
 	}
 }

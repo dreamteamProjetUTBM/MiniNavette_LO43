@@ -174,7 +174,6 @@ public class ClassicBus extends Bus
 					if(station.isOnStation(endpoint)){
 						
 
-						System.out.println("Bus a maintenant "+ passengers.size() + " passager(s).");
 					
 						if(lock){
 
@@ -192,6 +191,8 @@ public class ClassicBus extends Bus
 						}
 						nextSegment();
 						station.notifyBus(this);
+						System.out.println("Bus a maintenant "+ passengers.size() + " passager(s).");
+						break ;
 					}
 				}
 			}

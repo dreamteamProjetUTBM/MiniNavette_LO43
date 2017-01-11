@@ -33,13 +33,8 @@ public class Station extends EntityClickable implements EntityDrawable, Dijkstra
 	public static final int CRITICAL_PASSENGER = 6;	
 	private float waitedTime ;
 
-<<<<<<< HEAD
-	private static final int MAX_WAITING_TIME = 1130;
-	private static final int BONUS_WAITING_TIME = 15;
-=======
 	private static final float MAX_WAITING_TIME = 30;
 	private static final float BONUS_WAITING_TIME = 15;
->>>>>>> 55941917aebbad05f0c95a51ca4dd5432cb412d9
 	
 	private volatile Image preview;
 		
@@ -356,10 +351,8 @@ public class Station extends EntityClickable implements EntityDrawable, Dijkstra
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) {
 		// TODO Auto-generated method stub
 		super.update(gc, sbg,delta);
-<<<<<<< HEAD
 		
 		cpt+=delta/Map.getInstance().gameSpeed ;
-=======
 		float cptCamembert;
 		cpt+=delta ;
 		if(waitedTime == 0){
@@ -368,7 +361,6 @@ public class Station extends EntityClickable implements EntityDrawable, Dijkstra
 			cptCamembert = cpt;
 		}
 		camembert.setPercentage((waitedTime+cptCamembert/1000)*100/MAX_WAITING_TIME);
->>>>>>> 55941917aebbad05f0c95a51ca4dd5432cb412d9
 		if(cpt>1000){
 			if(isCriticalPassenger()){
 				waitedTime ++; 
