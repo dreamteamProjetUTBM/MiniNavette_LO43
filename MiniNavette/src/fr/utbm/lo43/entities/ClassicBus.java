@@ -244,6 +244,16 @@ public class ClassicBus extends Bus
 				local_direction = -1;
 		}
 	}
+	
+	
+	public void RightedClicked(float mouseX, float mouseY){
+		if(polygon.contains(mouseX, mouseY)){
+			if(isLock())
+				setCanBeRemove(true);
+			setLock(true);
+		}
+		
+	}
 
 	@Override
 	public  void  update(GameContainer gc, StateBasedGame sbg,int delta) {
@@ -252,12 +262,7 @@ public class ClassicBus extends Bus
 		
 		Input input = gc.getInput();
 
-		if(input.isMousePressed(input.MOUSE_RIGHT_BUTTON) && polygon.contains(input.getMouseX(), input.getMouseY())){
-			
-			if(isLock())
-				setCanBeRemove(true);
-			setLock(true);
-		}
+
 		
 		cpt += delta;
 		if(cpt >15 && !isGrabed)

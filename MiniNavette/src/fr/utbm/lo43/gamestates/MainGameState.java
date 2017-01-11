@@ -307,6 +307,14 @@ public class MainGameState extends BasicGameState {
 			arg1.enterState(GameWindow.GS_PAUSE_MENU);
 		}
 
+		if (input.isMousePressed(Input.MOUSE_RIGHT_BUTTON)){
+			for(Entity _entity : entities.getEntities()){
+				if(_entity.getClass() == ClassicBus.class){
+					ClassicBus _tmp = (ClassicBus) _entity;
+					_tmp.RightedClicked(input.getMouseX(), input.getMouseY());
+				}
+			}
+		}
 		//Ajouter un bus sur une ligne
 		if (input.isMousePressed(Input.MOUSE_LEFT_BUTTON) && bus_button.getToggled()) {
 			for (fr.utbm.lo43.logic.Line line : Map.getInstance().getLines()) {
