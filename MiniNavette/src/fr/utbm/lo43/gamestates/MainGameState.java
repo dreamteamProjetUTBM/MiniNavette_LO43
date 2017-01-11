@@ -504,6 +504,7 @@ public class MainGameState extends BasicGameState {
 		
 		if(Game.getGameOver())
 		{
+			threadPool.shutdownNow();
 			arg1.enterState(GameWindow.GS_GAME_OVER);
 		}
 	}

@@ -342,7 +342,7 @@ public class ClassicBus extends Bus
 			try {
 				Thread.sleep(15);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
+				Thread.currentThread().stop();
 				e.printStackTrace();
 			}
 
