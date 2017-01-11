@@ -266,9 +266,9 @@ public class ClassicBus extends Bus
 	
 	public void RightedClicked(float mouseX, float mouseY){
 		if(polygon.contains(mouseX, mouseY)){
-			if(isLock())
+			if(lock)
 				setCanBeRemove(true);
-			setLock(true);
+			lock = true;
 		}
 		
 	}
