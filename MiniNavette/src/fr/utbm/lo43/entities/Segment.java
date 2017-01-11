@@ -246,7 +246,7 @@ public class Segment extends EntityDragable implements EntityDrawable {
 	}
 
 	/**
-	 * Get all stations
+	 * Enregistre la station de depart et d'arrivé
 	 * 
 	 * @return
 	 */

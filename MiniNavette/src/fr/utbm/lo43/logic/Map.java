@@ -14,6 +14,7 @@ import fr.utbm.lo43.entities.Station;
 
 public class Map {
 	
+	public static final int MAX_STATION = 10;
 	public static final int WIDTH = 1280;
 	public static final int HEIGHT = 720;
 	public static final int GRID_SIZE = 32;
@@ -35,7 +36,7 @@ public class Map {
 		stations = new ArrayList<>();
 		grid = new ArrayList<>();
 		lines = new ArrayList<>();
-		
+
 		//Création de la grille
 		for(int i = 0;i < WIDTH ; i+=GRID_SIZE){
 			grid.add(new Line(i,0,i,HEIGHT));
@@ -43,6 +44,7 @@ public class Map {
 		for(int i = 0;i < HEIGHT ; i+=GRID_SIZE){
 			grid.add(new Line(0,i,WIDTH,i));
 		}
+
 	}
 
 	/** Instance unique pré-initialisée */
@@ -99,15 +101,15 @@ public class Map {
 		synchronized(stations){
 			stations.add(station);
 		}
-		Inventory.getInstance().setRemainingStation(-1);
+
 		return station;
 	}
 	
 	
 	public boolean CanCreateStation(){
-		if(Inventory.getInstance().getRemainingStation() == 0)
+		if(Map.getInstance().getStations().size()-1 == Map.MAX_STATION)
 			return false;
-		System.out.println("Station "+Inventory.getInstance().getRemainingStation());
+
 		return true;
 	}
 	

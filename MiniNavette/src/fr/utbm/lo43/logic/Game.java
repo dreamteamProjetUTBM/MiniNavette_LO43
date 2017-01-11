@@ -13,7 +13,6 @@ public class Game {
 	public Game(){
 		map = Map.getInstance();
 		inventory = Inventory.getInstance();
-		
 		gameOver = false;
 	}
 	
