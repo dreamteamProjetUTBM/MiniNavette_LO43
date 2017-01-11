@@ -256,7 +256,7 @@ public class MainGameState extends BasicGameState {
 
 			if(_entity.getClass() == ClassicBus.class){
 				ClassicBus _tmp = (ClassicBus) _entity;
-				if(_tmp.canBeRemoved()){
+				if(_tmp.canBeRemoved() || _tmp.CanBeKilled()){
 
 					System.out.println("Some bus to be removed");
 					if(entities.deleteObject(_tmp)){

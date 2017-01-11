@@ -155,6 +155,12 @@ public class ClassicBus extends Bus
 		
 	}
 
+	
+	
+	public boolean CanBeKilled() {
+		return canBeKilled;
+	}
+
 	@Override
 	protected void move() 
 	{
@@ -356,7 +362,9 @@ public class ClassicBus extends Bus
 
 			if(canBeKilled) {
 //				this.canBeRemove = true;
+				
 				System.out.println("fin du thread bus");
+				
 				try {
 					Thread.sleep(1000);
 				} catch (InterruptedException e) {
