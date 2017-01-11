@@ -23,6 +23,7 @@ import fr.utbm.lo43.entities.Entity;
 import fr.utbm.lo43.entities.EntityCollection;
 import fr.utbm.lo43.entities.EventEntityMouseClicked;
 import fr.utbm.lo43.entities.Label;
+import fr.utbm.lo43.entities.Passenger;
 import fr.utbm.lo43.entities.RailWay;
 import fr.utbm.lo43.entities.Segment;
 import fr.utbm.lo43.entities.Slider;
@@ -279,15 +280,23 @@ public class MainGameState extends BasicGameState {
 		/*
 		 * Supprime les bus bloqués
 		 */
-		for (Entity _entity : entities.getEntities()) {
+		
+
+		ArrayList<Entity> copy = new ArrayList<Entity>(entities.getEntities());
+		
+		for (Entity _entity : copy) {
+			
+			
 			if(_entity.getClass() == ClassicBus.class){
 				ClassicBus _tmp = (ClassicBus) _entity;
-				if(_tmp.canBeRemove()){
-					
+				if(_tmp.canBeRemoved()){
+
+					System.out.println("Some bus to be removed");
 					if(entities.deleteObject(_tmp))
 						game.getInventory().setRemainingBus(1);
+						
+					
 				}
-				break;
 			}
 		}
 		

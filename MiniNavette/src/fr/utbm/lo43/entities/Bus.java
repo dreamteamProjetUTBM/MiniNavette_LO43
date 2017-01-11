@@ -24,14 +24,28 @@ public abstract class Bus extends EntityDragable implements EntityDrawable, Enti
 	protected volatile Color color;
 	protected volatile ArrayList<Image> passenger_images;
 	
+	/*
+	 * Si le bus est bloqué, il sera à True, sinon il sera à False
+	 */
+	protected volatile boolean lock ;
+	
+
+	/*
+	 * Si le bus doit être supprimé, il sera à True
+	 */
+	protected volatile boolean canBeRemove ;
+	
+	
 	public Bus(Vector2f _position, Color _color) 
 	{
 		super(_position);
-
+		
 		passengers = new ArrayList<Passenger>()  ; 
 		passenger_images = new ArrayList<>();
 		drawable = true;
 		color = _color;
+		lock = false;
+		canBeRemove = false;
 		
 		polygon = new Polygon();
 		polygon.addPoint(_position.x-Map.GRID_SIZE/2, _position.y+Map.GRID_SIZE*0.75f);
@@ -41,6 +55,23 @@ public abstract class Bus extends EntityDragable implements EntityDrawable, Enti
 	}
 	
 	protected abstract void move();
+	
+	
+	public boolean canBeRemoved(){
+		return canBeRemove;
+	}
+	
+	protected void setCanBeRemove(boolean value){
+		canBeRemove = value;
+	}
+	
+	public boolean isLock(){
+		return lock;
+	}
+	
+	protected void setLock(boolean value){
+		lock = value;
+	}
 	
 	
 	
