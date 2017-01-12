@@ -249,11 +249,11 @@ public class MainGameState extends BasicGameState {
 
 		}
 		
-		if(counterBonus>60000){
+		if(counterBonus>90000){
 			if(rand.nextInt()%2==0){
 				Inventory.getInstance().addBridges(1);				
 			}else{
-				if(Inventory.getInstance().getRemainingBus()-threadPool.getPoolSize()<MAX_BUS){
+				if(Inventory.getInstance().getRemainingBus()+threadPool.getPoolSize()<MAX_BUS){
 					Inventory.getInstance().setRemainingBus(1);						
 				}else{
 
