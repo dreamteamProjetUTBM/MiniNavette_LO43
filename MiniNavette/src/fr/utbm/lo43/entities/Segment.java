@@ -17,6 +17,10 @@ import org.newdawn.slick.state.StateBasedGame;
 import fr.utbm.lo43.logic.Inventory;
 import fr.utbm.lo43.logic.Map;
 
+/**
+ * @author Quentin Nahil Thomas Jeremy 
+ *
+ */
 public class Segment extends EntityDragable implements EntityDrawable {
 
 	public static final float SEGMENT_THICKNESS = 5;
@@ -246,7 +250,7 @@ public class Segment extends EntityDragable implements EntityDrawable {
 	}
 
 	/**
-	 * Enregistre la station de depart et d'arrivé
+	 * Enregistre la station de depart et d'arrivï¿½
 	 * 
 	 * @return
 	 */
@@ -444,7 +448,6 @@ public class Segment extends EntityDragable implements EntityDrawable {
 		}
 		return intersect;
 
-		// System.out.println(_segment.line.getpo);
 	}
 
 	public  boolean hasSameVectors(Segment _seg) {

@@ -22,12 +22,16 @@ import fr.utbm.lo43.logic.Game;
 import fr.utbm.lo43.logic.Line;
 import fr.utbm.lo43.logic.Map;
 
+/**
+ * @author Quentin Nahil Thomas Jeremy 
+ * 
+ * Classe station, est comme dans mini metro, une station générant et accueillant des usager du réseau
+ * Elles génèrent jusqu'à 8 personnes, et lancent le timer de la défaite à partir de 6.
+ * Dès lors, le joueur a de MAX_WAITING_TIME à MAX_WAITING_TIME + BONUS_WAITING_TIME pour vider la station avant la défaite
+ *
+ */
 public class Station extends EntityClickable implements EntityDrawable, Dijkstrable
 {
-	//24 taille case
-	//Quadrillage
-	//Jerem: rajout de ma part, à voir s'il ne faut pas le mettre dans le diagramme
-	//En FR en plus
 	protected volatile Filiere filiere;
 	public static final int MAXIMUM_PASSENGER = 8;
 	public static final int CRITICAL_PASSENGER = 6;	
@@ -38,12 +42,22 @@ public class Station extends EntityClickable implements EntityDrawable, Dijkstra
 	
 	private volatile Image preview;
 		
+	/**
+	 * Bonus : gare d'affluence ici représentée comme soirée alcoolisée où les usagers sont plus patients (+bonus time)
+	 */
 	private  boolean alcoolized;
 	
+	/**
+	 * Affichage du waited time sous forme d'un camembert
+	 */
 	private CamembertCounter camembert;
+	
 	//Compteur pour le temps depuis le dernier appel de update
 	private float cpt = 0;
 	
+	/**
+	 * La liste des usagers attendant une navette
+	 */
 	private volatile List<Passenger> waitingPassenger;
 	
 	//HashMap qui donne la prochaine station a atteindre pour atteindre une filiere a partir de cette station 
@@ -75,12 +89,14 @@ public class Station extends EntityClickable implements EntityDrawable, Dijkstra
 	
 	
 	public  List<Passenger> getWaitingPassenger(){
-//		synchronized(waitingPassenger){
 			return waitingPassenger ;
-			
-//		}
 	}
 	
+	/**
+	 * logique de création de passager
+	 * Un passager est ici généré avec une filière aléatoire
+	 * @return le passager créé
+	 */
 	public Passenger newPassenger()
 	{
 		
@@ -172,6 +188,10 @@ public class Station extends EntityClickable implements EntityDrawable, Dijkstra
 	
 	
 	
+	/**
+	 * Retourne les lignes traversant la station
+	 * @return
+	 */
 	public ArrayList<Line> getLines(){
 		ArrayList<Line> lines = new ArrayList<>();
 		for(Line l : Map.getInstance().getLines()){
@@ -231,28 +251,30 @@ public class Station extends EntityClickable implements EntityDrawable, Dijkstra
 		alcoolized = true;
 	}
 	
+	
+	/**
+	 * Logique de passage d'un bus à cette station
+	 * Si le bus n'est pas vide, on le décharge en premier
+	 * On met ensuite à jour la station de correspondance de chaque passager dans la station
+	 * Et ensuite, si la station n'est pas vide, on charge le bus. 
+	 * @param bus
+	 */
 	public void notifyBus(Bus bus)
 	{
-
-
-		
-			
-		
-	
 			if(!bus.isEmpty()) bus.unload(this);
 
 				for(Passenger passenger : waitingPassenger)
 				{
 					//on met à jour l'arrêt suivant de chaque passager qui attend à la station avant qu'ils vérifient si le bus y va
 					passenger.nextStop = this.nextStop.get(passenger.filiere);
-	
-
 				}
 			if(waitingPassenger.size() > 0) bus.load(this);
-		
-		
 	}
 	
+	/**
+	 * Entrée en station d'un passager.
+	 * @param passenger
+	 */
 	public void enterStation(Passenger passenger)
 	{
 		boolean success = false ;
@@ -263,7 +285,7 @@ public class Station extends EntityClickable implements EntityDrawable, Dijkstra
 		}
 			if(success)
 			{
-				for(Passenger p : waitingPassenger)
+				for(Passenger p : waitingPassenger) //on remet la position de chaque passager à jour
 				{
 					float offsetX = waitingPassenger.indexOf(p)%4;
 					p.setPosition(
@@ -277,15 +299,18 @@ public class Station extends EntityClickable implements EntityDrawable, Dijkstra
 			}
 	}
 	
+	/**
+	 * Sortie d'un passager de la station
+	 * @param passenger
+	 */
 	public void leaveStation(Passenger passenger)
 	{
 		synchronized(waitingPassenger){
 		
-			System.out.println("PASSAGERS AVANT SUPPRESSION : " + waitingPassenger.size());
 			
 			if(waitingPassenger.remove(passenger))
 			{
-				for(Passenger p : waitingPassenger)
+				for(Passenger p : waitingPassenger) //on remet la position de chaque passager à jour
 				{
 					float offsetX = waitingPassenger.indexOf(p)%4;
 					p.setPosition(
@@ -299,11 +324,6 @@ public class Station extends EntityClickable implements EntityDrawable, Dijkstra
 			}
 		
 		}
-	}
-	
-	public Station getNextStation(Passenger passenger)
-	{
-		return null;
 	}
 
 	public Filiere getFiliere(){

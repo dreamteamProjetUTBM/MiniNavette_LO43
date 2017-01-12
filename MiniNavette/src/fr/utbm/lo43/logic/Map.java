@@ -12,6 +12,11 @@ import fr.utbm.lo43.entities.Passenger;
 import fr.utbm.lo43.entities.RailWay;
 import fr.utbm.lo43.entities.Station;
 
+
+/**
+ * @author Quentin Nahil Thomas Jeremy 
+ * Singleton map, espace logique où se déroule la partie.
+ */
 public class Map {
 	
 	public static final int MAX_STATION = 10;
@@ -27,8 +32,10 @@ public class Map {
 	public DijkstraPathfinding<Station> pathfinding;
 
 	public int gameSpeed; //pour gerer la vitesse du jeuet permettre ainsi d'accelerer
-	
-	/** Constructeur privé */
+
+	/** 
+	 * Constructeur privé
+	 */
 	private Map()
 	{
 		gameSpeed = 1;
@@ -50,7 +57,10 @@ public class Map {
 	/** Instance unique pré-initialisée */
 	private static Map INSTANCE;
  
-	/** Point d'accès pour l'instance unique du singleton */
+	/**
+	 * Point d'accès pour l'instance unique du singleton 
+	 * @return l'instance unique du singleton
+	 */
 	public static Map getInstance()
 	{	
 		if(INSTANCE == null)
@@ -58,6 +68,11 @@ public class Map {
 		return INSTANCE;
 	}
 	
+	/**
+	 * Méthode de création de stations. 
+	 * Fabrique une station de filière aléatoire et position générée et l'ajoute à sa liste de stations
+	 * @return la station générée
+	 */
 	public Station createStation(){
 		Random rand = new Random();
 		Vector2f _position = calculateStationPosition();
@@ -70,6 +85,11 @@ public class Map {
 		return station;
 	}
 	
+	/**
+	 * Créé une station d'une filière donné à une position générée et l'ajoute à la liste de station de la map
+	 * @param filiere de la station à générer
+	 * @return la station générée
+	 */
 	public Station createStation(Filiere filiere){
 		Vector2f _position = calculateStationPosition();
 		Station station = new Station(_position, filiere);
@@ -81,6 +101,13 @@ public class Map {
 		return station;
 	}
 	
+	/**
+	 * calcule des coordonnée aléatoire d'une station, qui cependant répondent aux critère du jeu :
+	 * -ne pas recouvrir une autre station
+	 * -ne pas être sur la voie ferrée
+	 * -être dans le périmère de jeu
+	 * @return des positions de station
+	 */
 	private Vector2f calculateStationPosition(){
 		Random rand = new Random();
 		boolean isRight = false;
@@ -123,14 +150,26 @@ public class Map {
 		return _newposition;
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean CanCreateStation(){
-		if(Map.getInstance().getStations().size() >= Map.MAX_STATION)
-			return false;
-
-		return true;
+		return !( Map.getInstance().getStations().size() >= Map.MAX_STATION);
+	
 	}
 	
 	
+	/**
+	 * renvoie une filière en fonction d'un index correspondant :
+	 * 0 = edim
+	 * 1 = energie
+	 * 2 = GI
+	 * 3 = GMC
+	 * default = IMSI 
+	 * @param index
+	 * @return filière 
+	 */
 	private Filiere getFiliere(int index){
 		switch(index){
 			case 0: 
@@ -146,6 +185,11 @@ public class Map {
 		}
 	}
 	
+	
+	/**
+	 * Met à jour toutes les hashmap des stations de la map à jour.
+	 * 
+	 */
 	public void calculateNextStopStations(){
 		synchronized(stations){
 			pathfinding = new DijkstraPathfinding<>(stations);
@@ -154,6 +198,7 @@ public class Map {
 			}
 		}
 	}
+	
 	public int getStationsLenght(){
 		return stations.size();
 	}
@@ -182,10 +227,21 @@ public class Map {
 		}
 	}
 	
+	/**
+	 * Méthode de réinitialisation de la map pour une nouvelle partie. 
+	 */
 	public static void reInit(){
 		INSTANCE = null;
 	}
 	
+	
+	/**
+	 * Renvoie les stations désservies par un bus depuis la station actuelle jusqu'à la fin de sa ligne.
+	 * Si ligne bouclée, renvoie toutes les stations sauf l'acutelle.
+	 * @param bus
+	 * @param _station station où se trouve actuellement le bus
+	 * @return les stations désservies par un bus depuis la station actuelle jusqu'à la fin de sa ligne.
+	 */
 	public ArrayList<Station> getNextStops(Bus bus, Station _station){
 		//renvoyer les stations suivantes du bus de sa ligne
 		ArrayList<Station> nextStops = new ArrayList<>(bus.getCurrentSegment().getLine_bus().getStations());

@@ -8,6 +8,10 @@ import org.newdawn.slick.state.StateBasedGame;
 import fr.utbm.lo43.entities.Segment;
 import fr.utbm.lo43.logic.Line;
 
+/**
+ * @author roger
+ * Lignes sur lesquelles se déplacent les bus classiques.
+ */
 public class ClassicLine extends Line{
 
 	

@@ -11,17 +11,39 @@ import org.newdawn.slick.geom.Vector2f;
 
 import fr.utbm.lo43.logic.Map;
 
+/**
+ * @author Quentin Nahil Thomas Jeremy 
+ * Classe abstraite bus, contient toute la logique commune aux differents bus.
+ */
 public abstract class Bus extends EntityDragable implements EntityDrawable, EntityUpdateable, Runnable
 {
 	protected Polygon polygon;
 
+	/**
+	 * Capacité d'un bus.
+	 */
 	protected int capacity;
 	protected boolean direction;
-	//	protected Station[] listStation;
 	//protected float segmentProgress;
+	
+	/**
+	 * Liste des passagers à bord
+	 */
 	protected volatile List<Passenger> passengers ; 
+	
+	/**
+	 * Segment sur lequel se déplace le bus à un instant T
+	 */
 	protected volatile Segment currentSegment ;
+	
+	/**
+	 * Couleur du bus, associée à celle de la ligne sur laquelle il se trouve
+	 */
 	protected volatile Color color;
+	
+	/**
+	 * Image des passagers à afficher
+	 */
 	protected volatile ArrayList<Image> passenger_images;
 
 	/*
@@ -84,6 +106,12 @@ public abstract class Bus extends EntityDragable implements EntityDrawable, Enti
 		return currentSegment;
 	}
 
+	
+	/**
+	 * Logique de chargement en station.
+	 * Le bus notifie les passagers de la station un à un jusqu'à ce qu'il soit plein
+	 * @param station la station ou le bus arrive
+	 */
 	public void load(Station station)
 	{
 
@@ -101,7 +129,6 @@ public abstract class Bus extends EntityDragable implements EntityDrawable, Enti
 
 		for(Passenger passenger : copy)
 		{
-			//System.out.println("passenger � charger !!!!!!!!!!!!! ==> " + copy.size());
 			if(passengers.size() >= capacity)
 			{
 				return;
@@ -120,10 +147,13 @@ public abstract class Bus extends EntityDragable implements EntityDrawable, Enti
 
 
 
+	/**
+	 * Logique de déchargement du bus en station.
+	 * Va faire descendre du bus chaque passager arrivé à destination
+	 * @param station
+	 */
 	public void unload(Station station)
 	{
-
-
 		try {
 			Thread.sleep(500/Map.getInstance().gameSpeed);
 		} catch (InterruptedException e) {
@@ -151,6 +181,11 @@ public abstract class Bus extends EntityDragable implements EntityDrawable, Enti
 	}
 
 
+	/**
+	 * Faire monter un passager dans le bus
+	 * @param passenger
+	 * @return réussite ou échec
+	 */
 	public boolean takeTheBus(Passenger passenger)
 	{
 		synchronized(passengers){
@@ -169,30 +204,22 @@ public abstract class Bus extends EntityDragable implements EntityDrawable, Enti
 
 
 
+	/**
+	 * Méthode d'actualisation du segment où le bus se déplace
+	 */
 	protected void nextSegment()
 	{
 
 		if(currentSegment.getAngle().distance(getPosition())==0 && currentSegment.getStartSegment().distance(getPosition()) != 0 && currentSegment.getEndSegment().distance(getPosition()) != 0){
-			//on fais rien
+
 		}else{
 			if(endLine()){
-	
-					//ne pas toucher
 					changeDirection();
-					
-			
-
 			}else{
 				if(direction){
-
-							//ne pas toucher
 						currentSegment = currentSegment.getNextSegment();
-						
 					}else{
-						//ne pas toucher
-					
 						currentSegment = currentSegment.getPreviousSegment();
-
 					}
 
 				}
@@ -212,10 +239,10 @@ public abstract class Bus extends EntityDragable implements EntityDrawable, Enti
 		direction = !direction ;
 	}
 
+	
 	private boolean endLine()
 	{
 		if(direction){
-
 			return currentSegment.getNextSegment()==null;
 		}else{
 

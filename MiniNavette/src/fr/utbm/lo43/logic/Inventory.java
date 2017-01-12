@@ -1,5 +1,9 @@
 package fr.utbm.lo43.logic;
 
+/**
+ * @author Quentin Nahil Thomas Jeremy 
+ * Singleton de l'inventaire
+ */
 public class Inventory {
 
 
@@ -53,12 +57,12 @@ public class Inventory {
 	}
 
 	public void takeBridge(){
-		if(remaining_bridges == 0)return; //envoie une exception plutôt
+		if(remaining_bridges == 0)return;
 		remaining_bridges -- ;
 	}
 	
 	public void takeBridges(int bridges){
-		if(remaining_bridges < bridges)return; //envoie une exception plutôt		
+		if(remaining_bridges < bridges)return; 
 		remaining_bridges -= bridges;
 	}
 	

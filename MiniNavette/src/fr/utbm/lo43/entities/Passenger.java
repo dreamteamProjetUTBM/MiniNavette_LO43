@@ -15,6 +15,11 @@ import fr.utbm.lo43.logic.Map;
 import fr.utbm.lo43.logic.Score;
 
 
+/**
+ * @author Quentin Nahil Thomas Jeremy 
+ * Usager du réseau de mini-navette.
+ * Il poppe sur une station et cherche à se rendre à une autre station.
+ */
 public class Passenger extends Entity implements EntityDrawable, EntityUpdateable
 {
 	private Date arrivalTime;
@@ -38,9 +43,15 @@ public class Passenger extends Entity implements EntityDrawable, EntityUpdateabl
 		drawable = true;
 	}
 	
+	/**
+	 * Notification de l'arrivée d'un bus : 
+	 * le passager va vérifier si la station dont il a besoin est desservie par le bus et monter si oui
+	 * @param bus
+	 * @param station
+	 * @param nextStops arrêts desservis par le bus
+	 */
 	public void busArrived(Bus bus,Station station, ArrayList<Station> nextStops )
 	{
-
 		if(nextStops.contains(nextStop))
 		{
 			boolean success = bus.takeTheBus(this);
@@ -52,6 +63,13 @@ public class Passenger extends Entity implements EntityDrawable, EntityUpdateabl
 
 	}
 	
+	/**
+	 * Lorsqu'un passager arrive en station. 
+	 * Il quitte le bus, et s'il est arrivée à sa destination finale, 
+	 * il ne reste pas dans la station mais incrémente le score
+	 * Sinon, il entre en station
+	 * @param station
+	 */
 	public void leaveBus(Station station)
 	{
 		if(this.filiere == station.filiere)

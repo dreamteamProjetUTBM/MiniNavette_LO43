@@ -1,5 +1,9 @@
 package fr.utbm.lo43.logic;
 
+/**
+ * @author Quentin Nahil Thomas Jeremy 
+ * Singleton score, classe enregistrant le score et pouvant faire office de stratégie pour changer le décompte des points
+ */
 public class Score {
 
 	private int passengersArrived ;
@@ -27,7 +31,6 @@ public class Score {
 	public void incrementScore()
 	{
 		passengersArrived ++ ;
-		System.out.println("Un passager arrivé à destination ! Le score est de : "+getScore());
 	}
 	
 	public int getScore()

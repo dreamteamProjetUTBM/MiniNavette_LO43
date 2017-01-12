@@ -1,5 +1,9 @@
 package fr.utbm.lo43.logic;
 
+/**
+ * @author Quentin Nahil Thomas Jeremy 
+ * classe -sensée- contenant la logique du jeu.
+ */
 public class Game {
 
 	public Map map;

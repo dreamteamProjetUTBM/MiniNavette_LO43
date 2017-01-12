@@ -20,6 +20,10 @@ import fr.utbm.lo43.logic.Inventory;
 import fr.utbm.lo43.logic.Line;
 import fr.utbm.lo43.logic.Map;
 
+/**
+ * @author roger
+ *
+ */
 public class ClassicBus extends Bus
 {	
 	
@@ -35,8 +39,6 @@ public class ClassicBus extends Bus
 	
 	
 	/*
-<<<<<<< Updated upstream
-=======
 	 * Si le bus est bloqué, il sera à True, sinon il sera à False
 	 */
 	boolean lock = false;
@@ -47,11 +49,13 @@ public class ClassicBus extends Bus
 	volatile boolean canBeRemove = false;
 	
 	/*
->>>>>>> Stashed changes
 	 * Contient l'angle de rotation du bus
 	 */
 	private float theta;
 	
+	/*
+	 * Booléen 
+	 */
 	private boolean canBeKilled ;
 	
 	/*
@@ -59,6 +63,12 @@ public class ClassicBus extends Bus
 	 */
 	private int cpt = 0;
 		
+	/**
+	 * Constructeur d'un bus de type classique
+	 * @param _position
+	 * @param _color
+	 * @param current
+	 */
 	public ClassicBus(Vector2f _position, Color _color,Segment current)
 	{
 		super(_position, _color);
@@ -270,16 +280,24 @@ public class ClassicBus extends Bus
 	}
 	
 	
+	/**
+	 * Méthode pour supprimer un bus. Un clic droit le fera disparaître à la prochaine station.
+	 * Deux clics le supprimera au deuxième clic 
+	 * @param mouseX
+	 * @param mouseY
+	 */
 	public void RightedClicked(float mouseX, float mouseY){
 		if(polygon.contains(mouseX, mouseY)){
 			if(lock){
 				setCanBeRemove(true);
+				canBeKilled = true;
 			}
 			lock = true;
 		}
 		
 	}
 
+	
 	@Override
 	public  void  update(GameContainer gc, StateBasedGame sbg,int delta) {
 		
@@ -345,10 +363,11 @@ public class ClassicBus extends Bus
 		canBeKilled = value;
 	}
 	
+	
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
-		while(true){
+		while(!canBeKilled){
 			
 			for(int i = 0; i<Map.getInstance().gameSpeed;++i){
 				move();
@@ -360,21 +379,15 @@ public class ClassicBus extends Bus
 				Thread.currentThread().stop();
 				e.printStackTrace();
 			}
-
-			if(canBeKilled) {
-//				this.canBeRemove = true;
-				
-				System.out.println("fin du thread bus");
-				
-				try {
-					Thread.sleep(1000);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				break ;
-			}
 			
+		}
+		System.out.println("fin du thread bus");
+		
+		try {
+			Thread.sleep(1000); 
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		
 	}

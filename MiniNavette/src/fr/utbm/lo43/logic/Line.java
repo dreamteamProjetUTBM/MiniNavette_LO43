@@ -14,6 +14,10 @@ import fr.utbm.lo43.entities.EntityUpdateable;
 import fr.utbm.lo43.entities.Segment;
 import fr.utbm.lo43.entities.Station;
 
+/**
+ * @author Quentin Nahil Thomas Jeremy 
+ * Ligne de bus de base. 
+ */
 public abstract class Line extends Entity implements EntityUpdateable, EntityDrawable {
 
 	protected Color color;
