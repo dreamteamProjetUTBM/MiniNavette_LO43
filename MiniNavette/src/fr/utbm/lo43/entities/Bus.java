@@ -176,26 +176,21 @@ public abstract class Bus extends EntityDragable implements EntityDrawable, Enti
 			//on fais rien
 		}else{
 			if(endLine()){
-				if(!currentSegment.line_bus.existingSegment(currentSegment)){
-
-				}else{
+	
 					//ne pas toucher
 					changeDirection();
-					System.out.println("3");
-				}
+					
+			
 
 			}else{
 				if(direction){
-					if(!currentSegment.line_bus.existingSegment(currentSegment)){			
-							currentSegment = currentSegment.getNextSegment();
-							System.out.println("6");
-						}else{
+
 							//ne pas toucher
-							currentSegment = currentSegment.getNextSegment();
-						}
+						currentSegment = currentSegment.getNextSegment();
+						
 					}else{
 						//ne pas toucher
-						System.out.println("7");
+					
 						currentSegment = currentSegment.getPreviousSegment();
 
 					}
