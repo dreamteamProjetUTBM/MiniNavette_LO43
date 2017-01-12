@@ -124,7 +124,7 @@ public class Map {
 	}
 	
 	public boolean CanCreateStation(){
-		if(Map.getInstance().getStations().size()-1 == Map.MAX_STATION)
+		if(Map.getInstance().getStations().size() >= Map.MAX_STATION)
 			return false;
 
 		return true;
