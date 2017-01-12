@@ -9,7 +9,7 @@ public class Inventory {
 	/** Constructeur privé */
 	private Inventory()
 	{
-		remaining_bus = 30;
+		remaining_bus = 3;
 		remaining_bridges = 2; 
 
 	}

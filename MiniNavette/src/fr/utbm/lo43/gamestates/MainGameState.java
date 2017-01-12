@@ -43,6 +43,7 @@ public class MainGameState extends BasicGameState {
 
 	int counter = 0;
 	int counterStation = 0;
+	int counterBonus = 0;
 	
 	public EntityCollection entities;
 	ThreadPoolExecutor threadPool ;
@@ -224,6 +225,7 @@ public class MainGameState extends BasicGameState {
 		Map.getInstance().gameSpeed = (int) (gameSpeed_slider.getValue()/100*Map.GAMESPEED_MAX +1);
 		counter += arg2*game.map.gameSpeed;
 		counterStation += arg2*game.map.gameSpeed;
+		counterBonus += arg2*game.map.gameSpeed;
 		
 		bus_label.setText(game.getInventory().getRemainingBus() + "");
 		bridge_label.setText(game.getInventory().getRemainingBridges() + "");
@@ -246,7 +248,20 @@ public class MainGameState extends BasicGameState {
 			counterStation = 0;
 
 		}
+		
+		if(counterBonus>60000){
+			if(rand.nextInt()%2==0){
+				Inventory.getInstance().addBridges(1);				
+			}else{
+				if(Inventory.getInstance().getRemainingBus()-threadPool.getPoolSize()<MAX_BUS){
+					Inventory.getInstance().setRemainingBus(1);						
+				}else{
 
+					Inventory.getInstance().addBridges(1);	
+				}
+			}
+			counterBonus = 0;
+		}
 		/*
 		 * Supprime les bus bloqués
 		 */
