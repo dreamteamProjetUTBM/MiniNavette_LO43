@@ -172,7 +172,7 @@ public abstract class Bus extends EntityDragable implements EntityDrawable, Enti
 	protected void nextSegment()
 	{
 
-		if(currentSegment.getAngle().distance(getPosition())==0){
+		if(currentSegment.getAngle().distance(getPosition())==0 && currentSegment.getStartSegment().distance(getPosition()) != 0 && currentSegment.getEndSegment().distance(getPosition()) != 0){
 			//on fais rien
 		}else{
 			if(endLine()){

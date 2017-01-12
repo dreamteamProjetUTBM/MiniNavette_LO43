@@ -357,8 +357,10 @@ public class Station extends EntityClickable implements EntityDrawable, Dijkstra
 		cpt+=delta ;
 		if(waitedTime == 0){
 			cptCamembert = 0;
-		}else{
+		}else if (isCriticalPassenger()){
 			cptCamembert = cpt;
+		}else{
+			cptCamembert = -cpt +1000;
 		}
 		camembert.setPercentage((waitedTime+cptCamembert/1000)*100/MAX_WAITING_TIME);
 		if(cpt>1000){
