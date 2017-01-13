@@ -14,81 +14,72 @@ import fr.utbm.lo43.logic.Filiere;
 import fr.utbm.lo43.logic.Map;
 import fr.utbm.lo43.logic.Score;
 
-
 /**
- * @author Quentin Nahil Thomas Jeremy 
- * Usager du réseau de mini-navette.
- * Il poppe sur une station et cherche à se rendre à une autre station.
+ * @author Quentin Nahil Thomas Jeremy Usager du réseau de mini-navette. Il
+ *         poppe sur une station et cherche à se rendre à une autre station.
  */
-public class Passenger extends Entity implements EntityDrawable, EntityUpdateable
-{
+public class Passenger extends Entity implements EntityDrawable, EntityUpdateable {
 	private Date arrivalTime;
 	protected Filiere filiere;
 	private Image preview;
 	protected Station nextStop;
-	
-	public Passenger(Vector2f _position, Filiere type) 
-	{
+
+	public Passenger(Vector2f _position, Filiere type) {
 		super(_position);
 		filiere = type;
 		try {
-			preview = new Image("asset/"+filiere.toString().toLowerCase()+".png");
-		}
-		catch (SlickException e) 
-		{
+			preview = new Image("asset/" + filiere.toString().toLowerCase() + ".png");
+		} catch (SlickException e) {
 			e.printStackTrace();
 		}
-		
+
 		updatable = true;
 		drawable = true;
 	}
-	
+
 	/**
-	 * Notification de l'arrivée d'un bus : 
-	 * le passager va vérifier si la station dont il a besoin est desservie par le bus et monter si oui
+	 * Notification de l'arrivée d'un bus : le passager va vérifier si la
+	 * station dont il a besoin est desservie par le bus et monter si oui
+	 * 
 	 * @param bus
 	 * @param station
-	 * @param nextStops arrêts desservis par le bus
+	 * @param nextStops
+	 *            arrêts desservis par le bus
 	 */
-	public void busArrived(Bus bus,Station station, ArrayList<Station> nextStops )
-	{
-		if(nextStops.contains(nextStop))
-		{
+	public void busArrived(Bus bus, Station station, ArrayList<Station> nextStops) {
+		if (nextStops.contains(nextStop)) {
 			boolean success = bus.takeTheBus(this);
-			if(success)
-			{
+			if (success) {
 				station.leaveStation(this);
 			}
 		}
 
 	}
-	
+
 	/**
-	 * Lorsqu'un passager arrive en station. 
-	 * Il quitte le bus, et s'il est arrivée à sa destination finale, 
-	 * il ne reste pas dans la station mais incrémente le score
-	 * Sinon, il entre en station
+	 * Lorsqu'un passager arrive en station. Il quitte le bus, et s'il est
+	 * arrivée à sa destination finale, il ne reste pas dans la station mais
+	 * incrémente le score Sinon, il entre en station
+	 * 
 	 * @param station
 	 */
-	public void leaveBus(Station station)
-	{
-		if(this.filiere == station.filiere)
-		{
+	public void leaveBus(Station station) {
+		if (this.filiere == station.filiere) {
 			Score.getInstance().incrementScore();
 			return;
 		}
 		this.arrivalTime = new Date();
-		station.enterStation(this);		
+		station.enterStation(this);
 	}
 
 	@Override
 	public void render(Graphics arg2) {
-		preview.draw(getPosition().x,getPosition().y,Map.GRID_SIZE/2,Map.GRID_SIZE/2);
+		preview.draw(getPosition().x, getPosition().y, Map.GRID_SIZE / 2, Map.GRID_SIZE / 2);
 	}
-	
+
 	@Override
-	public void update(GameContainer gc, StateBasedGame sbg,int delta) {
+	public void update(GameContainer gc, StateBasedGame sbg, int delta) {
 		// TODO Auto-generated method stub
-		
+
 	}
 }

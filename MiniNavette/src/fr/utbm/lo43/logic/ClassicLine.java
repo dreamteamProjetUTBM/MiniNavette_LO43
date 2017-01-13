@@ -9,22 +9,19 @@ import fr.utbm.lo43.entities.Segment;
 import fr.utbm.lo43.logic.Line;
 
 /**
- * @author roger
- * Lignes sur lesquelles se déplacent les bus classiques.
+ * @author roger Lignes sur lesquelles se déplacent les bus classiques.
  */
-public class ClassicLine extends Line{
+public class ClassicLine extends Line {
 
-	
-	
-	public ClassicLine(Color _color){
+	public ClassicLine(Color _color) {
 		super(_color);
-		
+
 	}
 
 	@Override
-	public void update(GameContainer gc, StateBasedGame sbg,int delta) {
+	public void update(GameContainer gc, StateBasedGame sbg, int delta) {
 		for (Segment segment : getSegments()) {
-			segment.update(gc, sbg,delta);
+			segment.update(gc, sbg, delta);
 		}
 	}
 
@@ -34,5 +31,5 @@ public class ClassicLine extends Line{
 			segment.render(arg2);
 		}
 	}
-	
+
 }

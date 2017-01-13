@@ -4,8 +4,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.state.StateBasedGame;
 
-public interface EntityDrawable 
-{
+public interface EntityDrawable {
 	/**
 	 * Tout ce qui concerne le rendu
 	 */

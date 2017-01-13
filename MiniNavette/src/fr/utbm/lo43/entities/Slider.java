@@ -12,106 +12,89 @@ import org.newdawn.slick.state.StateBasedGame;
 /**
  * Classe Slider
  * 
- * Permet de règler des paramètres comme le volume de la musique
- * par exemple
+ * Permet de règler des paramètres comme le volume de la musique par exemple
+ * 
  * @author Thomas Gredin
  *
  */
-public class Slider extends EntityClickable implements EntityDrawable
-{
+public class Slider extends EntityClickable implements EntityDrawable {
 	private Line slider;
 	private Rectangle indicator;
 	private int indicator_size;
-	
+
 	private Color color;
-	
+
 	boolean isSliding;
-	
-	public Slider(Vector2f _position) 
-	{
+
+	public Slider(Vector2f _position) {
 		super(_position);
 		indicator_size = 32;
-		
+
 		slider = new Line(_position, new Vector2f(_position.x + 200, _position.y));
-		indicator = new Rectangle(
-				_position.x - indicator_size / 4, 
-				_position.y - indicator_size / 2, 
-				indicator_size / 2, 
-				indicator_size
-		);
-		
+		indicator = new Rectangle(_position.x - indicator_size / 4, _position.y - indicator_size / 2,
+				indicator_size / 2, indicator_size);
+
 		isSliding = false;
 		color = Color.black;
 		drawable = true;
 	}
 
 	@Override
-	public void update(GameContainer gc, StateBasedGame sbg, int delta) 
-	{
+	public void update(GameContainer gc, StateBasedGame sbg, int delta) {
 		Input input = gc.getInput();
-		
-		if(input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON))
-		{
-			if(indicator.contains(input.getMouseX(), input.getMouseY()))
-			{
-				if(indicator.getCenterX() >= position.x && indicator.getCenterX() <= slider.getMaxX())
-				{
+
+		if (input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON)) {
+			if (indicator.contains(input.getMouseX(), input.getMouseY())) {
+				if (indicator.getCenterX() >= position.x && indicator.getCenterX() <= slider.getMaxX()) {
 					isSliding = true;
-				}
-				else
-				{
+				} else {
 					isSliding = false;
 				}
 			}
-		}
-		else
-		{
+		} else {
 			isSliding = false;
 		}
-		
-		if(isSliding)
-		{
+
+		if (isSliding) {
 			indicator.setCenterX(input.getMouseX());
 		}
-		
-		if(indicator.getCenterX() < position.x)
-		{
+
+		if (indicator.getCenterX() < position.x) {
 			indicator.setCenterX(position.x);
 		}
-		if(indicator.getCenterX() > slider.getMaxX())
-		{
+		if (indicator.getCenterX() > slider.getMaxX()) {
 			indicator.setCenterX(slider.getMaxX());
 		}
 	}
 
 	@Override
-	public void render(Graphics arg2) 
-	{
+	public void render(Graphics arg2) {
 		arg2.setColor(color);
 		arg2.setLineWidth(5);
 		arg2.draw(slider);
 		arg2.fill(indicator);
 	}
-	
+
 	/**
 	 * Permet de récupérer la valeur de slide en pourcentage
+	 * 
 	 * @return valeur en pourcent
 	 */
-	public float getValue()
-	{
+	public float getValue() {
 		float percentage = (indicator.getCenterX() - position.x);
 		percentage *= 100;
 		percentage /= (slider.getMaxX() - position.x);
-		
+
 		return percentage;
 	}
-	
+
 	/**
 	 * Permet de modifier la couleur de rendu du slider
-	 * @param _color nouvelle couleur
+	 * 
+	 * @param _color
+	 *            nouvelle couleur
 	 */
-	public void setColor(Color _color)
-	{
+	public void setColor(Color _color) {
 		color = _color;
 	}
 }

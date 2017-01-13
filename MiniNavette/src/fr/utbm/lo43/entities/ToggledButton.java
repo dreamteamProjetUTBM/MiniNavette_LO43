@@ -7,118 +7,102 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
 
-public class ToggledButton extends EntityClickable implements EntityDrawable 
-{
+public class ToggledButton extends EntityClickable implements EntityDrawable {
 	private Image img_actual;
-	
+
 	private Image img_idle;
 	private Image img_hover;
 	private Image img_pressed;
-	
+
 	private boolean toggled;
-	
-	public ToggledButton(EventEntityMouseClicked _clickedEvent, Vector2f _position, Vector2f _size) 
-	{
+
+	public ToggledButton(EventEntityMouseClicked _clickedEvent, Vector2f _position, Vector2f _size) {
 		super(_clickedEvent, _position, _size);
-		
+
 		drawable = true;
 		toggled = false;
 	}
-	
-	public ToggledButton(Vector2f _position, Vector2f _size,String _img_idle, String _img_hover, String _img_pressed) 
-	{
+
+	public ToggledButton(Vector2f _position, Vector2f _size, String _img_idle, String _img_hover, String _img_pressed) {
 		super(_position);
-		
-		try 
-		{
+
+		try {
 			img_idle = new Image(_img_idle);
 			img_hover = new Image(_img_hover);
 			img_pressed = new Image(_img_pressed);
-		} 
-		catch (SlickException e) 
-		{
+		} catch (SlickException e) {
 			e.printStackTrace();
 		}
-		
+
 		img_actual = img_idle;
 		size.x = _size.x;
 		size.y = _size.y;
-		
+
 		drawable = true;
 		toggled = false;
 
 	}
-	
-	public ToggledButton(Vector2f _position, Vector2f _size) 
-	{
+
+	public ToggledButton(Vector2f _position, Vector2f _size) {
 		super(_position, _size);
-		
+
 		drawable = true;
 		toggled = false;
 
 	}
-	
-	public ToggledButton(Vector2f _position) 
-	{
+
+	public ToggledButton(Vector2f _position) {
 		super(_position);
-		
+
 		drawable = true;
 		toggled = false;
 
 	}
 
 	@Override
-	public void render(Graphics arg2) 
-	{
-		img_actual.draw(position.x, position.y,size.x,size.y);
+	public void render(Graphics arg2) {
+		img_actual.draw(position.x, position.y, size.x, size.y);
 	}
-	
+
 	@Override
-	public void update(GameContainer gc, StateBasedGame sbg,int delta)
-	{
-		super.update(gc, sbg,delta);
-		
+	public void update(GameContainer gc, StateBasedGame sbg, int delta) {
+		super.update(gc, sbg, delta);
+
 		/**
 		 * Logique de changement d'image suivant la position de la souris
 		 */
-		if(toggled){
+		if (toggled) {
 			img_actual = img_pressed;
-		}
-		else {
-			if(isMouseHover)
-			{
-				
-				if(isMouseHoverAndPressed)
-				{
+		} else {
+			if (isMouseHover) {
+
+				if (isMouseHoverAndPressed) {
 					img_actual = img_pressed;
-				}
-				else
-				{
+				} else {
 					img_actual = img_hover;
 				}
-			}
-			else
-			{
+			} else {
 				img_actual = img_idle;
 			}
 		}
 	}
 
-	public void setToggled(boolean _bool){
+	public void setToggled(boolean _bool) {
 		toggled = _bool;
 	}
-	
-	public boolean getToggled(){
+
+	public boolean getToggled() {
 		return toggled;
 	}
-	
+
 	/**
-	 * Permet de mettre en place l'action qui sera men� quand le bouton de la souris sera
-	 * cliqu�
-	 * @param _mouseClicked L'interface surcharg�e
+	 * Permet de mettre en place l'action qui sera men� quand le bouton de la
+	 * souris sera cliqu�
+	 * 
+	 * @param _mouseClicked
+	 *            L'interface surcharg�e
 	 */
-	public void setEventCallback(EventEntityMouseClicked _mouseClicked)
-	{
+	public void setEventCallback(EventEntityMouseClicked _mouseClicked) {
 		clickedEvent = _mouseClicked;
 	}
 }

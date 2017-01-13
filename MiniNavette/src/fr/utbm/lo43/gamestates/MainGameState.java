@@ -39,22 +39,25 @@ import fr.utbm.lo43.logic.Score;
  * 
  * @author Thomas Gredin
  *
- * Classe MainGameState
+ *         Classe MainGameState
  * 
- * Cette classe décrit le fonctionnement de la phase de jeu, c'est à dire celle
- * ou l'on place les lignes, les bus, ...etc.
+ *         Cette classe décrit le fonctionnement de la phase de jeu, c'est à
+ *         dire celle ou l'on place les lignes, les bus, ...etc.
  * 
- * Elle hérite de la classe BasicGameState qui est une classe exposé par le framework
- * de Windowing que nous avons utilisé (Slick2D). Ce principe est simple mais très
- * puissant car il permet d'isoler les différentes phases du jeux dans des classes séparées.
- * Ainsi on se retrouve avec un GameState pour le Menu Principal, un pour le Menu de Pause
- * et ainsi de suite.
+ *         Elle hérite de la classe BasicGameState qui est une classe exposé par
+ *         le framework de Windowing que nous avons utilisé (Slick2D). Ce
+ *         principe est simple mais très puissant car il permet d'isoler les
+ *         différentes phases du jeux dans des classes séparées. Ainsi on se
+ *         retrouve avec un GameState pour le Menu Principal, un pour le Menu de
+ *         Pause et ainsi de suite.
  * 
- * Quand on souhaite changer de phase de jeux il suffit de faire appel à une
- * phase différente (Une instance d'un autre GameState) qui va prendre la 
- * place de l'actuelle pour être mise à jour et rendu à l'écran.
+ *         Quand on souhaite changer de phase de jeux il suffit de faire appel à
+ *         une phase différente (Une instance d'un autre GameState) qui va
+ *         prendre la place de l'actuelle pour être mise à jour et rendu à
+ *         l'écran.
  * 
- * @see MainMenuGameState, PauseMenuGameState, GameOverGameState, OptionMenuGameState
+ * @see MainMenuGameState, PauseMenuGameState, GameOverGameState,
+ *      OptionMenuGameState
  */
 public class MainGameState extends BasicGameState {
 
@@ -64,9 +67,9 @@ public class MainGameState extends BasicGameState {
 	int counter = 0;
 	int counterStation = 0;
 	int counterBonus = 0;
-	
+
 	public EntityCollection entities;
-	ThreadPoolExecutor threadPool ;
+	ThreadPoolExecutor threadPool;
 
 	Image menu_inventory;
 	ArrayList<ToggledButton> lines_button;
@@ -76,7 +79,7 @@ public class MainGameState extends BasicGameState {
 	private Label bus_label;
 	private Label bridge_label;
 	private Label score_label;
-	
+
 	private Slider gameSpeed_slider;
 	private Image gameSpeed_image;
 
@@ -88,25 +91,22 @@ public class MainGameState extends BasicGameState {
 	private boolean editLine;
 	private Vector2f drag_station_position;
 
-	//private RailWay railWay;
+	// private RailWay railWay;
 
 	@Override
 	public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException {
 		game = new Game();
 		entities = new EntityCollection();
-		threadPool = new ThreadPoolExecutor(
-				MAX_BUS,
-                MAX_BUS,
-                50000L,
-                TimeUnit.MILLISECONDS,
-                new LinkedBlockingQueue<Runnable>(MAX_BUS));
+		threadPool = new ThreadPoolExecutor(MAX_BUS, MAX_BUS, 50000L, TimeUnit.MILLISECONDS,
+				new LinkedBlockingQueue<Runnable>(MAX_BUS));
 		threadPool.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
-		
+
 		editLine = false;
 
 		menu_inventory = new Image("asset/info_barre.png");
-		//new Rectangle(0, Map.HEIGHT - Map.GRID_SIZE * 1.5f, Map.WIDTH, Map.GRID_SIZE * 1.5f);
-				
+		// new Rectangle(0, Map.HEIGHT - Map.GRID_SIZE * 1.5f, Map.WIDTH,
+		// Map.GRID_SIZE * 1.5f);
+
 		lines_button = new ArrayList<ToggledButton>();
 		lines_button_img = new ArrayList<String>();
 
@@ -175,8 +175,6 @@ public class MainGameState extends BasicGameState {
 				new Vector2f(Map.GRID_SIZE * 2, Map.GRID_SIZE * 2), "asset/bus_b_idle.png", "asset/bus_b_hover.png",
 				"asset/bus_b_pressed.png");
 
-
-		
 		bus_label = new Label(Integer.toString(game.getInventory().getRemainingBus()),
 				new Vector2f(107, Map.HEIGHT - Map.GRID_SIZE / 1.1f));
 		bus_label.setColor(Color.white);
@@ -184,11 +182,11 @@ public class MainGameState extends BasicGameState {
 		bridge_label = new Label(Integer.toString(game.getInventory().getRemainingBridges()),
 				new Vector2f(274, Map.HEIGHT - Map.GRID_SIZE / 1.1f));
 		bridge_label.setColor(Color.white);
-		
+
 		score_label = new Label(Integer.toString(Score.getInstance().getScore()),
 				new Vector2f(Map.WIDTH - 102, Map.HEIGHT - Map.GRID_SIZE / 1.1f));
 		score_label.setColor(Color.white);
-		
+
 		bus_button.setEventCallback(new EventEntityMouseClicked() {
 
 			@Override
@@ -196,23 +194,24 @@ public class MainGameState extends BasicGameState {
 				bus_button.setToggled(!bus_button.getToggled());
 			}
 		});
-		
-		gameSpeed_slider = new Slider(new Vector2f(Map.WIDTH - Map.GRID_SIZE * 12.5f, Map.HEIGHT - Map.GRID_SIZE / 1.5f));
+
+		gameSpeed_slider = new Slider(
+				new Vector2f(Map.WIDTH - Map.GRID_SIZE * 12.5f, Map.HEIGHT - Map.GRID_SIZE / 1.5f));
 		gameSpeed_slider.setColor(Color.black);
 		gameSpeed_image = new Image("asset/speed.png");
-		
+
 		entities.add(bus_button);
 		entities.add(bus_label);
 		entities.add(bridge_label);
 		entities.add(score_label);
 		entities.add(gameSpeed_slider);
-		
+
 		Map.getInstance().getStations().clear();
-		
+
 		entities.add(game.map.createStation(Filiere.GI));
 		entities.add(game.map.createStation(Filiere.ENERGIE));
 		entities.add(game.map.createStation(Filiere.EDIM));
-		
+
 		current_line = 0;
 	}
 
@@ -230,7 +229,7 @@ public class MainGameState extends BasicGameState {
 		menu_inventory.draw(0, Map.HEIGHT - Map.GRID_SIZE * 1.5f);
 
 		entities.render(arg2);
-		
+
 		gameSpeed_image.draw(Map.WIDTH - Map.GRID_SIZE * 14.5f, Map.HEIGHT - Map.GRID_SIZE * 1.65f);
 	}
 
@@ -238,22 +237,20 @@ public class MainGameState extends BasicGameState {
 	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException {
 
 		entities.update(arg0, arg1, arg2);
-		
-		
+
 		Random rand = new Random();
-		
-		Map.getInstance().gameSpeed = (int) (gameSpeed_slider.getValue()/100*Map.GAMESPEED_MAX +1);
-		counter += arg2*game.map.gameSpeed;
-		counterStation += arg2*game.map.gameSpeed;
-		counterBonus += arg2*game.map.gameSpeed;
-		
+
+		Map.getInstance().gameSpeed = (int) (gameSpeed_slider.getValue() / 100 * Map.GAMESPEED_MAX + 1);
+		counter += arg2 * game.map.gameSpeed;
+		counterStation += arg2 * game.map.gameSpeed;
+		counterBonus += arg2 * game.map.gameSpeed;
+
 		bus_label.setText(game.getInventory().getRemainingBus() + "");
 		bridge_label.setText(game.getInventory().getRemainingBridges() + "");
 		score_label.setText(Score.getInstance().getScore() + "");
-		
+
 		fr.utbm.lo43.logic.Line _line = Map.getInstance().getLine(current_line);
-		
-		
+
 		if (counter > 5000) {
 			int index_station = rand.nextInt(game.map.getStationsLenght());
 			while (!game.map.getStations().get(index_station).canAddPassenger())
@@ -261,23 +258,23 @@ public class MainGameState extends BasicGameState {
 			game.map.getStations().get(index_station).newPassenger();
 			counter = 0;
 		}
-		
-		if(counterStation > 15000){
-			if(game.map.CanCreateStation())
+
+		if (counterStation > 15000) {
+			if (game.map.CanCreateStation())
 				entities.add(game.map.createStation());
 			counterStation = 0;
 
 		}
-		
-		if(counterBonus>90000){
-			if(rand.nextInt()%2==0){
-				Inventory.getInstance().addBridges(1);				
-			}else{
-				if(Inventory.getInstance().getRemainingBus()+threadPool.getPoolSize()<MAX_BUS){
-					Inventory.getInstance().setRemainingBus(1);						
-				}else{
 
-					Inventory.getInstance().addBridges(1);	
+		if (counterBonus > 90000) {
+			if (rand.nextInt() % 2 == 0) {
+				Inventory.getInstance().addBridges(1);
+			} else {
+				if (Inventory.getInstance().getRemainingBus() + threadPool.getPoolSize() < MAX_BUS) {
+					Inventory.getInstance().setRemainingBus(1);
+				} else {
+
+					Inventory.getInstance().addBridges(1);
 				}
 			}
 			counterBonus = 0;
@@ -286,22 +283,22 @@ public class MainGameState extends BasicGameState {
 		 * Supprime les bus bloquÃ©s
 		 */
 		ArrayList<Entity> copyEntities = new ArrayList<Entity>(entities.getEntities());
-					
+
 		for (Entity _entity : copyEntities) {
 
-			if(_entity.getClass() == ClassicBus.class){
+			if (_entity.getClass() == ClassicBus.class) {
 				ClassicBus _tmp = (ClassicBus) _entity;
-				if(_tmp.canBeRemoved() || _tmp.CanBeKilled()){
+				if (_tmp.canBeRemoved() || _tmp.CanBeKilled()) {
 
 					System.out.println("Some bus to be removed");
-					if(entities.deleteObject(_tmp)){
+					if (entities.deleteObject(_tmp)) {
 						game.getInventory().setRemainingBus(1);
 						_tmp.setCanBeKilled(true);
 					}
 				}
 			}
 		}
-		
+
 		Input input = arg0.getInput();
 
 		if (input.isKeyDown(Input.KEY_ESCAPE)) {
@@ -309,36 +306,37 @@ public class MainGameState extends BasicGameState {
 			arg1.enterState(GameWindow.GS_PAUSE_MENU);
 		}
 
-		if (input.isMousePressed(Input.MOUSE_RIGHT_BUTTON)){
-			for(Entity _entity : entities.getEntities()){
-				if(_entity.getClass() == ClassicBus.class){
+		if (input.isMousePressed(Input.MOUSE_RIGHT_BUTTON)) {
+			for (Entity _entity : entities.getEntities()) {
+				if (_entity.getClass() == ClassicBus.class) {
 					ClassicBus _tmp = (ClassicBus) _entity;
 					_tmp.RightedClicked(input.getMouseX(), input.getMouseY());
 				}
 			}
 		}
-		//Ajouter un bus sur une ligne
+		// Ajouter un bus sur une ligne
 		if (input.isMousePressed(Input.MOUSE_LEFT_BUTTON) && bus_button.getToggled()) {
 			for (fr.utbm.lo43.logic.Line line : Map.getInstance().getLines()) {
 				for (Segment segment : line.getSegments()) {
 
-					for(int i = -10; i < 11; i++){
-						for(int j = -10; j < 11 ; j++){
-							int mouseX = (input.getMouseX())+i;
-							int mouseY = (input.getMouseY())+j;
-							
-							if(segment.isOnSegment(new Vector2f(mouseX,mouseY)) && game.getInventory().getRemainingBus() > 0){
-								//Alors on ajoute un bus sur le segment
-								
+					for (int i = -10; i < 11; i++) {
+						for (int j = -10; j < 11; j++) {
+							int mouseX = (input.getMouseX()) + i;
+							int mouseY = (input.getMouseY()) + j;
+
+							if (segment.isOnSegment(new Vector2f(mouseX, mouseY))
+									&& game.getInventory().getRemainingBus() > 0) {
+								// Alors on ajoute un bus sur le segment
+
 								bus_button.setToggled(false);
 								game.getInventory().setRemainingBus(-1);
-								
-								ClassicBus busThread = new ClassicBus(new Vector2f(mouseX,mouseY),
-										game.map.getLine(segment.getLineIndex()).getColor(), segment); 
-								
+
+								ClassicBus busThread = new ClassicBus(new Vector2f(mouseX, mouseY),
+										game.map.getLine(segment.getLineIndex()).getColor(), segment);
+
 								entities.add(busThread);
 
-				                threadPool.submit(busThread);
+								threadPool.submit(busThread);
 								return;
 							}
 						}
@@ -420,15 +418,15 @@ public class MainGameState extends BasicGameState {
 				if (_line.canRemove(previsualizedSegment)) {
 
 					previsualizedSegment.setIcon("asset/poubelle.png");
-				}else{
-					if(previsualizedSegment.getBridges().size()>0 && Inventory.getInstance().getRemainingBridges() <= 0){
+				} else {
+					if (previsualizedSegment.getBridges().size() > 0
+							&& Inventory.getInstance().getRemainingBridges() <= 0) {
 						previsualizedSegment.setForbiddenBridges(true);
 					}
 				}
 
-
 				segmentTemp = previsualizedSegment;
-		
+
 				entities.addAt(previsualizedSegment, 0);
 			}
 		}
@@ -449,8 +447,8 @@ public class MainGameState extends BasicGameState {
 						if (_line.canRemove(_segment)) {
 							_line.removeSegment(_segment);
 							entities.delete(_segment);
-							//Suppr bus ici
-							if(_segment.getBridges().size()>0){
+							// Suppr bus ici
+							if (_segment.getBridges().size() > 0) {
 								Inventory.getInstance().addBridge();
 							}
 						}
@@ -471,43 +469,49 @@ public class MainGameState extends BasicGameState {
 								if (index == 0) {
 									_segment = _segment.reverse();
 								}
-								
+
 								for (fr.utbm.lo43.logic.Line line : Map.getInstance().getLines()) {
 									if (line.isSegmentCrossingLine(_segment)) {
 
 										canContinue = false;
 									}
 								}
-								if(canContinue){
-									
-									if(_segment.getBridges().size() > 0){
-										if(Inventory.getInstance().getRemainingBridges()>0){
+								if (canContinue) {
+
+									if (_segment.getBridges().size() > 0) {
+										if (Inventory.getInstance().getRemainingBridges() > 0) {
 											_line.addSegment(_segment, index);
 											entities.addAt(_segment, 0);
 											Inventory.getInstance().takeBridge();
-											if(_line.getSegments().size() == 1 && game.getInventory().getRemainingBus() > 0){
+											if (_line.getSegments().size() == 1
+													&& game.getInventory().getRemainingBus() > 0) {
 												game.getInventory().setRemainingBus(-1);
-											
-												ClassicBus busThread = new ClassicBus(new Vector2f(_segment.getPositions().get(1).x,_segment.getPositions().get(1).y),
-														game.map.getLine(_segment.getLineIndex()).getColor(), _segment); 
-												
+
+												ClassicBus busThread = new ClassicBus(
+														new Vector2f(_segment.getPositions().get(1).x,
+																_segment.getPositions().get(1).y),
+														game.map.getLine(_segment.getLineIndex()).getColor(), _segment);
+
 												entities.add(busThread);
-		
-								                threadPool.submit(busThread);
+
+												threadPool.submit(busThread);
 											}
 										}
-									}else{
+									} else {
 										_line.addSegment(_segment, index);
 										entities.addAt(_segment, 0);
-										if(_line.getSegments().size() == 1 && game.getInventory().getRemainingBus() > 0){
+										if (_line.getSegments().size() == 1
+												&& game.getInventory().getRemainingBus() > 0) {
 											game.getInventory().setRemainingBus(-1);
-										
-											ClassicBus busThread = new ClassicBus(new Vector2f(_segment.getPositions().get(1).x,_segment.getPositions().get(1).y),
-													game.map.getLine(_segment.getLineIndex()).getColor(), _segment); 
-											
+
+											ClassicBus busThread = new ClassicBus(
+													new Vector2f(_segment.getPositions().get(1).x,
+															_segment.getPositions().get(1).y),
+													game.map.getLine(_segment.getLineIndex()).getColor(), _segment);
+
 											entities.add(busThread);
-	
-							                threadPool.submit(busThread);
+
+											threadPool.submit(busThread);
 										}
 									}
 
@@ -520,9 +524,8 @@ public class MainGameState extends BasicGameState {
 				editLine = false;
 			}
 		}
-		
-		if(Game.getGameOver())
-		{
+
+		if (Game.getGameOver()) {
 			threadPool.shutdownNow();
 			arg1.enterState(GameWindow.GS_GAME_OVER);
 		}
