@@ -82,7 +82,12 @@ public abstract class Line extends Entity implements EntityUpdateable, EntityDra
 			return false;	
 		}
 	}
-	//only top and queue
+
+	/**
+	 * Permet de savoir si un segment existe sur cette Line
+	 * @param _seg
+	 * @return
+	 */
 	public boolean existingSegment(Segment _seg){
 		for (Segment segment : segments) {
 			if(segment.equals(_seg))
@@ -91,7 +96,13 @@ public abstract class Line extends Entity implements EntityUpdateable, EntityDra
 		return false;
 	}
 	
-	//Return l'index ou l'insérer ou -1 s'il ne peut pas, -2 s'il existe
+	/**
+	 * Permet de savoir ou insérer un segment
+	 * @param _segment
+	 * @return l'index ou l'insérer
+	 * 			-1 s'il ne peut pas
+	 * 			-2 s'il existe déjà
+	 */
 	public int canAddSegment(Segment _segment){
 		
 		if(existingSegment(_segment)){
@@ -116,6 +127,12 @@ public abstract class Line extends Entity implements EntityUpdateable, EntityDra
 	
 	//En gros on peut créer un segment jusqu'à cette station
 	//si cpt == 2 ca veut dire qu'un segment arrive et part de cette position
+	/**
+	 * Permet de savoir si on peut ajouter un segment 
+	 * (si cpt == 2 ca veut dire qu'un segment arrive et part de cette position)
+	 * @param _vect position à comparer
+	 * @return
+	 */
 	public boolean canCreateSegment(Vector2f _vect)
 	{
 		int cpt = 0;
@@ -129,6 +146,11 @@ public abstract class Line extends Entity implements EntityUpdateable, EntityDra
 		return true;
 	}
 	
+	/**
+	 * Permet de savoir si on peut supprimer le segment
+	 * @param _seg
+	 * @return
+	 */
 	public boolean canRemove(Segment _seg){
 		
 		
@@ -150,6 +172,11 @@ public abstract class Line extends Entity implements EntityUpdateable, EntityDra
 		return false;
 	}
 	
+	/**
+	 * Supprime un segment de cette Line
+	 * @param _seg Segment à supprimer
+	 * @return
+	 */
 	public boolean removeSegment(Segment _seg){
 		// en cas de boucle, on decale les segments jusqu'a ce que _seg devienne le premier ou le dernier element
 		if(!segments.contains(_seg)){
@@ -164,6 +191,11 @@ public abstract class Line extends Entity implements EntityUpdateable, EntityDra
 		return result;
 	}
 	
+	/**
+	 * Permet de savoir si un segment en traverse un autre de cette Line
+	 * @param _segment segment à comparer
+	 * @return
+	 */
 	public boolean isSegmentCrossingLine(Segment _segment){
 
 		for (Segment segment : segments) {
@@ -177,6 +209,11 @@ public abstract class Line extends Entity implements EntityUpdateable, EntityDra
 		return false;
 	}
 	
+	/**
+	 * Permet d'obtenir le segment correspondant à une station sur cette Line
+	 * @param _station
+	 * @return
+	 */
 	public Segment getSegmentByStation(Station _station){
 		for (Segment segment : segments) {
 			if(segment.isOnSegment(_station.getPosition()))
