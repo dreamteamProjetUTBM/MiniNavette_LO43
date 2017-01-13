@@ -7,6 +7,16 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
 
+/**
+ * 
+ * @author Thomas Gredin
+ * 
+ * Classe Button
+ * 
+ * Cette classe permet de créer un boton à trois états (idle, hover, pressed)
+ * On peut également mettre un callback qui permettra de décrire les actions
+ * qui seront exécutés lors de l'appuie sur le bouton
+ */
 public class Button extends EntityClickable implements EntityDrawable 
 {
 	private Image img_actual;
@@ -15,6 +25,13 @@ public class Button extends EntityClickable implements EntityDrawable
 	private Image img_hover;
 	private Image img_pressed;
 	
+	/**
+	 * Constructeur.
+	 * @param _position
+	 * @param _img_idle
+	 * @param _img_hover
+	 * @param _img_pressed
+	 */
 	public Button(Vector2f _position, String _img_idle, String _img_hover, String _img_pressed) 
 	{
 		super(_position);
@@ -37,6 +54,15 @@ public class Button extends EntityClickable implements EntityDrawable
 		drawable = true;
 	}
 
+	/**
+	 * Constructeur.
+	 * @param _position
+	 * @param height
+	 * @param width
+	 * @param _img_idle
+	 * @param _img_hover
+	 * @param _img_pressed
+	 */
 	public Button(Vector2f _position, float height, float width,String _img_idle, String _img_hover, String _img_pressed) 
 	{
 		super(_position);
