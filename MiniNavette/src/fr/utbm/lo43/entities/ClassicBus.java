@@ -2,22 +2,16 @@ package fr.utbm.lo43.entities;
 
 import java.util.ArrayList;
 
-import org.lwjgl.Sys;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
-import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Polygon;
-import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Transform;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
 
-import fr.utbm.lo43.gamestates.MainGameState;
-import fr.utbm.lo43.logic.Inventory;
-import fr.utbm.lo43.logic.Line;
 import fr.utbm.lo43.logic.Map;
 
 /**
@@ -278,11 +272,7 @@ public class ClassicBus extends Bus
 	public  void  update(GameContainer gc, StateBasedGame sbg,int delta) {
 		
 		super.update(gc, sbg,delta);
-		
-		Input input = gc.getInput();
 
-
-		
 		cpt += delta;
 		if(cpt >15 && !isGrabed)
 		{
@@ -340,6 +330,7 @@ public class ClassicBus extends Bus
 	}
 	
 	
+	@SuppressWarnings("deprecation")
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub

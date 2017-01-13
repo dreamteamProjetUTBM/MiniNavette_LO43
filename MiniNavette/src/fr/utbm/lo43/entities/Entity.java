@@ -9,6 +9,10 @@ public class Entity
 	 * La position de l'entitï¿½
 	 */
 	protected Vector2f position;
+	
+	/**
+	 * Taille de l'entité
+	 */
 	protected Vector2f size;
 	
 	/**

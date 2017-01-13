@@ -7,6 +7,14 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
 
+/**
+ * 
+ * @author Thomas Gredin Jeremy
+ *
+ * Classe ToggledButton
+ * Classe qui permet de créer un bouton à état, c'est à dire qu'il reste activé quand
+ * il est cliqué et ne sera désactivé que lors du prochain clique.
+ */
 public class ToggledButton extends EntityClickable implements EntityDrawable 
 {
 	private Image img_actual;
@@ -17,6 +25,12 @@ public class ToggledButton extends EntityClickable implements EntityDrawable
 	
 	private boolean toggled;
 	
+	/**
+	 * Constructeur.
+	 * @param _clickedEvent
+	 * @param _position
+	 * @param _size
+	 */
 	public ToggledButton(EventEntityMouseClicked _clickedEvent, Vector2f _position, Vector2f _size) 
 	{
 		super(_clickedEvent, _position, _size);
@@ -25,6 +39,14 @@ public class ToggledButton extends EntityClickable implements EntityDrawable
 		toggled = false;
 	}
 	
+	/**
+	 * Constructeur.
+	 * @param _position
+	 * @param _size
+	 * @param _img_idle
+	 * @param _img_hover
+	 * @param _img_pressed
+	 */
 	public ToggledButton(Vector2f _position, Vector2f _size,String _img_idle, String _img_hover, String _img_pressed) 
 	{
 		super(_position);
@@ -49,6 +71,11 @@ public class ToggledButton extends EntityClickable implements EntityDrawable
 
 	}
 	
+	/**
+	 * Constructeur.
+	 * @param _position
+	 * @param _size
+	 */
 	public ToggledButton(Vector2f _position, Vector2f _size) 
 	{
 		super(_position, _size);
@@ -58,6 +85,10 @@ public class ToggledButton extends EntityClickable implements EntityDrawable
 
 	}
 	
+	/**
+	 * Constructeur.
+	 * @param _position
+	 */
 	public ToggledButton(Vector2f _position) 
 	{
 		super(_position);

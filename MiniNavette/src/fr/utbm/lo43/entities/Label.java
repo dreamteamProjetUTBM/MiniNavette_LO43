@@ -5,10 +5,11 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Vector2f;
 
 /**
- * Classe Label
- * Permet d'afficher un text donn� sur l'�cran
+ * 
  * @author Thomas Gredin
  *
+ * Classe Label
+ * Permet d'afficher un text donn� sur l'�cran
  */
 public class Label extends Entity implements EntityDrawable
 {	

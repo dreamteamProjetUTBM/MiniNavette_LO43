@@ -3,6 +3,13 @@ package fr.utbm.lo43.entities;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.state.StateBasedGame;
 
+/**
+ * 
+ * @author Thomas Gredin
+ *
+ * Interface EntityUpdateable
+ * Permet à une entité de possèder une logique.
+ */
 public interface EntityUpdateable 
 {
 	/**

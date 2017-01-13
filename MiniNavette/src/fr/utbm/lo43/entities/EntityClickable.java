@@ -5,6 +5,14 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
 
+/**
+ * 
+ * @author Thomas Gredin
+ *
+ * Classe EntityClickable
+ * Est une sorte d'entité qui peut entrer en interaction avec le curseur de la
+ * souris.
+ */
 public class EntityClickable extends Entity implements EntityUpdateable 
 {
 	protected EventEntityMouseClicked clickedEvent;

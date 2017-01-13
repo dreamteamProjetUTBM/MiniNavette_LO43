@@ -1,5 +1,13 @@
 package fr.utbm.lo43.entities;
 
+/**
+ * 
+ * @author Thomas Gredin
+ *
+ * Interface EventEntityMouseDraged
+ * Représente les évènement qui sont appellé lors du drag and drop
+ * d'une EntityDragable.
+ */
 public interface EventEntityMouseDraged 
 {
 	/**

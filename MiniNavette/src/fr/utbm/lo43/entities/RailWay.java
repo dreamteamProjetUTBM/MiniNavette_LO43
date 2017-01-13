@@ -12,12 +12,12 @@ import org.newdawn.slick.geom.Vector2f;
 import fr.utbm.lo43.logic.Map;
 
 /**
- * Classe RailWay
  * 
- * A la mani�re des rivi�res dans mini metro, les voix ferr�es repr�sentent des obstacles
- * que les lignes ne peuvent traverser qu'avec des ponts
  * @author Thomas Gredin
  *
+ * Classe RailWay
+ * A la mani�re des rivi�res dans mini metro, les voix ferr�es repr�sentent des obstacles
+ * que les lignes ne peuvent traverser qu'avec des ponts
  */
 public class RailWay extends Entity implements EntityDrawable
 {

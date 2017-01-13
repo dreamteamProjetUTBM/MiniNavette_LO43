@@ -8,6 +8,15 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import fr.utbm.lo43.logic.Map;
 
+/**
+ * 
+ * @author Thomas Gredin
+ *
+ * Classe EntityCollection
+ * Est une classe qui permet de rassembler les entités, de mettre
+ * à jour leur logique et de les rendre. Cette classe existe dans le but
+ * d'allèger le MainGameState qui est déjà conséquent.
+ */
 public class EntityCollection implements EntityUpdateable, EntityDrawable
 {
 	ArrayList<Entity> entities;

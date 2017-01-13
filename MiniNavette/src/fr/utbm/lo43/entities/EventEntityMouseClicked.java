@@ -1,5 +1,13 @@
 package fr.utbm.lo43.entities;
 
+/**
+ * 
+ * @author Thomas Gredin
+ *
+ * Interface EventEntityClicked
+ * Représente les évènement qui sont appellé lors du drag and drop
+ * d'une EntityClickable.
+ */
 public interface EventEntityMouseClicked 
 {
 	/**

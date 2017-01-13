@@ -22,7 +22,6 @@ import fr.utbm.lo43.logic.Score;
  */
 public class Passenger extends Entity implements EntityDrawable, EntityUpdateable
 {
-	private Date arrivalTime;
 	protected Filiere filiere;
 	private Image preview;
 	protected Station nextStop;
@@ -77,7 +76,7 @@ public class Passenger extends Entity implements EntityDrawable, EntityUpdateabl
 			Score.getInstance().incrementScore();
 			return;
 		}
-		this.arrivalTime = new Date();
+		new Date();
 		station.enterStation(this);		
 	}
 

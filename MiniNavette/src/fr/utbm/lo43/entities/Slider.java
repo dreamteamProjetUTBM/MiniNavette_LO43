@@ -10,12 +10,12 @@ import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
 
 /**
- * Classe Slider
  * 
- * Permet de règler des paramètres comme le volume de la musique
- * par exemple
  * @author Thomas Gredin
  *
+ * Classe Slider
+ * Permet de règler des paramètres comme le volume de la musique
+ * par exemple
  */
 public class Slider extends EntityClickable implements EntityDrawable
 {
@@ -27,6 +27,10 @@ public class Slider extends EntityClickable implements EntityDrawable
 	
 	boolean isSliding;
 	
+	/**
+	 * Constructeur.
+	 * @param _position
+	 */
 	public Slider(Vector2f _position) 
 	{
 		super(_position);

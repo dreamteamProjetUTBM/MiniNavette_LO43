@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Image;
-import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Polygon;
 import org.newdawn.slick.geom.Vector2f;
 
@@ -112,6 +111,7 @@ public abstract class Bus extends EntityDragable implements EntityDrawable, Enti
 	 * Le bus notifie les passagers de la station un à un jusqu'à ce qu'il soit plein
 	 * @param station la station ou le bus arrive
 	 */
+	@SuppressWarnings("deprecation")
 	public void load(Station station)
 	{
 
@@ -152,6 +152,7 @@ public abstract class Bus extends EntityDragable implements EntityDrawable, Enti
 	 * Va faire descendre du bus chaque passager arrivé à destination
 	 * @param station
 	 */
+	@SuppressWarnings("deprecation")
 	public void unload(Station station)
 	{
 		try {

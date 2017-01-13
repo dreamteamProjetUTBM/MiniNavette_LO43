@@ -83,7 +83,8 @@ public class Station extends EntityClickable implements EntityDrawable, Dijkstra
 		size.x = Map.GRID_SIZE*2;
 		size.y = Map.GRID_SIZE*2;
 		
-		camembert = new CamembertCounter(new Vector2f(getPosition().x ,getPosition().y), Map.getInstance().GRID_SIZE*2);
+		Map.getInstance();
+		camembert = new CamembertCounter(new Vector2f(getPosition().x ,getPosition().y), Map.GRID_SIZE*2);
 		drawable = true;
 	}
 	

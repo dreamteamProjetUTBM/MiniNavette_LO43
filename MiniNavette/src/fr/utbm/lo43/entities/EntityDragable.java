@@ -5,6 +5,14 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
 
+/**
+ * 
+ * @author Thomas Gredin
+ *
+ * Classe EntityDragable
+ * Est une sorte d'entité qui peut être déplacer par une action de glissé-déposé
+ * effectué avec le curseur de la souris.
+ */
 public class EntityDragable extends Entity implements EntityUpdateable
 {
 	protected EventEntityMouseDraged dragedEvent;
