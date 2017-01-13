@@ -27,38 +27,38 @@ import fr.utbm.lo43.logic.Map;
 public class ClassicBus extends Bus
 {	
 	
-	/*
+	/**
 	 * Start désigne le vecteur de départ, et end celui ou le bus doitd'arriver
 	 */
 	private volatile Vector2f start,end;
 	
-	/*
+	/**
 	 * Permet de connaitre la direction du bus
 	 */
 	int local_direction = -1;
 	
 	
-	/*
+	/**
 	 * Si le bus est bloqué, il sera à True, sinon il sera à False
 	 */
 	boolean lock = false;
 	
-	/*
+	/**
 	 * Si le bus doit être supprimé, il sera à True
 	 */
 	volatile boolean canBeRemove = false;
 	
-	/*
+	/**
 	 * Contient l'angle de rotation du bus
 	 */
 	private float theta;
 	
-	/*
-	 * Booléen 
+	/**
+	 * Booleen 
 	 */
 	private boolean canBeKilled ;
 	
-	/*
+	/**
 	 * Compteur de temps du bus
 	 */
 	private int cpt = 0;
@@ -79,29 +79,10 @@ public class ClassicBus extends Bus
 		
 		theta = getAngle();
 		polygon = (Polygon) polygon.transform(Transform.createRotateTransform((float) Math.toRadians(-getAngle()),getPosition().x,getPosition().y));
-
-		
-		/*//Determine le sens pour aller à la station la plus proche
-		if(currentSegment.getEndSegment().distance(getPosition()) > currentSegment.getStartSegment().distance(getPosition())){
-			if(currentSegment.getStartSegment().x > getPosition().x)
-				local_direction = 1;
-			else if (currentSegment.getStartSegment().y > getPosition().y)
-				local_direction = 1;
-			else
-				local_direction = -1;
-		}
-		else {
-			if(currentSegment.getEndSegment().x > getPosition().x)
-				local_direction = 1;
-			else if (currentSegment.getEndSegment().y > getPosition().y)
-				local_direction = 1;
-			else
-				local_direction = -1;
-		}*/
 		
 	}
 
-	/*
+	/**
 	 * Permet de calculer l'angle de rotation du bus selon le segment ou il se trouve
 	 */
 	public synchronized float getAngle(){
@@ -149,6 +130,7 @@ public class ClassicBus extends Bus
 		arg2.fill(polygon);
 		arg2.draw(polygon);
 		
+		//Permet d'afficher les passagers à des emplacements différents
 		if(passenger_images.size() >0)
 			passenger_images.get(0).draw(getPosition().x-Map.GRID_SIZE/2,getPosition().y-Map.GRID_SIZE/2,Map.GRID_SIZE/2,Map.GRID_SIZE/2);
 		if(passenger_images.size() > 1)
@@ -165,8 +147,9 @@ public class ClassicBus extends Bus
 		
 	}
 
-	
-	
+	/**
+	 * Permet de savoir si le bus peut être supprimer
+	 */
 	public boolean CanBeKilled() {
 		return canBeKilled;
 	}
@@ -183,12 +166,6 @@ public class ClassicBus extends Bus
 				//Alors on est arrivé soit dans une station soit à la fin d'une partie du segment
 				for (Station station : Map.getInstance().getStations()) {
 					if(station.isOnStation(endpoint)){
-							
-					/*	if(station.getLines().contains(currentSegment.line_bus))
-							if(!currentSegment.line_bus.existingSegment(currentSegment))
-								if(currentSegment.line_bus.getSegmentByStation(station)!=null){
-								currentSegment = currentSegment.line_bus.getSegmentByStation(station);
-								}*/
 						
 						if(lock){
 							
@@ -214,7 +191,6 @@ public class ClassicBus extends Bus
 		}
 		
 		//On avance
-		
 		ArrayList<Vector2f> vects = currentSegment.isBetween(getPosition());
 		
 		
