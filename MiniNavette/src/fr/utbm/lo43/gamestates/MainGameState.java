@@ -71,7 +71,7 @@ public class MainGameState extends BasicGameState {
 	Image menu_inventory;
 	ArrayList<ToggledButton> lines_button;
 	ArrayList<String> lines_button_img;
-	// Bus button
+	
 	private ToggledButton bus_button;
 	private Label bus_label;
 	private Label bridge_label;
