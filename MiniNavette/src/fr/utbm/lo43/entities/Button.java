@@ -7,9 +7,9 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
 
-<<<<<<< HEAD
-public class Button extends EntityClickable implements EntityDrawable {
-=======
+
+
+
 /**
  * 
  * @author Thomas Gredin
@@ -22,16 +22,15 @@ public class Button extends EntityClickable implements EntityDrawable {
  */
 public class Button extends EntityClickable implements EntityDrawable 
 {
->>>>>>> branch 'master' of https://github.com/dreamteamProjetUTBM/MiniNavette_LO43.git
+
 	private Image img_actual;
 
 	private Image img_idle;
 	private Image img_hover;
 	private Image img_pressed;
-<<<<<<< HEAD
 
-	public Button(Vector2f _position, String _img_idle, String _img_hover, String _img_pressed) {
-=======
+
+
 	
 	/**
 	 * Constructeur.
@@ -42,7 +41,7 @@ public class Button extends EntityClickable implements EntityDrawable
 	 */
 	public Button(Vector2f _position, String _img_idle, String _img_hover, String _img_pressed) 
 	{
->>>>>>> branch 'master' of https://github.com/dreamteamProjetUTBM/MiniNavette_LO43.git
+
 		super(_position);
 
 		try {
@@ -60,10 +59,7 @@ public class Button extends EntityClickable implements EntityDrawable
 		drawable = true;
 	}
 
-<<<<<<< HEAD
-	public Button(Vector2f _position, float height, float width, String _img_idle, String _img_hover,
-			String _img_pressed) {
-=======
+
 	/**
 	 * Constructeur.
 	 * @param _position
@@ -75,7 +71,7 @@ public class Button extends EntityClickable implements EntityDrawable
 	 */
 	public Button(Vector2f _position, float height, float width,String _img_idle, String _img_hover, String _img_pressed) 
 	{
->>>>>>> branch 'master' of https://github.com/dreamteamProjetUTBM/MiniNavette_LO43.git
+
 		super(_position);
 
 		try {
