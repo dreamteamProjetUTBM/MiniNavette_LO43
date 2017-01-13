@@ -226,6 +226,10 @@ public abstract class Bus extends EntityDragable implements EntityDrawable, Enti
 			}
 		}
 
+	/**
+	 * Supprimer un passager se trouvant dans le bus
+	 * @param passenger passager à supprimer
+	 */
 	protected void removePassenger(Passenger passenger)
 	{
 		synchronized(passengers)
@@ -234,12 +238,18 @@ public abstract class Bus extends EntityDragable implements EntityDrawable, Enti
 		}
 	}
 
+	/**
+	 * Permet au bus de changer de direction
+	 */
 	private void changeDirection()
 	{
 		direction = !direction ;
 	}
 
 	
+	/**
+	 * Permet de savoir si le bus se trouve à la fin du segment
+	 */
 	private boolean endLine()
 	{
 		if(direction){
@@ -251,6 +261,9 @@ public abstract class Bus extends EntityDragable implements EntityDrawable, Enti
 
 	}
 
+	/**
+	 * Permet de savoir si un bus contient des passagers
+	 */
 	public synchronized boolean isEmpty()
 	{
 		synchronized(passengers){
