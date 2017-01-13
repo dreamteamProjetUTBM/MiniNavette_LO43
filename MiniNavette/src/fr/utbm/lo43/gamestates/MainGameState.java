@@ -23,7 +23,6 @@ import fr.utbm.lo43.entities.Entity;
 import fr.utbm.lo43.entities.EntityCollection;
 import fr.utbm.lo43.entities.EventEntityMouseClicked;
 import fr.utbm.lo43.entities.Label;
-import fr.utbm.lo43.entities.Passenger;
 import fr.utbm.lo43.entities.RailWay;
 import fr.utbm.lo43.entities.Segment;
 import fr.utbm.lo43.entities.Slider;
@@ -36,6 +35,27 @@ import fr.utbm.lo43.logic.Inventory;
 import fr.utbm.lo43.logic.Map;
 import fr.utbm.lo43.logic.Score;
 
+/**
+ * 
+ * @author Thomas Gredin
+ *
+ * Classe MainGameState
+ * 
+ * Cette classe décrit le fonctionnement de la phase de jeu, c'est à dire celle
+ * ou l'on place les lignes, les bus, ...etc.
+ * 
+ * Elle hérite de la classe BasicGameState qui est une classe exposé par le framework
+ * de Windowing que nous avons utilisé (Slick2D). Ce principe est simple mais très
+ * puissant car il permet d'isoler les différentes phases du jeux dans des classes séparées.
+ * Ainsi on se retrouve avec un GameState pour le Menu Principal, un pour le Menu de Pause
+ * et ainsi de suite.
+ * 
+ * Quand on souhaite changer de phase de jeux il suffit de faire appel à une
+ * phase différente (Une instance d'un autre GameState) qui va prendre la 
+ * place de l'actuelle pour être mise à jour et rendu à l'écran.
+ * 
+ * @see MainMenuGameState, PauseMenuGameState, GameOverGameState, OptionMenuGameState
+ */
 public class MainGameState extends BasicGameState {
 
 	private static final int MAX_BUS = 30;
