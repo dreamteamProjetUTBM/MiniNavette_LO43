@@ -23,18 +23,52 @@ import fr.utbm.lo43.logic.Map;
  */
 public class Segment extends EntityDragable implements EntityDrawable {
 
+	/**
+	 * Epaisseur d'un segment (affichage)
+	 */
 	public static final float SEGMENT_THICKNESS = 5;
+	
+	/**
+	 * Permet l'affichage du segments
+	 */
 	private volatile Polygon polygon;
+	
+	/**
+	 * Permet la prévisualisation d'un segment pour le joueur
+	 */
 	private volatile Polygon polygonRender;
+	
+	/**
+	 * Contient les coordonnées des ponts sur le segment
+	 */
 	private volatile ArrayList<Vector2f> bridges;
+	
+	/**
+	 * Station de départ du segmebt
+	 */
 	private volatile Station stationDepart;
+	
+	/**
+	 * Station d'arrivée du segment
+	 */
 	private volatile Station stationArrival;
 
+	/**
+	 * Contient le chemin du logo de l'opération effectué sur le segment
+	 */
 	private volatile String iconPath;
-	// Line de Slick2D
-	Line line;
+
+	/**
+	 * Line correspondant au segment
+	 */
 	fr.utbm.lo43.logic.Line line_bus;
+	
+	/**
+	 * Contient le numéro de Line
+	 */
 	int lineIndex;
+	
+	
 	private boolean forbiddenBridges;
 
 
@@ -89,7 +123,9 @@ public class Segment extends EntityDragable implements EntityDrawable {
 
 	}
 
-
+	/**
+	 * Permet de calculer l'offset d'un segment
+	 */
 	public int getOffset(){
 		int offset = 0;
 		for (int i = lineIndex; i < Map.getInstance().getLines().size(); i++) {
@@ -112,6 +148,9 @@ public class Segment extends EntityDragable implements EntityDrawable {
 		return offset;
 	}
 
+	/**
+	 * Modifie la prévisualisation du segment
+	 */
 	public void setPolygonRender(){
 		Line tempLine;
 
@@ -200,11 +239,10 @@ public class Segment extends EntityDragable implements EntityDrawable {
 
 
 	}
-
+	
 	public fr.utbm.lo43.logic.Line getLine_bus() {
 		return line_bus;
 	}
-
 
 	public void setForbiddenBridges(boolean forbiddenBridges) {
 		this.forbiddenBridges = forbiddenBridges;
@@ -232,11 +270,7 @@ public class Segment extends EntityDragable implements EntityDrawable {
 		return new Vector2f(polygon.getPoint(index)[0], polygon.getPoint(index)[1]);
 	}
 
-	/***
-	 * Get line number of the segment
-	 * 
-	 * @return
-	 */
+
 	public  int getLineIndex() {
 		return lineIndex;
 	}
@@ -407,10 +441,8 @@ public class Segment extends EntityDragable implements EntityDrawable {
 	}
 
 	/***
-	 * To know if a segment cross another one
-	 * 
-	 * @param _segment
-	 *            Segment to compare
+	 * Permet de savoir si un segment en croise un autre
+	 * @param _segment Segment to compare     
 	 * @return true if the segment cross the line false if not
 	 */
 	public  boolean isCrossing(Segment _segment) {
@@ -450,6 +482,7 @@ public class Segment extends EntityDragable implements EntityDrawable {
 
 	}
 
+	
 	public  boolean hasSameVectors(Segment _seg) {
 		if ((_seg.getStartSegment().distance(getStartSegment()) == 0
 				&& _seg.getEndSegment().distance(getEndSegment()) == 0))
@@ -517,7 +550,6 @@ public class Segment extends EntityDragable implements EntityDrawable {
 			return line_bus.getSegment(0);
 		}
 		return null;
-		//return (line_bus.getSegments().indexOf(this)+1) <= ( line_bus.getSegments().size() ) ? line_bus.getSegments().get(line_bus.getSegments().indexOf(this)+1) : null ;
 	}
 
 	public Segment getPreviousSegment()
@@ -528,8 +560,6 @@ public class Segment extends EntityDragable implements EntityDrawable {
 			return line_bus.getSegment(line_bus.getSegments().size()-1);
 		}
 		return null;
-
-		//return (line_bus.getSegments().indexOf(this)-1) > 0 ? line_bus.getSegments().get(line_bus.getSegments().indexOf(this)+1) : null ;
 	}
 
 	/**
@@ -629,6 +659,11 @@ public class Segment extends EntityDragable implements EntityDrawable {
 		return getPositions().get(index);
 	}
 
+	/**
+	 * Permet de savoir entre quels point se trouve la position
+	 * @param position 
+	 * @return une liste des vecteurs ou se trouve position
+	 */
 	public ArrayList<Vector2f> isBetween(Vector2f position){
 		ArrayList<Vector2f> vects = new ArrayList<>();
 
